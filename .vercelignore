@@ -1,0 +1,8 @@
+node_modules
+.next
+out
+.git
+visual-qa
+test-results
+playwright-report
+*.tsbuildinfo
