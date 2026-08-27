@@ -8,7 +8,7 @@ import { ok, fail } from "@/lib/api/respond.server";
  *
  * Read-only, explicitly allowlisted action (NOT a transparent proxy). Returns
  * the product catalogue in the UI shape via the repository abstraction. Serves
- * mock data unless DATA_SOURCE=pladsly and credentials are configured.
+ * mock data unless PLADSLY_INTEGRATION_MODE=live and credentials are configured.
  *
  * Exposes only the minimum fields the frontend needs; no Pladsly internals,
  * credentials or raw responses are ever returned.

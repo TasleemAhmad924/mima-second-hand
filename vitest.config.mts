@@ -1,6 +1,8 @@
 import { defineConfig } from "vitest/config";
 import path from "path";
 
+const dirname = import.meta.dirname;
+
 /**
  * Unit tests run in Node. `server-only` is aliased to an empty stub so that
  * server modules (which guard themselves with `import "server-only"`) can be
@@ -9,8 +11,8 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
-      "server-only": path.resolve(__dirname, "src/test/server-only-stub.ts"),
-      "@": path.resolve(__dirname, "src"),
+      "server-only": path.resolve(dirname, "src/test/server-only-stub.ts"),
+      "@": path.resolve(dirname, "src"),
     },
   },
   test: {

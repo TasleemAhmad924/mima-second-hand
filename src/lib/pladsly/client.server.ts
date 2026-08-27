@@ -16,7 +16,7 @@ import { IntegrationError } from "@/lib/pladsly/errors";
  *
  * The concrete endpoint paths, auth scheme and response shapes are ASSUMED and
  * must be confirmed against the official Pladsly API docs before enabling
- * DATA_SOURCE=pladsly (see docs/pladsly-integration.md).
+ * PLADSLY_INTEGRATION_MODE=live (see docs/PLADSLY_INTEGRATION.md).
  */
 
 const DEFAULT_TIMEOUT_MS = 8000;

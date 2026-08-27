@@ -3,11 +3,14 @@ import { siteConfig } from "@/config/site";
 import { endDateFor } from "@/lib/booking";
 import { formatEuro, formatGermanDate } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 
 interface BookingSummaryProps {
   startDate: string;
   planId: RentalPlanId;
   shelfId: string | null;
+  /** Fired when the user is handed off to the Pladsly booking assistant. */
+  onBook?: () => void;
 }
 
 function Row({ label, value }: { label: string; value: string }) {
@@ -23,6 +26,7 @@ export function BookingSummary({
   startDate,
   planId,
   shelfId,
+  onBook,
 }: BookingSummaryProps) {
   const plan = getPlan(planId);
   const endDate = endDateFor(startDate, planId);
@@ -51,6 +55,7 @@ export function BookingSummary({
             href={siteConfig.external.bookingUrl}
             external
             className="w-full"
+            onClick={onBook}
           >
             Weiter zur Buchung
           </Button>
@@ -70,6 +75,17 @@ export function BookingSummary({
         Buchung, Konto und Zahlung schließt du sicher bei unserem Partner Pladsly
         ab. Die angezeigte Belegung ist ein Vorschau-Stand mit Beispieldaten.
       </p>
+
+      {/* The real booking is always reachable, even without a selection. */}
+      <div className="mt-4">
+        <ArrowLink
+          href={siteConfig.external.bookingUrl}
+          external
+          onClick={onBook}
+        >
+          Direkt beim Buchungsassistenten buchen
+        </ArrowLink>
+      </div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ import { pladslyShelfAvailabilityRepository } from "@/lib/repositories/pladsly-s
  * Server-side repository resolver.
  *
  * Chooses the mock or Pladsly-backed implementation based on the effective data
- * source (DATA_SOURCE + whether credentials are configured). This runs only on
+ * source (PLADSLY_INTEGRATION_MODE + whether credentials are configured). Runs only on
  * the server; client components must never import this module.
  */
 export function getProductRepository(): ProductRepository {

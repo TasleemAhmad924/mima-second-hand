@@ -11,13 +11,19 @@ type Filter = ProductCategory | "alle";
 
 export function ProductGrid() {
   const [products, setProducts] = useState<Product[] | null>(null);
+  const [error, setError] = useState(false);
   const [filter, setFilter] = useState<Filter>("alle");
 
   useEffect(() => {
     let active = true;
-    catalogue.getProducts().then((result) => {
-      if (active) setProducts(result);
-    });
+    catalogue
+      .getProducts()
+      .then((result) => {
+        if (active) setProducts(result);
+      })
+      .catch(() => {
+        if (active) setError(true);
+      });
     return () => {
       active = false;
     };
@@ -61,7 +67,17 @@ export function ProductGrid() {
       </div>
 
       <div className="border-t border-line pt-10">
-        {filtered === null ? (
+        {error ? (
+          <div className="py-16 text-center">
+            <p className="font-display text-xl text-charcoal">
+              Die Vorschau ist gerade nicht verfügbar.
+            </p>
+            <p className="mx-auto mt-2 max-w-md text-sm text-muted">
+              Bitte versuche es in Kürze erneut – das vollständige Sortiment
+              findest du jederzeit in unserem Online-Shop.
+            </p>
+          </div>
+        ) : filtered === null ? (
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index}>

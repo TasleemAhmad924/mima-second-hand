@@ -13,8 +13,14 @@ import "server-only";
 
 export type DataSource = "mock" | "pladsly";
 
+/**
+ * Integration mode. Preferred variable: PLADSLY_INTEGRATION_MODE=mock|live.
+ * `DATA_SOURCE=mock|pladsly` is kept as a backward-compatible alias. "live"
+ * and "pladsly" both mean the real integration; anything else means mock.
+ */
 function readDataSource(): DataSource {
-  return process.env.DATA_SOURCE === "pladsly" ? "pladsly" : "mock";
+  const mode = process.env.PLADSLY_INTEGRATION_MODE ?? process.env.DATA_SOURCE;
+  return mode === "live" || mode === "pladsly" ? "pladsly" : "mock";
 }
 
 export const serverEnv = {

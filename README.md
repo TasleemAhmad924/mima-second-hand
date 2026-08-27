@@ -32,7 +32,7 @@ See `.env.example`. Two rules:
 - **Secrets** (e.g. `PLADSLY_API_KEY`) are server-side only — never prefixed with `NEXT_PUBLIC_`, never shipped to the browser. Set them in the Vercel dashboard, not in the repo.
 - **Public URLs** (`NEXT_PUBLIC_PLADSLY_*`) are plain links and safe to expose.
 
-`DATA_SOURCE` (server-only) selects the data source: `mock` (default) or `pladsly`.
+`PLADSLY_INTEGRATION_MODE` (server-only) selects the data source: `mock` (default) or `live`. (`DATA_SOURCE=mock|pladsly` is still accepted as an alias.)
 
 ## Architecture
 
@@ -49,7 +49,7 @@ MiMa owns content, brand, floor-plan geometry, SEO and the integration layer. **
 
 ## Pladsly integration
 
-The real API contract is not yet confirmed. Open questions and the go-live checklist are tracked in [`docs/pladsly-integration.md`](docs/pladsly-integration.md). Do **not** set `DATA_SOURCE=pladsly` in production until those items are confirmed.
+The real API contract is not yet confirmed. The living plan is in [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md); open questions and the go-live checklist are in [`docs/PLADSLY_INTEGRATION.md`](docs/PLADSLY_INTEGRATION.md). Do **not** set `PLADSLY_INTEGRATION_MODE=live` in production until those items are confirmed.
 
 ## Security
 

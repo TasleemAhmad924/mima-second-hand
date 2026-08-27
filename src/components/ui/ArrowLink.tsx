@@ -7,6 +7,7 @@ interface ArrowLinkProps {
   tone?: "dark" | "light";
   external?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 /** A restrained editorial text link with a small forward arrow. */
@@ -16,6 +17,7 @@ export function ArrowLink({
   tone = "dark",
   external = false,
   className = "",
+  onClick,
 }: ArrowLinkProps) {
   const color =
     tone === "light"
@@ -47,6 +49,7 @@ export function ArrowLink({
         target="_blank"
         rel="noopener noreferrer"
         className={`${color} ${className}`}
+        onClick={onClick}
       >
         {content}
       </a>
@@ -54,7 +57,7 @@ export function ArrowLink({
   }
 
   return (
-    <Link href={href} className={`${color} ${className}`}>
+    <Link href={href} className={`${color} ${className}`} onClick={onClick}>
       {content}
     </Link>
   );

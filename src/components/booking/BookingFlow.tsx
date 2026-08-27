@@ -4,10 +4,12 @@ import { useEffect, useState, type ReactNode } from "react";
 import { getPlan, type RentalPlanId } from "@/config/pricing";
 import { siteConfig } from "@/config/site";
 import { booking } from "@/lib/pladsly";
+import { track, AnalyticsEvent } from "@/lib/analytics";
 import { todayIso, formatEuro } from "@/lib/format";
 import type { Shelf } from "@/types";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Button } from "@/components/ui/Button";
+import { ArrowLink } from "@/components/ui/ArrowLink";
 import { DateStep } from "@/components/booking/DateStep";
 import { DurationStep } from "@/components/booking/DurationStep";
 import { FloorPlan } from "@/components/booking/FloorPlan";
@@ -46,6 +48,7 @@ export function BookingFlow() {
   const [planId, setPlanId] = useState<RentalPlanId>("monat-1");
   const [shelfId, setShelfId] = useState<string | null>(null);
   const [shelves, setShelves] = useState<Shelf[] | null>(null);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -53,6 +56,9 @@ export function BookingFlow() {
       .getShelves({ startDate, days: getPlan(planId).days })
       .then((result) => {
         if (active) setShelves(result);
+      })
+      .catch(() => {
+        if (active) setLoadError(true);
       });
     return () => {
       active = false;
@@ -65,9 +71,29 @@ export function BookingFlow() {
     shelves?.filter((shelf) => shelf.status === "available").length ?? 0;
   const complete = Boolean(shelfId);
   const plan = getPlan(planId);
+  const onBookingHandoff = () => track(AnalyticsEvent.BookingHandoff);
 
   return (
     <div className="grid grid-cols-1 gap-14 pb-20 lg:grid-cols-12 lg:gap-16 lg:pb-0">
+      <div className="lg:col-span-12">
+        <div className="flex flex-col gap-4 rounded-[var(--radius-sm)] border border-line bg-cream/40 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="max-w-2xl text-sm leading-relaxed text-muted">
+            <span className="font-medium text-charcoal">Vorschau.</span> Die hier
+            gezeigte Belegung sind Beispieldaten und noch nicht live. Deine
+            verbindliche Buchung – mit echter Verfügbarkeit und Zahlung – schließt
+            du beim Buchungsassistenten unseres Partners Pladsly ab.
+          </p>
+          <ArrowLink
+            href={siteConfig.external.bookingUrl}
+            external
+            onClick={onBookingHandoff}
+            className="shrink-0"
+          >
+            Zum Buchungsassistenten
+          </ArrowLink>
+        </div>
+      </div>
+
       <div className="flex flex-col gap-14 lg:col-span-7">
         <Step number="01" title="Startdatum wählen">
           <DateStep value={startDate} min={minDate} onChange={setStartDate} />
@@ -78,7 +104,26 @@ export function BookingFlow() {
         </Step>
 
         <Step number="03" title="Regal wählen" id="regal">
-          {shelves === null ? (
+          {loadError ? (
+            <div className="py-10">
+              <p className="font-display text-xl text-charcoal">
+                Die Belegungs-Vorschau konnte nicht geladen werden.
+              </p>
+              <p className="mt-2 max-w-md text-sm text-muted">
+                Das ist nur die Vorschau – deine Buchung kannst du jederzeit
+                direkt beim Buchungsassistenten abschließen.
+              </p>
+              <div className="mt-5">
+                <ArrowLink
+                  href={siteConfig.external.bookingUrl}
+                  external
+                  onClick={onBookingHandoff}
+                >
+                  Zum Buchungsassistenten
+                </ArrowLink>
+              </div>
+            </div>
+          ) : shelves === null ? (
             <div>
               <Skeleton className="aspect-[3/2] w-full min-w-[280px]" />
               <p className="mt-4 text-sm text-muted">Regale werden geladen …</p>
@@ -119,6 +164,7 @@ export function BookingFlow() {
             startDate={startDate}
             planId={planId}
             shelfId={shelfId}
+            onBook={onBookingHandoff}
           />
         </div>
       </aside>
@@ -129,6 +175,7 @@ export function BookingFlow() {
           startDate={startDate}
           planId={planId}
           shelfId={shelfId}
+          onBook={onBookingHandoff}
         />
       </div>
 
@@ -143,7 +190,11 @@ export function BookingFlow() {
             </span>
           </div>
           {complete ? (
-            <Button href={siteConfig.external.bookingUrl} external>
+            <Button
+              href={siteConfig.external.bookingUrl}
+              external
+              onClick={onBookingHandoff}
+            >
               Weiter
             </Button>
           ) : (

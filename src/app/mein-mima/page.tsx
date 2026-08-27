@@ -3,8 +3,9 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Button } from "@/components/ui/Button";
 import { ArrowLink } from "@/components/ui/ArrowLink";
+import { TrackedButton } from "@/components/analytics/TrackedButton";
+import { AnalyticsEvent } from "@/lib/analytics";
 import { siteConfig } from "@/config/site";
 import { pageMetadata } from "@/lib/seo";
 
@@ -55,9 +56,12 @@ export default function MeinMimaPage() {
                 Du wirst in einem neuen Tab dorthin weitergeleitet.
               </p>
               <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-                <Button href={siteConfig.external.sellerPortalUrl} external>
+                <TrackedButton
+                  href={siteConfig.external.sellerPortalUrl}
+                  event={AnalyticsEvent.MeinMimaPortalClick}
+                >
                   Zum Verkäuferportal
-                </Button>
+                </TrackedButton>
                 <ArrowLink href="/regal-mieten">
                   Noch kein Regal? Jetzt mieten
                 </ArrowLink>
