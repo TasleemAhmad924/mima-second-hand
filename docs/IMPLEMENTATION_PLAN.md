@@ -30,23 +30,26 @@ Wire the site to Pladsly's officially supported entry points (portal, shop, book
 
 ## Current task
 
-- [~] Stage A wiring on branch `feat/pladsly-integration`:
-  - `/mein-mima` → Pladsly seller portal (verify + analytics event).
-  - `/entdecken` → supported Pladsly shop link (curated preview stays, clearly labelled).
-  - `/regal-mieten` → always-reachable Pladsly booking assistant; preview clearly marked.
-  - Rename integration flag → `PLADSLY_INTEGRATION_MODE` (keep `DATA_SOURCE` alias).
-  - Non-invasive analytics event hooks.
-  - German failure/error states for products, availability, booking.
+- [x] Stage A wiring on branch `feat/pladsly-integration`:
+  - [x] `/mein-mima` → Pladsly seller portal (tracked, safe external link).
+  - [x] `/entdecken` → supported Pladsly shop link; curated preview kept + clearly labelled; product error state.
+  - [x] `/regal-mieten` → always-reachable Pladsly booking assistant; preview clearly marked; availability error state.
+  - [x] Rename integration flag → `PLADSLY_INTEGRATION_MODE` (kept `DATA_SOURCE` alias).
+  - [x] Non-invasive analytics event hooks (`src/lib/analytics.ts` + `TrackedButton`).
+  - [x] German failure/error states for products, availability, booking.
+- [x] Branch pushed; browser QA run against a local production build (see Testing).
+- [!] Vercel **preview** deployment — blocked (build stall, see Deployment status).
 
 ---
 
 ## Next tasks
 
-- [ ] Push branch, create Vercel **preview** deployment, browser-QA (desktop + mobile).
-- [ ] Send consolidated Pladsly API discovery request (see `PLADSLY_INTEGRATION.md`).
+- [ ] Resolve Vercel preview build stall (connect GitHub in Vercel → managed CI builds; or retry when the build queue clears), then browser-QA the live preview.
+- [ ] Merge `feat/pladsly-integration` → `main` once a preview build succeeds and is verified.
+- [ ] Send consolidated Pladsly API discovery request (see `PLADSLY_INTEGRATION.md` §6).
 - [ ] After answers: implement `PladslyProductRepository` fetch + Zod response schemas.
 - [ ] After answers: implement live availability + immediate re-validation before booking.
-- [ ] POS/Zettle end-to-end test checklist (blocked on real seller/test data).
+- [ ] POS/Zettle end-to-end test (see checklist below) — blocked on real seller/test data.
 
 ---
 
@@ -96,7 +99,7 @@ Tracked in detail in `docs/PLADSLY_INTEGRATION.md`. Headlines:
 
 ## Pladsly integration status
 
-- **Stage A (supported entry points):** in progress on `feat/pladsly-integration`.
+- **Stage A (supported entry points):** implemented on `feat/pladsly-integration` (portal / shop / booking-assistant wiring). Pending live-preview verification + merge.
 - **Stage B (read-only API, e.g. products):** blocked — API undocumented.
 - **Stage C (live availability + booking via API):** blocked — API undocumented.
 - Mock mode is the default and keeps the whole site usable offline.
@@ -105,15 +108,47 @@ Tracked in detail in `docs/PLADSLY_INTEGRATION.md`. Headlines:
 
 ## Testing status
 
-- Unit tests: `npm run test` (mapping, validation, errors, mock repos) — passing.
-- Deployment verification script: `scripts/verify-deployment.mjs` (routes, console errors, images, screenshots).
-- Browser QA of preview deployment: pending this phase.
+- Unit tests: `npm run test` — 26 passing (mapping, validation, errors, mock repos).
+- Type check: `npm run typecheck` — clean. Build: `npm run build` — clean.
+- Browser QA (this phase): run with `scripts/verify-deployment.mjs` against a **local production build** (`next start`) because the Vercel preview build is stalled. Findings:
+  - All routes (`/`, `/entdecken`, `/regal-mieten`, `/mein-mima`, …) return 200 on desktop + mobile.
+  - **Zero console/hydration errors** on every route (CSP intact).
+  - Integration elements verified in rendered HTML: `/mein-mima` → portal link (`rel="noopener noreferrer"`); `/entdecken` → "Zum MiMa Shop" + shop URL + "kuratierte Vorschau" framing; `/regal-mieten` → "Buchungsassistenten" link + "Vorschau" + booking URL.
+  - "Broken image" flags from the script are false positives: scroll/lazy-revealed images not yet in-viewport at screenshot time (assets confirmed HTTP 200).
+- Pending: browser QA against the live Vercel preview once the build stall is resolved.
 
 ---
 
 ## Deployment status
 
-- Production: https://mima-second-hand.vercel.app (Ready).
-- Repo: https://github.com/TasleemAhmad924/mima-second-hand (private, branch `main`).
-- Preview: created per feature branch (this phase).
-- Manual step pending: connect GitHub repo in Vercel (Settings → Git) for push-to-deploy.
+- Production: https://mima-second-hand.vercel.app — **Ready** (unchanged this phase; still the previous phase's build). Healthy.
+- Repo: https://github.com/TasleemAhmad924/mima-second-hand (private). Branch `feat/pladsly-integration` pushed.
+- [!] **Preview build stalled:** CLI uploads complete, but Vercel builds stay `UNKNOWN` (0 ms, never start) for preview deployments; several attempts made and cleaned up. Production built fine previously, so this is a Vercel-side build-queue/infra issue, not a code issue (local `next build` succeeds).
+  - Recommended fix: connect the GitHub repo in Vercel (Settings → Git) so pushes trigger **managed** Git builds instead of CLI uploads; or retry the CLI deploy later when the build queue clears. Requires the Vercel GitHub App to be installed on the repo (browser step).
+- Manual step still pending: Vercel ↔ GitHub connection (also enables preview-per-PR and push-to-deploy).
+
+---
+
+## POS / Zettle end-to-end test checklist (STEP 21 — run later, needs real data)
+
+Blocked until a real seller account + test product + store POS hardware are available. MiMa is **not** a POS sync layer; this only validates the Pladsly ⇄ Zettle flow.
+
+1. [ ] Seller creates a test product in the Pladsly portal.
+2. [ ] Product appears correctly (title, image, price).
+3. [ ] Barcode/label is generated.
+4. [ ] Product is available in the POS as expected.
+5. [ ] Test sale is completed at the POS.
+6. [ ] Sale appears in Pladsly.
+7. [ ] Seller balance updates.
+8. [ ] Product online status updates (sold/removed).
+9. [ ] Refund behaviour works.
+10. [ ] Duplicate-sale prevention is understood.
+
+---
+
+## Caching strategy (planned, not yet implemented — no live API)
+
+- Product catalogue: may be cached briefly (e.g. short revalidate) once live.
+- Shelf availability: must be fresh (no/low cache).
+- Booking state: never from cache; re-validate immediately before checkout.
+- No single global caching rule for all Pladsly requests.
