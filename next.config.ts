@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const isProd = process.env.NODE_ENV === "production";
+const isIonosStatic = process.env.IONOS_STATIC === "1";
 
 /*
   Security header baseline.
@@ -72,10 +73,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  // NOTE: Static export (`output: "export"`) was intentionally removed. The app
-  // now runs as a standard Next.js app on Vercel so that sensitive Pladsly
-  // requests can execute server-side (API routes / server modules) and secret
-  // credentials never reach the browser. The public UI is unchanged.
+  // IONOS Deploy Now has no Node runtime. `IONOS_STATIC=1` emits HTML into
+  // `out/` (server routes are moved aside by `scripts/build-ionos.mjs`).
+  // Local/Vercel builds stay a Next server so Pladsly secrets never ship.
+  ...(isIonosStatic ? { output: "export" as const } : {}),
   poweredByHeader: false,
   trailingSlash: true,
   images: {
@@ -86,14 +87,18 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: securityHeaders,
-      },
-    ];
-  },
+  ...(!isIonosStatic
+    ? {
+        async headers() {
+          return [
+            {
+              source: "/:path*",
+              headers: securityHeaders,
+            },
+          ];
+        },
+      }
+    : {}),
 };
 
 export default nextConfig;
