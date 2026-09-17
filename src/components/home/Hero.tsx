@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-line">
       <div className="mx-auto grid w-full max-w-[82rem] grid-cols-1 lg:min-h-[min(38rem,calc(100dvh-4.5rem))] lg:grid-cols-12">
-        <div className="order-2 flex min-w-0 flex-col justify-center px-6 pb-9 pt-7 sm:px-8 sm:pb-12 sm:pt-9 lg:order-1 lg:col-span-6 lg:px-10 lg:py-14 xl:col-span-5 xl:px-14">
+        <div className="order-2 flex min-w-0 flex-col justify-center px-6 pb-9 pt-7 sm:px-8 sm:pb-12 sm:pt-9 lg:order-1 lg:col-span-6 lg:px-10 lg:py-14">
           <Reveal immediate>
             <p className="eyebrow">Second-Hand-Laden · Stockelsdorf</p>
           </Reveal>
@@ -38,16 +38,16 @@ export function Hero() {
           </Reveal>
 
           <Reveal immediate delay={0.22}>
-            <div className="mt-7 flex w-full flex-col items-stretch gap-3.5 sm:mt-8 sm:flex-row sm:items-start sm:gap-6">
-              <BookingCta className="w-full sm:w-auto" />
-              <ArrowLink href="/entdecken" className="sm:mt-3">
+            <div className="mt-7 flex w-full flex-col items-stretch gap-3.5 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
+              <BookingCta className="w-full shrink-0 sm:w-auto" />
+              <ArrowLink href="/entdecken" className="shrink-0 whitespace-nowrap">
                 Second Hand entdecken
               </ArrowLink>
             </div>
           </Reveal>
         </div>
 
-        <div className="order-1 lg:order-2 lg:col-span-6 lg:h-full xl:col-span-7">
+        <div className="order-1 lg:order-2 lg:col-span-6 lg:h-full">
           <HeroPhoto />
         </div>
       </div>

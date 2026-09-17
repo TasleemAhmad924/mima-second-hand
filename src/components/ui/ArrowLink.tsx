@@ -25,7 +25,7 @@ export function ArrowLink({
       : "text-charcoal hover:text-taupe-ink";
 
   const content = (
-    <span className="group inline-flex items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.14em]">
+    <span className="group inline-flex min-h-11 items-center gap-2 text-[0.78rem] font-medium uppercase tracking-[0.14em]">
       <span className="link-underline">{children}</span>
       <svg
         width="16"
@@ -48,7 +48,7 @@ export function ArrowLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${color} ${className}`}
+        className={`inline-flex items-center ${color} ${className}`}
         onClick={onClick}
       >
         {content}
@@ -57,7 +57,7 @@ export function ArrowLink({
   }
 
   return (
-    <Link href={href} className={`${color} ${className}`} onClick={onClick}>
+    <Link href={href} className={`inline-flex items-center ${color} ${className}`} onClick={onClick}>
       {content}
     </Link>
   );
