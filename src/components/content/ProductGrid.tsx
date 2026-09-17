@@ -73,12 +73,12 @@ export function ProductGrid() {
               Die Vorschau ist gerade nicht verfügbar.
             </p>
             <p className="mx-auto mt-2 max-w-md text-sm text-muted">
-              Bitte versuche es in Kürze erneut – das vollständige Sortiment
-              findest du jederzeit in unserem Online-Shop.
+              Bitte versuche es in Kürze erneut. Das vollständige Sortiment
+              findest du jederzeit im Online-Katalog.
             </p>
           </div>
         ) : filtered === null ? (
-          <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
               <div key={index}>
                 <Skeleton className="aspect-[3/4] w-full" />
@@ -98,13 +98,13 @@ export function ProductGrid() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((product, index) => (
               <div
                 key={product.id}
                 className={
                   filter === "alle" && index === 0
-                    ? "sm:col-span-2 lg:col-span-2"
+                    ? "md:col-span-2 lg:col-span-2"
                     : ""
                 }
               >
@@ -112,7 +112,7 @@ export function ProductGrid() {
                   product={product}
                   sizes={
                     filter === "alle" && index === 0
-                      ? "(max-width: 640px) 100vw, 66vw"
+                      ? "(max-width: 768px) 100vw, 66vw"
                       : undefined
                   }
                 />

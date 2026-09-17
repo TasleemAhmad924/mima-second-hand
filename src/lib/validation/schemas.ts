@@ -4,6 +4,7 @@ import {
   AVAILABILITY_LOOKAHEAD_DAYS,
   SHELF_ID_PATTERN,
 } from "@/config/business";
+import { todayIso } from "@/lib/format";
 
 /**
  * Input validation schemas for the server boundary.
@@ -29,8 +30,8 @@ export const isoDateSchema = z
   .refine((value) => {
     const [y, m, d] = value.split("-").map(Number);
     const date = new Date(y, m - 1, d);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const [ty, tm, td] = todayIso().split("-").map(Number);
+    const today = new Date(ty, tm - 1, td);
     const max = new Date(today);
     max.setDate(max.getDate() + AVAILABILITY_LOOKAHEAD_DAYS);
     return date >= today && date <= max;
@@ -45,15 +46,30 @@ export const rentalDaysSchema = z.coerce
     "Ungültige Mietdauer.",
   );
 
-/** MiMa shelf id, e.g. "R01". */
+/** Layout-local shelf label, e.g. "M1-12". Not a Pladsly ID. */
 export const shelfIdSchema = z
   .string()
   .regex(SHELF_ID_PATTERN, "Ungültige Regal-Kennung.");
+
+export const rentalPlanIdSchema = z.enum(["wochen-2", "wochen-4", "monate-3"]);
 
 /** Availability lookup query (used by /api/pladsly/availability). */
 export const availabilityQuerySchema = z.object({
   startDate: isoDateSchema,
   days: rentalDaysSchema,
+});
+
+export const mimaAvailabilityQuerySchema = z.object({
+  startDate: isoDateSchema,
+  planId: rentalPlanIdSchema,
+});
+
+export const mimaBookingBodySchema = z.object({
+  startDate: isoDateSchema,
+  planId: rentalPlanIdSchema,
+  shelfId: z.string().min(1).max(40),
+  email: z.string().email("Bitte eine gültige E-Mail angeben."),
+  name: z.string().trim().min(2).max(80),
 });
 
 /** Simple, bounded pagination for list endpoints. */

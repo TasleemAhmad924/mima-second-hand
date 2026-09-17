@@ -1,46 +1,44 @@
 import type { FaqItem } from "@/types";
+import { SALES_COMMISSION_PERCENT } from "@/config/pricing";
+import { publicBooking } from "@/config/booking";
 
 /**
  * FAQ content grouped by audience. Copy is intentionally concrete and plain.
- * Where an answer depends on details not yet confirmed by the client, it stays
- * general rather than inventing specifics (prices, exact hours, contract terms).
  */
 export const faqItems: FaqItem[] = [
   {
     audience: "verkaufen",
     question: "Wie miete ich ein Regal?",
-    answer:
-      "Du wählst online einen Startzeitpunkt, einen Mietzeitraum und ein freies Regal. Den Rest – Konto, Buchung und Zahlung – wickelst du anschließend über dein MiMa-Konto ab.",
+    answer: `${publicBooking.statement} ${publicBooking.support} Sobald die Buchung startet, wählst du deinen Mietzeitraum. Konto, Zahlung und die Zuweisung eines Regals laufen über unseren Partner Pladsly.`,
   },
   {
     audience: "verkaufen",
     question: "Wie lange kann ich ein Regal mieten?",
     answer:
-      "Aktuell in drei Zeiträumen: zwei Wochen, ein Monat oder drei Monate. Du kannst nach Ablauf verlängern, solange das Regal frei ist.",
+      "Aktuell in drei Zeiträumen: 2 Wochen, 4 Wochen oder 3 Monate. Eine Verlängerung klärst du im Buchungsablauf, sobald dein Zeitraum endet.",
   },
   {
     audience: "verkaufen",
     question: "Muss ich selbst im Laden stehen?",
     answer:
-      "Nein. Du richtest dein Regal ein, MiMa übernimmt den Verkauf und die Kasse im Store. Deine Verkäufe siehst du in deinem Konto.",
+      "Nein. Du richtest dein Regal ein, MiMa übernimmt den Verkauf und die Kasse im Second-Hand-Laden. Deine Verkäufe siehst du in deinem Konto.",
   },
   {
     audience: "verkaufen",
     question: "Wie bekomme ich mein Geld?",
-    answer:
-      "Die Verkäufe werden deinem Konto gutgeschrieben und ausgezahlt. Die Abrechnung läuft über dein MiMa-Konto – transparent und nachvollziehbar.",
+    answer: `Die Verkäufe werden über das Kassensystem erfasst. Von jedem Verkauf behält MiMa ${SALES_COMMISSION_PERCENT} % als Provision. Den Rest überweisen wir auf dein Konto. Die Details stehen in den AGB.`,
   },
   {
     audience: "verkaufen",
     question: "Was darf ich verkaufen?",
     answer:
-      "Gut erhaltene Second-Hand-Stücke: Kleidung, Bücher, Accessoires und Dinge für zuhause. Details zu erlaubten Artikeln stimmen wir vor dem Start mit dir ab.",
+      "Gut erhaltene Second-Hand-Stücke: Kleidung, Bücher, Accessoires und Dinge für zuhause. Was nicht angeboten werden darf, steht in den AGB.",
   },
   {
     audience: "entdecken",
     question: "Kann ich online kaufen?",
     answer:
-      "Entdecken kannst du online, gekauft wird vor Ort im Store. So bleibt jedes Stück ein Einzelstück und du siehst es dir in Ruhe an.",
+      "Entdecken kannst du online, gekauft wird vor Ort im Second-Hand-Laden. So bleibt jedes Stück ein Einzelstück und du siehst es dir in Ruhe an.",
   },
   {
     audience: "entdecken",
@@ -50,8 +48,14 @@ export const faqItems: FaqItem[] = [
   },
   {
     audience: "entdecken",
+    question: "Wann hat MiMa geöffnet?",
+    answer:
+      "Dienstag bis Freitag von 10:00–17:00 Uhr, Samstag von 10:00–16:00 Uhr. Montag und Sonntag sind Ruhetage.",
+  },
+  {
+    audience: "entdecken",
     question: "Wo finde ich MiMa?",
     answer:
-      "MiMa ist ein fester Ort in Lübeck. Adresse und Öffnungszeiten findest du auf der Kontaktseite.",
+      "MiMa ist ein Second-Hand-Laden in Stockelsdorf. Adresse und Öffnungszeiten findest du auf der Kontaktseite.",
   },
 ];

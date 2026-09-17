@@ -14,7 +14,7 @@ import { primaryNav, legalNav } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { isActivePath } from "@/lib/nav";
 import { EASE_INOUT, EASE_OUT } from "@/lib/motion";
-import { Button } from "@/components/ui/Button";
+import { BookingCta } from "@/components/booking/BookingCta";
 
 interface MobileMenuProps {
   open: boolean;
@@ -123,18 +123,18 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             duration: 0.4,
             ease: EASE_INOUT,
             when: "beforeChildren",
-            delayChildren: 0.04,
-            staggerChildren: 0.024,
+            delayChildren: 0.06,
+            staggerChildren: 0.045,
           },
         },
       };
 
   const itemVariants: Variants = {
-    closed: { opacity: 0, y: reduceMotion ? 0 : 8 },
+    closed: { opacity: 0, y: reduceMotion ? 0 : 12 },
     open: {
       opacity: 1,
       y: 0,
-      transition: { duration: reduceMotion ? 0 : 0.26, ease: EASE_OUT },
+      transition: { duration: reduceMotion ? 0 : 0.38, ease: EASE_OUT },
     },
   };
 
@@ -146,7 +146,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
         <motion.div
           id="mobile-menu"
           ref={panelRef}
-          className="fixed inset-0 z-[60] bg-warm lg:hidden"
+          className="fixed inset-0 z-[60] bg-warm xl:hidden"
           variants={overlayVariants}
           initial="closed"
           animate="open"
@@ -169,7 +169,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                         aria-current={active ? "page" : undefined}
                         className="group flex min-h-11 items-baseline gap-4 border-b border-line/60 py-3"
                       >
-                        <span className="w-6 shrink-0 font-sans text-[0.62rem] uppercase tracking-[0.14em] text-taupe">
+                        <span className="w-6 shrink-0 font-sans text-[0.62rem] uppercase tracking-[0.14em] text-taupe-ink">
                           {number}
                         </span>
                         <span
@@ -207,9 +207,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
 
               <div className="mt-auto pt-8">
                 <motion.div variants={itemVariants}>
-                  <Button href="/regal-mieten" onClick={onClose}>
-                    Regal mieten
-                  </Button>
+                  <BookingCta mode="link" className="w-full sm:w-auto" onNavigate={onClose} />
                 </motion.div>
 
                 <motion.p variants={itemVariants} className="mt-4 text-sm text-muted">

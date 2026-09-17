@@ -18,9 +18,9 @@ export function DurationStep({ value, onChange }: DurationStepProps) {
           return (
             <label
               key={plan.id}
-              className={`flex min-h-14 cursor-pointer items-center justify-between gap-4 border-b border-line px-0 py-4 transition-colors duration-300 [transition-timing-function:var(--ease-inout)] sm:min-h-[4.5rem] sm:flex-1 sm:flex-col sm:items-start sm:justify-center sm:border-b-0 sm:border-r sm:px-5 sm:last:border-r-0 ${
+              className={`flex min-h-14 cursor-pointer items-center justify-between gap-4 border-b border-line px-0 py-4 transition-colors duration-300 [transition-timing-function:var(--ease-inout)] sm:min-h-[4.25rem] sm:flex-1 sm:flex-col sm:items-start sm:justify-center sm:border-b-0 sm:border-r sm:px-5 sm:last:border-r-0 ${
                 selected
-                  ? "text-charcoal"
+                  ? "bg-cream/80 text-charcoal"
                   : "text-muted hover:text-charcoal"
               }`}
             >

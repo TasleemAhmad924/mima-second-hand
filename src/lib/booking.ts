@@ -1,26 +1,24 @@
 import { getPlan, type RentalPlanId } from "@/config/pricing";
+import { exclusiveEndFor } from "@/lib/mima/booking-rules";
+import { addDays as addIsoDays, lastOccupiedDay } from "@/lib/mima/dates";
 
 /**
- * Booking helpers. These are pure, client-safe calculations for the prototype.
- * The final, authoritative booking (availability, price, payment) is handled by
- * the provider — never trust these client-side values for real payments.
+ * Client-safe display helpers. Authoritative overlap and payment live in the
+ * operations service — never trust these values to take money.
  */
 
-/** Adds `days` to an ISO date and returns a new ISO date (yyyy-mm-dd). */
 export function addDays(iso: string, days: number): string {
-  const [year, month, day] = iso.split("-").map(Number);
-  const date = new Date(year, month - 1, day);
-  date.setDate(date.getDate() + days);
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
+  return addIsoDays(iso, days);
 }
 
-/** Computes the (exclusive) end date for a plan starting on `startIso`. */
+/** Exclusive first free day (turnover). */
 export function endDateFor(startIso: string, planId: RentalPlanId): string {
-  const plan = getPlan(planId);
-  return addDays(startIso, plan.days);
+  return exclusiveEndFor(startIso, planId);
+}
+
+/** Last occupied calendar day, for customer-facing copy. */
+export function lastDayFor(startIso: string, planId: RentalPlanId): string {
+  return lastOccupiedDay(endDateFor(startIso, planId));
 }
 
 export function priceFor(planId: RentalPlanId): number {

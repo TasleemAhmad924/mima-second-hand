@@ -12,9 +12,9 @@
 import { externalServices } from "@/config/external-services";
 
 export interface OpeningHour {
-  /** German weekday label, e.g. "Dienstag – Samstag". */
+  /** German weekday label, e.g. "Di-Fr". */
   days: string;
-  /** Human readable hours, e.g. "10:00 – 18:00 Uhr", or a closed note. */
+  /** Human readable hours, e.g. "10:00-17:00 Uhr", or a closed note. */
   hours: string;
   closed?: boolean;
 }
@@ -26,6 +26,10 @@ export interface SiteConfig {
   url: string;
   tagline: string;
   description: string;
+  owner: {
+    name: string;
+    label: string;
+  };
   contact: {
     email: string;
     /** Empty until confirmed. A tel: link only renders when set. */
@@ -38,7 +42,6 @@ export interface SiteConfig {
     country: string;
   };
   openingHours: OpeningHour[];
-  mapUrl: string;
   external: {
     sellerPortalUrl: string;
     bookingUrl: string;
@@ -52,53 +55,49 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   name: "MiMa Second Hand",
   shortName: "MiMa",
-  city: "Lübeck", // PLACEHOLDER — Standort laut Vorentwurf. Bitte bestätigen.
+  city: "Stockelsdorf",
 
   /** Used for metadataBase, canonical URLs and the sitemap. */
-  url: "https://www.mima-secondhand.de", // PLACEHOLDER — finale Domain bestätigen.
+  url: "https://www.mima-second-hand.de",
 
-  tagline: "Dein Indoor-Flohmarkt für besondere Dinge.",
+  tagline: "Dein Second-Hand-Laden zum Entdecken und Verkaufen.",
   description:
-    "MiMa Second Hand ist ein Indoor-Flohmarkt in Lübeck: Miete dein eigenes Verkaufsregal oder entdecke gebrauchte Lieblingsstücke, die im Store auf dich warten.",
+    "MiMa Second Hand ist ein Second-Hand-Laden in Stockelsdorf: miete ein Verkaufsregal oder entdecke gebrauchte Lieblingsstücke vor Ort.",
+
+  owner: {
+    name: "Miriam Vlot",
+    label: "Inhaberin",
+  },
 
   contact: {
-    email: "hallo@mima-secondhand.de", // PLACEHOLDER — aus Vorentwurf.
-    phone: "", // PLACEHOLDER — Telefonnummer vom Mandanten ergänzen.
+    email: "info@mima-secondhand.de",
+    phone: "+49 1512 2386262",
   },
 
   address: {
-    // PLACEHOLDER — vollständige Anschrift wurde noch nicht bereitgestellt.
-    street: "", // z. B. "Musterstraße 1"
-    postalCode: "", // z. B. "23552"
-    city: "Lübeck",
+    street: "Segeberger Straße 8",
+    postalCode: "23617",
+    city: "Stockelsdorf",
     country: "Deutschland",
   },
 
-  /** PLACEHOLDER — Öffnungszeiten aus Vorentwurf. Bitte bestätigen. */
   openingHours: [
-    { days: "Dienstag – Samstag", hours: "10:00 – 18:00 Uhr" },
-    { days: "Sonntag & Montag", hours: "Ruhetag", closed: true },
+    { days: "Di–Fr", hours: "10:00–17:00" },
+    { days: "Sa", hours: "10:00–16:00" },
+    { days: "Mo & So", hours: "Ruhetag", closed: true },
   ],
-
-  /** PLACEHOLDER — echten Kartenlink (Google Maps / OSM) einsetzen. */
-  mapUrl: "https://www.openstreetmap.org/search?query=L%C3%BCbeck%20Altstadt",
 
   /**
    * External services. The public frontend links out to these; the real
    * integrations (accounts, bookings, payments) live entirely on the provider.
-   * All values are PLACEHOLDERS until the client accounts exist.
    */
   external: {
-    // Pladsly handles seller accounts, dashboard, bookings, catalogue, payouts.
-    // Values come from the centralized external-service config (env-overridable,
-    // public URLs only — never secrets).
     sellerPortalUrl: externalServices.pladslyPortalUrl,
     bookingUrl: externalServices.pladslyBookingUrl,
     shopUrl: externalServices.pladslyShopUrl,
   },
 
-  /** Optional social profiles. Empty entries are simply not rendered. */
   social: {
-    instagram: "", // PLACEHOLDER
+    instagram: "https://www.instagram.com/mima.second.hand/",
   },
 };

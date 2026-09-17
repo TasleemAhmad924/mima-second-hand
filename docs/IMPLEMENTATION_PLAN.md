@@ -4,151 +4,124 @@
 >
 > Status legend: `[ ]` not started · `[~]` in progress · `[x]` completed · `[!]` blocked
 
-Last updated: 2026-08-28
+Last updated: 2026-09-17
 
 ---
 
 ## Current phase
 
-**Phase 3 — Progressive Pladsly integration (Stage A: supported entry points).**
-Wire the site to Pladsly's officially supported entry points (portal, shop, booking assistant) while preserving the custom MiMa design and keeping the mock architecture replaceable. No custom/private Pladsly API work yet (API is undocumented).
+**Phase 8 — Client content & UX corrections (Stockelsdorf, booking wait, CI)** `[x]`
+
+Not a redesign. Preserve the approved editorial layout. Apply the 2026-09-16
+client brief to copy, facts, public booking state and brand tokens.
+
+- [x] Stockelsdorf (not Lübeck) in all customer-facing location copy + SEO.
+- [x] Canonical term: Second-Hand-Laden (natural German, no Store/Geschäft mix).
+- [x] Opening hours: Di–Fr 10:00–17:00, Sa 10:00–16:00, Mo & So Ruhetag.
+- [x] Commission 17 % in public copy and `commissionBps` (1700). AGB still 15 % until a new legal text is supplied.
+- [x] Public booking gated: “Buchung wird bald freigeschaltet.” Pladsly architecture stays.
+- [x] Rental-model recommender (client-side, no fake profit).
+- [x] Hide TwoSides images on mobile only (`hidden md:block`).
+- [x] About/Miriam editorial rewrite + “Ein Wohlfühlort”.
+- [x] Hero prepared for real store photo (`/images/mima-store-hero.jpg`).
+- [!] Replace hero image with final real MiMa store photograph.
+- [!] Original vector/transparent logo of “MiMa / SECOND HAND LADEN” not yet supplied (WhatsApp screenshots are not production assets).
+- [x] Instagram: https://www.instagram.com/mima.second.hand/
+- [!] Holiday handwritten font: do not embed until usage rights are confirmed.
+- [x] Pladsly V1: automatic allocation. Floor plan remains a visual explorer.
+- [x] Location map: Google Maps Embed with click-to-load / Usercentrics hook. OSM link removed. Floor-plan SVG unchanged.
 
 ---
 
-## Completed work
+## Previous phases
 
-- [x] Phase 1/2: Secure foundation, private GitHub repo, Vercel deployment (see git history).
-- [x] Static export dropped so server-side integration is possible on Vercel.
-- [x] Centralized external-service config (`src/config/external-services.ts`).
-- [x] Server-only Pladsly integration scaffold (`src/lib/pladsly/*.server.ts`).
-- [x] Repository abstraction (mock ⇄ Pladsly) for products + shelf availability.
-- [x] Allowlisted, Zod-validated API routes (`/api/pladsly/products`, `/availability`).
-- [x] Security-header baseline; safe error handling + redacting logger.
-- [x] Unit tests (mapping, validation, errors, mock repos).
+**Phase 7 — Presentation prep: traced floor plan + honest Pladsly decision pack** `[x]` (local; Vercel preview still blocked)
 
----
+**Phase 6 — Client materials + cautious Pladsly alignment** `[x]`
 
-## Current task
+**Phase 5 — MIMA OPERATIONS FOUNDATION** `[x]` (foundation only; not a production cutover)
 
-- [x] Stage A wiring on branch `feat/pladsly-integration`:
-  - [x] `/mein-mima` → Pladsly seller portal (tracked, safe external link).
-  - [x] `/entdecken` → supported Pladsly shop link; curated preview kept + clearly labelled; product error state.
-  - [x] `/regal-mieten` → always-reachable Pladsly booking assistant; preview clearly marked; availability error state.
-  - [x] Rename integration flag → `PLADSLY_INTEGRATION_MODE` (kept `DATA_SOURCE` alias).
-  - [x] Non-invasive analytics event hooks (`src/lib/analytics.ts` + `TrackedButton`).
-  - [x] German failure/error states for products, availability, booking.
-- [x] Branch pushed; browser QA run against a local production build (see Testing).
-- [!] Vercel **preview** deployment — blocked (build stall, see Deployment status).
+**Phase 4 — FINAL UI / NORDIC ART DIRECTION POLISH** `[x]`
+
+**Phase 3 — Progressive Pladsly integration (Stage A).**
 
 ---
 
 ## Next tasks
 
-- [ ] Resolve Vercel preview build stall (connect GitHub in Vercel → managed CI builds; or retry when the build queue clears), then browser-QA the live preview.
-- [ ] Merge `feat/pladsly-integration` → `main` once a preview build succeeds and is verified.
+- [ ] Resolve Vercel preview build stall (GitHub App in Vercel), then QA a live preview.
 - [ ] Send consolidated Pladsly API discovery request (see `PLADSLY_INTEGRATION.md` §6).
-- [ ] After answers: implement `PladslyProductRepository` fetch + Zod response schemas.
-- [ ] After answers: implement live availability + immediate re-validation before booking.
-- [ ] POS/Zettle end-to-end test (see checklist below) — blocked on real seller/test data.
+- [!] After answers: read-only shop / general-availability API — blocked on a documented contract.
+- [!] Per-shelf IDs, live per-shelf availability, customer-side exact-shelf booking — **BLOCKED BY CURRENT PLADSLY CAPABILITY** (Julian, 2026-09-15).
+- [x] V1 uses automatic Pladsly shelf allocation.
+- [x] CCM19 Cloud cookie banner (German embed, CSP allowlist). Layout stays in CCM19 admin.
+- [!] Flip `publicBooking.isOpen` only when the client explicitly opens public booking.
+- [!] Replace AGB § 16 (15 %) when the client supplies an updated legal document for 17 %.
+- [!] Wire Usercentrics to the Google Maps service (`src/lib/consent/google-maps.ts`). Until then the map stays click-to-load. Cookie banner remains CCM19.
 
 ---
 
 ## Technical decisions
 
-- **Static export removed**; app runs server-side on Vercel (needed for secret-safe API calls).
-- **Integration mode flag**: `PLADSLY_INTEGRATION_MODE=mock|live` (server-only). `DATA_SOURCE` kept as a backward-compatible alias. Defaults to `mock`.
-- **Stage A over custom API**: use supported entry points (link/redirect) first so a real booking/shop path exists before any private API work.
-- **Entdecken V1**: link to the live Pladsly shop; keep the custom grid as a clearly-labelled curated **preview** (mock data). No scraping, no HTML parsing, no CMS.
-- **Regal-mieten V1**: keep custom floor plan as a **preview** (mock availability, never presented as live); the Pladsly booking assistant is always reachable to complete a real booking.
-- **Domain model**: UI depends on MiMa `Product`/`Shelf` types, not Pladsly shapes. Adapters map external → domain (kept minimal until real responses are known).
-- **Caching** (planned): products may be cached briefly; availability must be fresh; booking state never from cache. Not yet implemented (no live API).
+- **Pladsly stays the operational source of truth** for bookings, sellers, products, POS and payouts.
+- **Public booking is closed** until the waitlist/demand is processed. The Pladsly booking URL remains in config; public CTAs do not send visitors there.
+- **No parallel reservation engine** on the public site. Native `/api/mima/*` remains prototype / intern-only.
+- **Floor-plan geometry is MiMa-owned.** Public map = explorer. No live occupancy, no shelf pick.
+- **Canonical prices / wording**: 2 Wochen 39 €, 4 Wochen 75 €, 3 Monate 210 €.
+- **4 Wochen = 28 days.** 3 Monate remains calendar months.
+- **Public location city = Stockelsdorf.** Internal store id `store-luebeck` is a technical key, not customer copy.
+- **Location map = Google Maps Embed**, click-to-load until Usercentrics grants the Google Maps service. No OSM, no Leaflet. The SVG floor plan is separate.
+- **Brand type:** Playfair Display + Montserrat (client CI). Holiday script is not embedded without a license.
+- **Paid booking** remains the Pladsly booking assistant once public booking is opened.
 
 ---
 
-## Open questions
+## Open questions / missing assets
 
-Tracked in detail in `docs/PLADSLY_INTEGRATION.md`. Headlines:
-
-- Is there a readable product API (fields, images, pagination, sold-state)?
-- Places/shelves API with stable IDs + availability by exact date range?
-- Booking a specific shelf via API + hold/reserve + success/cancel URLs?
-- Webhooks (product/booking/sale)? API-key scopes, rate limits, browser-safety?
-- Official shop embedding method vs. link-only?
+- Final hero photograph of the real Second-Hand-Laden.
+- Original logo file (SVG/PDF/PNG with transparency), not a chat screenshot.
+- License for Holiday (handwritten accent).
+- Updated AGB if 17 % is to replace 15 % in the legal text.
+- Exact date when public booking should go live.
 
 ---
 
 ## External dependencies
 
-- **Pladsly** — seller portal, shop, booking assistant, (undocumented) API. API access/docs pending.
-- **Stripe (via Pladsly)** — online shelf-rental payment. Not integrated directly by MiMa.
-- **Zettle / PayPal POS (via Pladsly)** — physical checkout + sale sync. Not integrated directly by MiMa.
-- **Vercel** — hosting/deployments. GitHub auto-deploy connection is a pending manual step (Vercel GitHub App install).
-
----
-
-## Security considerations
-
-- `PLADSLY_API_KEY` is server-only; never `NEXT_PUBLIC_`, never in Git/logs/HTML/error responses. Verified: not present in client bundle.
-- No client component imports any `*.server` module (only API routes do).
-- All server-boundary input validated with Zod; API routes are explicit allowlisted actions (no transparent proxy).
-- External links: HTTPS only, `rel="noopener noreferrer"`, no user-controlled redirect targets.
-- CORS is not treated as security; assume API keys are private.
-- Prices/availability/payment/booking state are never trusted from the client.
-
----
-
-## Pladsly integration status
-
-- **Stage A (supported entry points):** implemented on `feat/pladsly-integration` (portal / shop / booking-assistant wiring). Pending live-preview verification + merge.
-- **Stage B (read-only API, e.g. products):** blocked — API undocumented.
-- **Stage C (live availability + booking via API):** blocked — API undocumented.
-- Mock mode is the default and keeps the whole site usable offline.
+- **Pladsly** — seller portal, shop, booking assistant, (undocumented) API.
+- **Stripe (via Pladsly)** — online shelf-rental payment.
+- **Zettle / PayPal POS (via Pladsly)** — physical checkout + sale sync.
+- **Vercel** — hosting. GitHub auto-deploy connection is still a manual step.
+- **CCM19 Cloud** — cookie banner.
+- **Google Maps** — share iframe for Segeberger Str. 8 after explicit activation / future Usercentrics grant.
 
 ---
 
 ## Testing status
 
-- Unit tests: `npm run test` — 26 passing (mapping, validation, errors, mock repos).
-- Type check: `npm run typecheck` — clean. Build: `npm run build` — clean.
-- Browser QA (this phase): run with `scripts/verify-deployment.mjs` against a **local production build** (`next start`) because the Vercel preview build is stalled. Findings:
-  - All routes (`/`, `/entdecken`, `/regal-mieten`, `/mein-mima`, …) return 200 on desktop + mobile.
-  - **Zero console/hydration errors** on every route (CSP intact).
-  - Integration elements verified in rendered HTML: `/mein-mima` → portal link (`rel="noopener noreferrer"`); `/entdecken` → "Zum MiMa Shop" + shop URL + "kuratierte Vorschau" framing; `/regal-mieten` → "Buchungsassistenten" link + "Vorschau" + booking URL.
-  - "Broken image" flags from the script are false positives: scroll/lazy-revealed images not yet in-viewport at screenshot time (assets confirmed HTTP 200).
-- Pending: browser QA against the live Vercel preview once the build stall is resolved.
+Google Maps location swap (2026-09-17):
+
+- `npm run typecheck` passed
+- `npm run test` — 15 files, 64 tests passed
+- `npm run build` passed (no dedicated lint script in this repo)
+- Browser QA: homepage + Kontakt map gate at 1440; overflow checks at 768, 390, 320
+- No iframe / no Google request before „Google Maps laden“
+- OSM link removed; SVG floor plan on `/regal-mieten` unchanged
+- After activation the Google share iframe for Segeberger Str. 8 loads
+
+Phase 8 quality gate (2026-09-16):
+
+- `npm run typecheck` passed
+- `npm run test` — 13 files, 58 tests passed
+- `npm run build` passed (no dedicated lint script in this repo)
+- Browser QA: homepage, Über MiMa, Regal mieten, Kontakt at 1440 and 390
+- Public copy audit: no customer-facing Lübeck; no public 15 %; booking gated
+- AGB August 2026 still contains 15 % (legal text, flagged)
 
 ---
 
 ## Deployment status
 
-- Production: https://mima-second-hand.vercel.app — **Ready** (unchanged this phase; still the previous phase's build). Healthy.
-- Repo: https://github.com/TasleemAhmad924/mima-second-hand (private). Branch `feat/pladsly-integration` pushed.
-- [!] **Preview build stalled:** CLI uploads complete, but Vercel builds stay `UNKNOWN` (0 ms, never start) for preview deployments; several attempts made and cleaned up. Production built fine previously, so this is a Vercel-side build-queue/infra issue, not a code issue (local `next build` succeeds).
-  - Recommended fix: connect the GitHub repo in Vercel (Settings → Git) so pushes trigger **managed** Git builds instead of CLI uploads; or retry the CLI deploy later when the build queue clears. Requires the Vercel GitHub App to be installed on the repo (browser step).
-- Manual step still pending: Vercel ↔ GitHub connection (also enables preview-per-PR and push-to-deploy).
-
----
-
-## POS / Zettle end-to-end test checklist (STEP 21 — run later, needs real data)
-
-Blocked until a real seller account + test product + store POS hardware are available. MiMa is **not** a POS sync layer; this only validates the Pladsly ⇄ Zettle flow.
-
-1. [ ] Seller creates a test product in the Pladsly portal.
-2. [ ] Product appears correctly (title, image, price).
-3. [ ] Barcode/label is generated.
-4. [ ] Product is available in the POS as expected.
-5. [ ] Test sale is completed at the POS.
-6. [ ] Sale appears in Pladsly.
-7. [ ] Seller balance updates.
-8. [ ] Product online status updates (sold/removed).
-9. [ ] Refund behaviour works.
-10. [ ] Duplicate-sale prevention is understood.
-
----
-
-## Caching strategy (planned, not yet implemented — no live API)
-
-- Product catalogue: may be cached briefly (e.g. short revalidate) once live.
-- Shelf availability: must be fresh (no/low cache).
-- Booking state: never from cache; re-validate immediately before checkout.
-- No single global caching rule for all Pladsly requests.
+- Production: https://mima-second-hand.vercel.app — previous phase; do not ship unverified work blindly.
+- Repo: https://github.com/TasleemAhmad924/mima-second-hand (private).
+- [!] **Preview build stalled:** Vercel CLI uploads stay `UNKNOWN`. Local `next build` has been the verification path.

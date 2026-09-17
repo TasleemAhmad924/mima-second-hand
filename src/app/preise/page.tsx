@@ -5,13 +5,14 @@ import { Reveal } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { PriceRows } from "@/components/content/PriceRows";
 import { CtaBand } from "@/components/content/CtaBand";
+import { RentalRecommender } from "@/components/content/RentalRecommender";
 import { pricingNotes } from "@/config/pricing";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Preise",
   description:
-    "Regal mieten bei MiMa Second Hand: drei Mietzeiträume – zwei Wochen, ein Monat oder drei Monate. Alle Preise auf einen Blick.",
+    "Regal mieten bei MiMa Second Hand: 2 Wochen, 4 Wochen oder 3 Monate. Alle Preise auf einen Blick.",
   path: "/preise",
 });
 
@@ -21,7 +22,7 @@ export default function PreisePage() {
       <PageHeader
         eyebrow="Preise"
         title="Ein Regal, drei Zeiträume."
-        intro="Du zahlst für den Zeitraum, den du wählst. Ohne versteckte Kosten – den Verkauf im Store übernehmen wir."
+        intro="Du zahlst für den Zeitraum, den du wählst. Vom Verkauf behält MiMa 17 % Provision. Den Verkauf im Second-Hand-Laden übernehmen wir."
       />
 
       <Section space="md">
@@ -30,7 +31,10 @@ export default function PreisePage() {
             <PriceRows />
             <Reveal>
               <p className="mt-6 text-xs leading-relaxed text-muted">
-                {pricingNotes.disclaimer}
+                {pricingNotes.disclaimer}{" "}
+                <a href="/agb/" className="link-underline text-charcoal">
+                  AGB
+                </a>
               </p>
             </Reveal>
           </div>
@@ -54,9 +58,16 @@ export default function PreisePage() {
         </Container>
       </Section>
 
+      <Section space="md" tone="cream">
+        <Container>
+          <RentalRecommender />
+        </Container>
+      </Section>
+
       <CtaBand
-        title="Zeitraum gewählt? Dann weiter zum Regal."
-        primary={{ label: "Regal auswählen", href: "/regal-mieten" }}
+        title="Buchung wird bald freigeschaltet."
+        text="Die Regalbuchung wird in Kürze geöffnet. Bis dahin kannst du Preise und Mietmodell in Ruhe ansehen."
+        primary={{ bookingSoon: true }}
         secondary={{ label: "So funktioniert's", href: "/so-funktionierts" }}
       />
     </>

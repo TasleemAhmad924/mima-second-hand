@@ -14,7 +14,8 @@ import { logIntegration, newRequestId } from "@/lib/logger.server";
  */
 
 interface Meta {
-  source: "mock" | "pladsly";
+  source: "mock" | "pladsly" | "native";
+  live?: boolean;
 }
 
 export function ok<T>(data: T, meta: Meta) {

@@ -1,6 +1,7 @@
 import { getPlan, type RentalPlanId } from "@/config/pricing";
+import { publicBooking } from "@/config/booking";
 import { siteConfig } from "@/config/site";
-import { endDateFor } from "@/lib/booking";
+import { lastDayFor } from "@/lib/booking";
 import { formatEuro, formatGermanDate } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -29,7 +30,7 @@ export function BookingSummary({
   onBook,
 }: BookingSummaryProps) {
   const plan = getPlan(planId);
-  const endDate = endDateFor(startDate, planId);
+  const endDate = lastDayFor(startDate, planId);
   const complete = Boolean(shelfId);
 
   return (
@@ -50,42 +51,50 @@ export function BookingSummary({
       </dl>
 
       <div className="mt-7">
-        {complete ? (
-          <Button
-            href={siteConfig.external.bookingUrl}
-            external
-            className="w-full"
-            onClick={onBook}
-          >
-            Weiter zur Buchung
-          </Button>
+        {publicBooking.isOpen ? (
+          complete ? (
+            <Button
+              href={siteConfig.external.bookingUrl}
+              external
+              className="w-full"
+              onClick={onBook}
+            >
+              Weiter zur Buchung
+            </Button>
+          ) : (
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-[var(--radius-sm)] border border-line-strong px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.16em] text-muted"
+            >
+              Buchung starten
+            </button>
+          )
         ) : (
-          <button
-            type="button"
-            disabled
-            aria-disabled="true"
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-[var(--radius-sm)] border border-line-strong px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.16em] text-muted"
-          >
-            Regal auswählen
-          </button>
+          <p className="text-sm leading-relaxed text-muted">
+            {publicBooking.statement} {publicBooking.support}
+          </p>
         )}
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-muted">
-        Buchung, Konto und Zahlung schließt du sicher bei unserem Partner Pladsly
-        ab. Die angezeigte Belegung ist ein Vorschau-Stand mit Beispieldaten.
-      </p>
-
-      {/* The real booking is always reachable, even without a selection. */}
-      <div className="mt-4">
-        <ArrowLink
-          href={siteConfig.external.bookingUrl}
-          external
-          onClick={onBook}
-        >
-          Direkt beim Buchungsassistenten buchen
-        </ArrowLink>
-      </div>
+      {publicBooking.isOpen ? (
+        <>
+          <p className="mt-4 text-xs leading-relaxed text-muted">
+            Buchung, Konto und Zahlung schließt du sicher bei unserem Partner
+            Pladsly ab.
+          </p>
+          <div className="mt-4">
+            <ArrowLink
+              href={siteConfig.external.bookingUrl}
+              external
+              onClick={onBook}
+            >
+              Direkt beim Buchungsassistenten buchen
+            </ArrowLink>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

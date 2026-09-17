@@ -13,7 +13,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Entdecken",
   description:
-    "Stöbere durch eine wechselnde Auswahl an Second-Hand-Stücken – Mode, Accessoires und Dinge fürs Zuhause. Online entdecken, im Store kaufen.",
+    "Stöbere durch eine wechselnde Auswahl an Second-Hand-Stücken: Mode, Accessoires und Dinge fürs Zuhause. Online entdecken, im Second-Hand-Laden kaufen.",
   path: "/entdecken",
 });
 
@@ -23,7 +23,7 @@ export default function EntdeckenPage() {
       <PageHeader
         eyebrow="Second Hand entdecken"
         title="Eine Auswahl, die lebt."
-        intro="Was du hier siehst, ist eine kuratierte Vorschau des Sortiments. Das vollständige, tagesaktuelle Angebot findest du in unserem Online-Shop – online stöbern, vor Ort kaufen."
+        intro="Was du hier siehst, ist eine kuratierte Vorschau des Sortiments. Das vollständige, tagesaktuelle Angebot findest du im Online-Katalog. Online stöbern, vor Ort kaufen."
       />
 
       <Section space="sm" divider={false}>
@@ -31,7 +31,7 @@ export default function EntdeckenPage() {
           <Reveal>
             <div className="flex flex-col gap-5 border-b border-line pb-8 sm:flex-row sm:items-end sm:justify-between">
               <p className="max-w-xl text-base leading-relaxed text-muted">
-                Der komplette Shop mit allen aktuellen Stücken wird von unserem
+                Der komplette Katalog mit allen aktuellen Stücken wird von unserem
                 Partner Pladsly bereitgestellt. Dort kannst du das gesamte
                 Sortiment durchsuchen.
               </p>
@@ -41,7 +41,7 @@ export default function EntdeckenPage() {
                 variant="secondary"
                 className="shrink-0"
               >
-                Zum MiMa Shop
+                Zum Katalog
               </TrackedButton>
             </div>
           </Reveal>
@@ -56,9 +56,9 @@ export default function EntdeckenPage() {
 
       <CtaBand
         title="Lieber selbst verkaufen?"
-        text="Miete dein eigenes Regal und bring deine Lieblingsstücke ins Sortiment."
-        primary={{ label: "Regal mieten", href: "/regal-mieten" }}
-        secondary={{ label: "Zum Store", href: "/kontakt" }}
+        text="Miete dein eigenes Regal und bring deine Lieblingsstücke ins Sortiment. Die Buchung wird bald freigeschaltet."
+        primary={{ bookingSoon: true }}
+        secondary={{ label: "Zum Laden", href: "/kontakt" }}
       />
     </>
   );

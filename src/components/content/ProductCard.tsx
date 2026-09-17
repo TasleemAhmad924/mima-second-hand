@@ -18,14 +18,14 @@ export function ProductCard({ product, sizes }: ProductCardProps) {
           src={product.image}
           alt={product.alt}
           fill
-          sizes={sizes ?? "(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 22vw"}
+          sizes={sizes ?? "(max-width: 768px) 100vw, (max-width: 1024px) 45vw, 22vw"}
           className="object-cover"
         />
       </div>
-      <h3 className="mt-3.5 font-display text-[1.05rem] leading-snug text-charcoal sm:mt-4 sm:text-lg">
+      <h3 className="mt-3 font-display text-[1.02rem] leading-snug text-charcoal sm:mt-3.5 sm:text-[1.15rem]">
         {product.title}
       </h3>
-      <p className="mt-1 text-sm text-muted">{product.detail}</p>
+      <p className="mt-1 text-[0.9rem] text-muted">{product.detail}</p>
     </article>
   );
 }

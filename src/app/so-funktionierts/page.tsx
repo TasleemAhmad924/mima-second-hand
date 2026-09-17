@@ -4,6 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ProcessSteps } from "@/components/content/ProcessSteps";
+import { RevealMedia } from "@/components/ui/RevealMedia";
 import { CtaBand } from "@/components/content/CtaBand";
 import { sellerSteps } from "@/data/process";
 import { pageMetadata } from "@/lib/seo";
@@ -11,18 +12,18 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "So funktioniert's",
   description:
-    "Regal auswählen, Lieblingsstücke vorbereiten, verkaufen lassen, Verkäufe verfolgen – so einfach ist Verkaufen bei MiMa Second Hand.",
+    "Zeitraum wählen, Lieblingsstücke vorbereiten, verkaufen lassen, Verkäufe verfolgen. So einfach ist Verkaufen bei MiMa Second Hand.",
   path: "/so-funktionierts",
 });
 
 const mimaHandles = [
   {
-    title: "Verkauf im Store",
-    text: "Deine Stücke stehen sichtbar im Laden. Wir beraten die Kundschaft und wickeln den Verkauf ab.",
+    title: "Verkauf im Laden",
+    text: "Deine Stücke stehen sichtbar im Second-Hand-Laden. Wir beraten die Kundschaft und wickeln den Verkauf ab.",
   },
   {
     title: "Kasse & Abwicklung",
-    text: "Die gesamte Kassenabwicklung im Store übernehmen wir – du musst nicht vor Ort sein.",
+    text: "Die gesamte Kassenabwicklung im Second-Hand-Laden übernehmen wir. Du musst nicht vor Ort sein.",
   },
   {
     title: "Überblick im Konto",
@@ -36,12 +37,24 @@ export default function SoFunktioniertsPage() {
       <PageHeader
         eyebrow="So funktioniert's"
         title="Verkaufen, ohne Standdienst."
-        intro="Du bringst deine Lieblingsstücke, wir kümmern uns um den Rest. In vier Schritten von der Regalbuchung bis zum Verkauf."
+        intro="Du bringst deine Lieblingsstücke, wir kümmern uns um den Rest. In vier Schritten vom Mietmodell bis zum Verkauf."
       />
 
       <Section space="md">
         <Container>
           <ProcessSteps steps={sellerSteps} variant="detail" />
+        </Container>
+      </Section>
+
+      <Section space="sm" divider={false}>
+        <Container>
+          <RevealMedia
+            src="/images/store-wall.jpg"
+            alt="Holzregale im Second-Hand-Laden, aufgenommen in der Breite des Raums."
+            objectPosition="center 28%"
+            sizes="100vw"
+            className="aspect-[16/9] w-full sm:aspect-[21/9]"
+          />
         </Container>
       </Section>
 
@@ -75,8 +88,8 @@ export default function SoFunktioniertsPage() {
 
       <CtaBand
         title="Bereit für dein eigenes Regal?"
-        text="Wähle Zeitraum und Regal. Die Buchung schließt du anschließend sicher ab."
-        primary={{ label: "Regal mieten", href: "/regal-mieten" }}
+        text="Buchung wird bald freigeschaltet. Bis dahin kannst du Preise und Ablauf in Ruhe ansehen."
+        primary={{ bookingSoon: true }}
         secondary={{ label: "Preise ansehen", href: "/preise" }}
       />
     </>

@@ -1,6 +1,6 @@
 # MiMa Second Hand
 
-Public website for **MiMa Second Hand** — an indoor second-hand market and shelf-rental store in Lübeck. Built with Next.js (App Router) and deployed on Vercel. Pladsly is the operational backend (seller accounts, products, shelves, bookings, payouts); this app is the branded public frontend and a secure, server-side integration layer in front of Pladsly.
+Public website for **MiMa Second Hand** — a Second-Hand-Laden with shelf rental in Stockelsdorf. Built with Next.js (App Router) and deployed on Vercel. Pladsly is the operational backend (seller accounts, products, shelves, bookings, payouts); this app is the branded public frontend and a secure, server-side integration layer in front of Pladsly. Public booking is currently gated (`publicBooking.isOpen = false`) until the client opens it.
 
 ## Tech
 
@@ -37,7 +37,10 @@ See `.env.example`. Two rules:
 ## Architecture
 
 ```
-Browser → MiMa Next.js (Vercel) → server-only integration layer → Pladsly API
+Browser → MiMa Next.js (brand, map, CTA)
+        → server-only adapter (scaffolded; live REST not verified)
+Customer booking today: CTA → coming-soon state (`/regal-mieten#buchung`)
+Pladsly booking URL remains in config for when public booking opens.
 ```
 
 - Client components use mock data via `src/lib/pladsly.ts` (no secrets).
@@ -49,7 +52,12 @@ MiMa owns content, brand, floor-plan geometry, SEO and the integration layer. **
 
 ## Pladsly integration
 
-The real API contract is not yet confirmed. The living plan is in [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md); open questions and the go-live checklist are in [`docs/PLADSLY_INTEGRATION.md`](docs/PLADSLY_INTEGRATION.md). Do **not** set `PLADSLY_INTEGRATION_MODE=live` in production until those items are confirmed.
+The REST contract is not live-tested. Statuses and the decision matrix:
+
+- [`docs/PLADSLY_INTEGRATION.md`](docs/PLADSLY_INTEGRATION.md)
+- [`docs/PLADSLY_CAPABILITY_MATRIX.md`](docs/PLADSLY_CAPABILITY_MATRIX.md)
+
+Do **not** set `PLADSLY_INTEGRATION_MODE=live` until a path is **VERIFIED BY LIVE TEST**.
 
 ## Security
 

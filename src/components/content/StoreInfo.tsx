@@ -1,5 +1,6 @@
 import { siteConfig } from "@/config/site";
-import { ArrowLink } from "@/components/ui/ArrowLink";
+import { InstagramLink } from "@/components/content/InstagramLink";
+import { toTelHref } from "@/lib/format";
 
 interface StoreInfoProps {
   className?: string;
@@ -7,11 +8,9 @@ interface StoreInfoProps {
 
 /** Renders the store's factual details from the central config. */
 export function StoreInfo({ className = "" }: StoreInfoProps) {
-  const { address, openingHours, contact, mapUrl, city } = siteConfig;
+  const { address, openingHours, contact, city } = siteConfig;
   const hasStreet = address.street.length > 0;
-  const telHref = contact.phone
-    ? `tel:${contact.phone.replace(/\s+/g, "")}`
-    : null;
+  const telHref = contact.phone ? toTelHref(contact.phone) : null;
 
   return (
     <dl className={`grid gap-x-10 gap-y-7 sm:grid-cols-2 sm:gap-y-9 ${className}`}>
@@ -61,15 +60,10 @@ export function StoreInfo({ className = "" }: StoreInfoProps) {
               {contact.phone}
             </a>
           ) : null}
-        </dd>
-      </div>
-
-      <div>
-        <dt className="eyebrow">Anfahrt</dt>
-        <dd className="mt-3">
-          <ArrowLink href={mapUrl} external>
-            Auf der Karte
-          </ArrowLink>
+          <InstagramLink
+            label="MiMa auf Instagram"
+            className="mt-2 text-charcoal"
+          />
         </dd>
       </div>
     </dl>

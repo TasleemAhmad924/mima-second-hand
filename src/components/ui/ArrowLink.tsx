@@ -35,7 +35,7 @@ export function ArrowLink({
         stroke="currentColor"
         strokeWidth="1.5"
         aria-hidden="true"
-        className="transition-transform duration-500 [transition-timing-function:var(--ease-inout)] group-hover:translate-x-[5px] motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+        className="transition-transform duration-400 [transition-timing-function:var(--ease-inout)] group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
       >
         <path d="M4 12h15M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
       </svg>

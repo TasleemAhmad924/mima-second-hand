@@ -7,18 +7,19 @@
 */
 @theme {
   --color-warm: #f7f5f1;
-  --color-cream: #ece5db;
-  --color-cream-deep: #e2d8c9;
-  --color-taupe: #b89a7a;
-  --color-taupe-ink: #8f7154;
-  --color-charcoal: #292827;
-  --color-ink: #1b1a19;
-  --color-muted: #7d7973;
-  --color-line: rgba(41, 40, 39, 0.14);
-  --color-line-strong: rgba(41, 40, 39, 0.28);
+  --color-cream: #ece6dc;
+  --color-cream-deep: #cebba9;
+  --color-taupe: #cebba9;
+  --color-taupe-ink: #4a3a32;
+  --color-sage: #8c9a83;
+  --color-charcoal: #292725;
+  --color-ink: #4a3a32;
+  --color-muted: #5c534c;
+  --color-line: rgba(41, 39, 37, 0.14);
+  --color-line-strong: rgba(41, 39, 37, 0.28);
 
-  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), "Times New Roman", Georgia, serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 
   --radius-sm: 2px;
   --radius: 3px;
@@ -36,7 +37,7 @@
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
-    overflow-x: clip;
+    overflow-x: hidden;
   }
 
   body {
@@ -46,9 +47,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "kern";
-    overflow-x: clip;
+    overflow-x: hidden;
     touch-action: manipulation;
-    -webkit-tap-highlight-color: rgba(184, 154, 122, 0.22);
+    -webkit-tap-highlight-color: rgba(140, 154, 131, 0.22);
   }
 
   h1,
@@ -58,7 +59,6 @@
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: -0.018em;
-    font-optical-sizing: auto;
     text-wrap: balance;
     hyphens: none;
   }
@@ -74,7 +74,7 @@
   }
 
   ::selection {
-    background-color: rgba(184, 154, 122, 0.28);
+    background-color: rgba(140, 154, 131, 0.28);
   }
 
   /* Respect users who prefer reduced motion for CSS-driven transitions. */
@@ -103,8 +103,8 @@
   .display {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(1.875rem, 0.72rem + 5.4vw, 5.1rem);
-    line-height: 1.02;
+    font-size: clamp(2rem, 0.88rem + 4.6vw, 4.15rem);
+    line-height: 1.04;
     letter-spacing: -0.022em;
     text-wrap: balance;
     hyphens: none;
@@ -149,6 +149,16 @@
     }
     .media-zoom:hover img {
       transform: none;
+    }
+  }
+
+  /* Responsive crop for photography that needs a different mobile focal point. */
+  .media-crop img {
+    object-position: var(--media-pos-mobile, center);
+  }
+  @media (min-width: 1024px) {
+    .media-crop img {
+      object-position: var(--media-pos, center);
     }
   }
 

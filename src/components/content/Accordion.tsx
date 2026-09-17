@@ -32,9 +32,9 @@ function AccordionItem({ item }: { item: Pick<FaqItem, "question" | "answer"> })
           aria-expanded={open}
           aria-controls={panelId}
           onClick={() => setOpen((prev) => !prev)}
-          className="flex w-full items-start justify-between gap-6 py-5 text-left sm:items-center sm:py-6"
+          className="group flex w-full items-start justify-between gap-6 py-5 text-left sm:items-center sm:py-5"
         >
-          <span className="font-display text-[1.05rem] leading-snug text-charcoal sm:text-xl">
+          <span className="font-display text-[1.05rem] leading-snug text-charcoal transition-colors duration-300 [transition-timing-function:var(--ease-inout)] group-hover:text-taupe-ink">
             {item.question}
           </span>
           <span

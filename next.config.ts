@@ -8,7 +8,8 @@ const isProd = process.env.NODE_ENV === "production";
 
   Kept intentionally small so it does not break Next.js, self-hosted fonts,
   local images or the motion library. Notes:
-    - Fonts are self-hosted by next/font, so no external font-src is required.
+    - Fonts for the site are self-hosted by next/font. CCM19 may load its
+      own assets from cloud.ccm19.de.
     - Framer Motion sets inline style attributes, so style-src allows
       'unsafe-inline'.
     - Next's runtime uses inline bootstrap scripts; without nonces we allow
@@ -17,18 +18,28 @@ const isProd = process.env.NODE_ENV === "production";
       subresources), so they need no CSP entry. If Pladsly content is ever
       embedded or fetched from the browser, extend connect-src/frame-src
       explicitly and re-test.
+    - CCM19 Cloud is the cookie banner. It must load and fetch config from
+      cloud.ccm19.de before other scripts run.
+    - Google Maps is only framed after the visitor activates the map or
+      Usercentrics grants the Google Maps service. frame-src must still
+      allow the embed origin so the iframe can load after that click.
 */
+const ccm19Origin = "https://cloud.ccm19.de";
+const googleMapsFrameSrc =
+  "https://www.google.com https://maps.google.com https://www.google.de";
+
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
   "frame-ancestors 'none'",
   "form-action 'self'",
-  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
-  "font-src 'self'",
-  "connect-src 'self'",
+  `script-src 'self' 'unsafe-inline' ${ccm19Origin}${isProd ? "" : " 'unsafe-eval'"}`,
+  `style-src 'self' 'unsafe-inline' ${ccm19Origin}`,
+  `img-src 'self' data: blob: ${ccm19Origin}`,
+  `font-src 'self' ${ccm19Origin}`,
+  `connect-src 'self' ${ccm19Origin}`,
+  `frame-src 'self' ${ccm19Origin} ${googleMapsFrameSrc}`,
   "manifest-src 'self'",
   "upgrade-insecure-requests",
 ].join("; ");

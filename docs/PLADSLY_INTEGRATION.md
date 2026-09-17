@@ -1,157 +1,172 @@
 # Pladsly Integration
 
-Status legend: **CONFIRMED** (verified against official docs or the client) · **ASSUMED** (working guess, must be verified) · **OPEN** (unknown, needs an answer) · **BLOCKED** (cannot proceed without an external answer/access).
+Status legend (use only these):
 
-This is the source of truth for the MiMa ↔ Pladsly contract. Never silently promote an **ASSUMED** item to **CONFIRMED**.
+- **CONFIRMED** — true in our codebase or in Pladsly’s public product pages (links, portal, shop). Not a live API test.
+- **VERIFIED BY LIVE TEST** — we sent an authenticated request to a documented path and recorded the result. Nothing in this repo currently has this status.
+- **LIKELY FROM PLADSLY COMMUNICATION** — stated in correspondence. Not independently tested. Do not treat as an API contract.
+- **OPEN** — unknown. Needs an answer or a test.
+- **UNSUPPORTED** — we will not build this unless Pladsly documents it and the business still wants it.
 
-Last updated: 2026-08-28
+Never silently promote a communication claim to CONFIRMED or VERIFIED BY LIVE TEST.
+
+Last updated: 2026-09-15
 
 ---
 
-## 1. Architecture
+## 1. Desired architecture
 
 ```
-Browser
-   │
-MiMa Next.js (Vercel)
-   │  server-only integration layer (secrets never leave the server)
-   ▼
-Pladsly (portal · shop · booking assistant · [undocumented] API)
+MiMa Frontend
+    ↓
+MiMa server-side service layer
+    ↓
+Pladsly adapter  (src/lib/pladsly/*.server.ts)
+    ↓
+Pladsly API
 ```
 
-- **Stage A (now):** use Pladsly's officially supported entry points (links/redirects). Gives a working real booking/shop path with no private API.
-- **Stage B (later):** read-only API (e.g. products) once documented.
-- **Stage C (later):** live availability + booking via API with immediate re-validation before checkout.
+Pladsly remains the operational source of truth for bookings, seller/renter
+information, shelf allocation, availability, extensions and rental state.
 
-Integration mode is controlled by `PLADSLY_INTEGRATION_MODE=mock|live` (server-only; `DATA_SOURCE` kept as alias). Default `mock`.
+MiMa owns website UX, brand, store-map geometry, presentation and public discovery.
 
----
+Do not duplicate Pladsly booking state in a separate MiMa database.
 
-## 2. What Pladsly documents publicly — CONFIRMED (capability, not API contract)
-
-- Booking assistant integration via **iframe or direct link**.
-- Online **shop** integration (embed into an existing site, or use as its own page).
-- **Seller portal** in the browser.
-- **Stripe** booking payments.
-- **Zettle / PayPal POS** integration + physical sale sync.
-
-> The Pladsly **REST API is not publicly documented**. The API-key screen in the dashboard is **not** sufficient evidence of any specific endpoint/contract. We do **not** guess or reverse-engineer private endpoints.
+Integration mode: `PLADSLY_INTEGRATION_MODE=mock|live` (server-only). Default `mock`.
 
 ---
 
-## 3. Known entry points — CONFIRMED (as provided)
+## 2. Fallback V1 (this is the live customer path)
 
-Public URLs (not secrets), configured in `src/config/external-services.ts`, overridable via `NEXT_PUBLIC_PLADSLY_*`:
+```
+MiMa website
+  → start booking CTA
+  → Pladsly booking assistant
+  → Pladsly performs booking and automatic shelf allocation
+```
 
-- Seller portal: `https://portal.pladsly.app/`
-- MiMa booking assistant: `https://mima.pladsly.app/default/wizard/package`
-- MiMa shop: `https://mima.pladsly.app/default/shop/all`
+This fallback is acceptable even if the REST API stays closed. The custom
+store map remains a visual explorer only.
 
-`default` is treated as the store slug (`PLADSLY_STORE_SLUG`). **ASSUMED** — confirm stability.
+**V1 product decision (Julian / Pladsly, 2026-09-15):** specific shelf
+selection is not currently supported. Pladsly allocates automatically.
+Specific shelf selection: **BLOCKED BY CURRENT PLADSLY CAPABILITY**.
+Automatic allocation: **in use for V1**. Julian may add named-shelf
+selection later; the map architecture can then be upgraded. Do not build a
+MiMa-side picker in the meantime.
 
----
-
-## 4. Current temporary integration (Stage A) — CONFIRMED (our implementation)
-
-| Route | V1 behaviour | Notes |
-| --- | --- | --- |
-| `/mein-mima` | Branded transition → opens Pladsly **seller portal** (new tab, `rel="noopener noreferrer"`). | No custom auth. URL from central config. |
-| `/entdecken` | Custom curated grid shown as a **preview** (mock data, clearly labelled) + prominent link → live Pladsly **shop**. | No scraping, no CMS. |
-| `/regal-mieten` | Custom floor plan as a **preview** (mock availability, never presented as live) + always-reachable link → Pladsly **booking assistant** to complete a real booking. | Geometry = MiMa; availability/booking = Pladsly. |
-
-**Shop embedding decision:** V1 uses a **link** to the Pladsly shop (robust, no iframe sizing/mobile pitfalls). Iframe embedding is a documented option and is recorded as a **future** alternative to evaluate during browser QA.
-
----
-
-## 5. Ownership matrix (for a non-technical store owner)
-
-| Thing | Managed in | System owner |
-| --- | --- | --- |
-| Shelves / places | Pladsly dashboard | **Pladsly** |
-| Bookings & booking state | Pladsly | **Pladsly** |
-| Sellers / registration / login | Pladsly portal | **Pladsly** |
-| Products & product images | Pladsly portal (by seller) | **Pladsly** |
-| Sales | Pladsly + POS | **Pladsly / Zettle** |
-| Payouts & balances | Pladsly | **Pladsly** |
-| Barcodes / labels | Pladsly | **Pladsly** |
-| Online shelf-rental payment | Stripe via Pladsly | **Stripe/Pladsly** |
-| Physical checkout | Zettle / PayPal POS | **Zettle** |
-| Website copy / text | MiMa repository | **MiMa** |
-| Website images | MiMa repository | **MiMa** |
-| FAQ / editorial content | MiMa repository | **MiMa** |
-| Floor-plan geometry (positions) | MiMa repository | **MiMa** |
-| SEO / analytics events | MiMa repository | **MiMa** |
-
-One source of truth per row. MiMa never duplicates Pladsly-owned operational data.
+Progressive enhancement later, if documented capabilities appear. The website
+must not depend on a future API.
 
 ---
 
-## 6. Consolidated API discovery request (send to Pladsly)
+## 3. What is CONFIRMED in our code / public Pladsly product
 
-> One consolidated request — not scattered questions. Track answers inline as CONFIRMED/ASSUMED and remove from OPEN.
+- Server-only integration modules exist (`src/lib/pladsly/*.server.ts`).
+- API keys are not exposed to the client (`PLADSLY_API_KEY` is never `NEXT_PUBLIC_`).
+- Mock / live separation exists (`PLADSLY_INTEGRATION_MODE`).
+- Public URLs (not secrets), in `src/config/external-services.ts`:
+  - Seller portal: `https://portal.pladsly.app/`
+  - Booking assistant: `https://mima.pladsly.app/default/wizard/package`
+  - Shop: `https://mima.pladsly.app/default/shop/all`
+- Public Pladsly product pages describe a booking assistant (iframe or link),
+  an online shop, a seller portal, Stripe payments, and Zettle / PayPal POS.
 
-### Products
-- Can products be read via API? — **OPEN**
-- Fields: images, price, category, size, availability, updated timestamp, sold state? — **OPEN**
-- Pagination + filtering? — **OPEN**
-
-### Product events (webhooks)
-- created / updated / sold / removed? Signing + verification scheme? — **OPEN**
-
-### Places / shelves
-- List shelves/places? Stable shelf IDs (map to R01…R18)? — **OPEN**
-- Availability by exact start/end date? — **OPEN**
-
-### Bookings
-- Book a specific shelf via API? Temporary hold/reserve? — **OPEN**
-- Start checkout for a selected shelf? Success URL? Cancellation URL? Booking webhook? — **OPEN**
-
-### Security
-- API-key permissions / read-only scopes? Rate limits? — **OPEN**
-- Server-only or a documented browser-safe public-key mechanism? Purpose of the CORS-domain field? — **OPEN**
-
-### Shop
-- Official embed method? Can a custom frontend consume product data directly? — **OPEN**
+The API-key screen in a dashboard is **not** evidence of any endpoint.
 
 ---
 
-## 7. Auth scheme — ASSUMED
+## 4. VERIFIED BY LIVE TEST
 
-Server client currently sends `Authorization: Bearer <PLADSLY_API_KEY>`. **ASSUMED** — confirm header name/token format; adjust `src/lib/pladsly/client.server.ts`.
+None.
 
----
-
-## 8. DTOs — ASSUMED
-
-See `src/lib/pladsly/types.ts`. All fields assumed; adapters (`mapPladslyProduct`, `mapAvailability`) normalize into MiMa domain types and are unit-tested. Field names/shape unconfirmed.
+No authenticated Pladsly REST request has been executed from this repository.
+No response body has been recorded. `GET /api/pladsly/status` reports
+`probeResult: "skipped"` on purpose.
 
 ---
 
-## 9. Blocking items
+## 5. LIKELY FROM PLADSLY COMMUNICATION
 
-- **BLOCKED:** `PladslyProductRepository` live fetch — needs product API contract (§6 Products).
-- **BLOCKED:** live shelf availability + booking-via-API — needs places/booking contract (§6 Places/Bookings).
-- **BLOCKED:** POS/Zettle end-to-end sale test — needs a real seller + test product + store hardware access.
+Treat as conversation notes, not as callable contracts:
 
----
+- API-key authentication can work.
+- General shop information can be queried.
+- General “when is the next fitting shelf free” can be queried.
+- Bookings can be assigned to shelves internally.
+- Pladsly prefers automatic shelf assignment.
+- **Julian (2026-09-15): customer-side specific shelf selection is not
+  currently supported.** He may add it later. V1 uses automatic allocation.
+- A parallel availability system would fight theirs.
 
-## 10. Security requirements (must hold before go-live)
-
-- API key server-side only; never `NEXT_PUBLIC_`, never logged/returned.
-- All `/api/pladsly/*` inputs validated with Zod; no client-controlled Pladsly paths.
-- Third-party responses validated + mapped before use (treat as untrusted input).
-- Prices, availability, payment/booking state authoritative on the backend — never trusted from the client.
-- Availability re-validated immediately before booking (Stage C).
-- Errors → safe German messages only; technical detail logged server-side without secrets/PII.
-- Webhooks (if added): verify signatures server-side; idempotent booking actions.
+REST path, auth header, and response shape for all of the above: **OPEN**.
 
 ---
 
-## 11. Enabling live mode (checklist)
+## 6. OPEN (needed before any live adapter work)
 
-1. Confirm §6 items; update `types.ts` + adapters + add Zod response schemas.
-2. Implement `fetch*` in `src/lib/pladsly/products.server.ts` / `places.server.ts` via `pladslyRequest`.
-3. Set `PLADSLY_API_KEY`, `PLADSLY_API_BASE_URL` in Vercel (Production/Preview).
+- Documented REST base URL and auth header.
+- Shop-info endpoint and fields.
+- General availability endpoint (start date / duration).
+- Retrieve booking; retrieve assigned shelf/place.
+- List shelf/place identifiers; stable IDs.
+- Per-shelf availability.
+- Create booking; assign/fix a shelf.
+- Prefill / deep-link into the booking assistant beyond the public URL.
+- Product and seller/renter read APIs.
+- Webhooks, scopes, rate limits.
+
+See `docs/PLADSLY_CAPABILITY_MATRIX.md`.
+
+---
+
+## 7. UNSUPPORTED (do not build)
+
+- Scraping the Pladsly shop or portal.
+- Reverse-engineering private requests.
+- A second booking ledger on the MiMa site.
+- Fake per-shelf availability on the floor plan.
+- Customer-side “click this shelf, it is yours”. Blocked by current Pladsly
+  capability (Julian, 2026-09-15). Revisit only if Pladsly ships it.
+
+---
+
+## 8. Current website behaviour (our implementation)
+
+| Route | Behaviour |
+| --- | --- |
+| `/mein-mima` | Link to seller portal. |
+| `/entdecken` | Curated preview + link to shop. |
+| `/regal-mieten` | Prices, shelf photo, traced store map (explorer), CTA to booking assistant. |
+| `GET /api/pladsly/status` | Mode + whether credentials exist. No secrets. |
+| `GET /api/pladsly/products` | Mock unless a documented live fetch exists. |
+| `GET /api/pladsly/availability` | Allowlisted query; live per-shelf fetch not implemented. |
+| `POST /api/mima/bookings` | Prototype; 403 unless `MIMA_NATIVE_BOOKING=true`. Not the public source of truth. |
+
+`default` in the public URLs is treated as the store slug. Stability is **OPEN**.
+
+Auth header currently coded as `Authorization: Bearer <key>` — **OPEN** (not verified).
+
+DTO field names in `src/lib/pladsly/types.ts` are working guesses. Not verified.
+
+---
+
+## 9. Ownership
+
+| Thing | Owner |
+| --- | --- |
+| Bookings, allocation, availability, extensions | **Pladsly** |
+| Sellers / renters, products, POS, payouts | **Pladsly** |
+| Website UX, brand, copy, store-map geometry | **MiMa** |
+
+---
+
+## 10. Enabling live mode (only after a documented path)
+
+1. Record the contract in the capability matrix as VERIFIED BY LIVE TEST.
+2. Implement that path only. Add Zod response schemas.
+3. Set `PLADSLY_API_KEY` and `PLADSLY_API_BASE_URL` in the host environment.
 4. Set `PLADSLY_INTEGRATION_MODE=live`.
-5. Re-run unit tests + deployment verification; confirm no secret leaks (browser/network).
-6. Extend CSP (`img-src`/`connect-src`) if product images or browser calls to a Pladsly host are introduced.
+5. Re-test. Confirm no secret leaks.
+6. Do not enable live mode solely because an API key field exists.

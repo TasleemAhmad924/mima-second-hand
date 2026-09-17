@@ -34,9 +34,9 @@ export function FloorPlan({ shelves, selectedId, onSelect }: FloorPlanProps) {
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="h-auto w-full min-w-[340px] bg-warm"
-        style={{ fontFamily: "var(--font-hanken)" }}
+        style={{ fontFamily: "var(--font-sans)" }}
         role="group"
-        aria-label="Grundriss des Stores mit auswählbaren Regalen"
+        aria-label="Grundriss des Second-Hand-Ladens. Orientierung, keine Regalauswahl."
       >
         <defs>
           <pattern

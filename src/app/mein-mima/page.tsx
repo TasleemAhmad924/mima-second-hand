@@ -44,7 +44,7 @@ export default function MeinMimaPage() {
         intro="Dein Konto, deine Buchungen, Produkte und Verkäufe verwaltest du im Verkäuferportal unseres Partners Pladsly – sicher und getrennt von dieser Website."
       />
 
-      <Section space="lg" divider={false}>
+      <Section space="md" divider={false}>
         <Container className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <Reveal>
@@ -63,7 +63,7 @@ export default function MeinMimaPage() {
                   Zum Verkäuferportal
                 </TrackedButton>
                 <ArrowLink href="/regal-mieten">
-                  Noch kein Regal? Jetzt mieten
+                  Noch kein Regal? Zum Mietmodell
                 </ArrowLink>
               </div>
             </Reveal>

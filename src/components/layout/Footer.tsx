@@ -3,24 +3,31 @@ import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
 import { footerNav, legalNav } from "@/config/navigation";
+import { InstagramLink } from "@/components/content/InstagramLink";
+import { toTelHref } from "@/lib/format";
 
 export function Footer() {
   const year = new Date().getFullYear();
   const { contact, address, openingHours } = siteConfig;
   const hasStreet = address.street.length > 0;
-  const telHref = contact.phone ? `tel:${contact.phone.replace(/\s+/g, "")}` : null;
+  const telHref = contact.phone ? toTelHref(contact.phone) : null;
 
   return (
     <footer className="mt-auto bg-charcoal text-warm">
-      <Container className="py-10 sm:py-12 lg:py-14">
+      <Container className="py-9 sm:py-11 lg:py-12">
         <div className="grid grid-cols-1 gap-8 border-b border-warm/12 pb-8 sm:gap-10 sm:pb-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <Logo tone="light" width={120} />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-warm/65">
-              Indoor-Flohmarkt in {siteConfig.city}. Miete dein eigenes Regal
-              oder entdecke gebrauchte Lieblingsstücke, die im Store auf dich
-              warten.
+              Second-Hand-Laden in {siteConfig.city}. Miete dein eigenes Regal
+              oder entdecke gebrauchte Lieblingsstücke vor Ort.
             </p>
+            <div className="mt-4 text-warm/70">
+              <InstagramLink
+                label="MiMa auf Instagram"
+                className="text-warm/70 hover:text-warm"
+              />
+            </div>
           </div>
 
           <nav
@@ -43,7 +50,7 @@ export function Footer() {
           </nav>
 
           <div className="md:col-span-3">
-            <h2 className="eyebrow text-taupe">Store &amp; Kontakt</h2>
+            <h2 className="eyebrow text-taupe">Laden &amp; Kontakt</h2>
             <div className="mt-3.5 space-y-2.5 text-sm text-warm/70">
               {hasStreet ? (
                 <address className="not-italic leading-relaxed">
@@ -58,7 +65,7 @@ export function Footer() {
               <div className="space-y-0.5">
                 {openingHours.map((entry) => (
                   <p key={entry.days}>
-                    <span className="text-warm/50">{entry.days}: </span>
+                    <span className="text-warm/50">{entry.days} </span>
                     {entry.hours}
                   </p>
                 ))}
@@ -84,7 +91,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col-reverse gap-3 pt-5 text-xs text-warm/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col-reverse gap-3 pt-5 text-xs text-warm/60 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {siteConfig.name}
           </p>

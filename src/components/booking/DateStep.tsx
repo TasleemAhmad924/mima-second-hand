@@ -16,7 +16,7 @@ export function DateStep({ value, min, onChange }: DateStepProps) {
         Startdatum
       </label>
       <div className="relative mt-3 border-b border-line-strong transition-colors duration-300 focus-within:border-charcoal">
-        <p className="pointer-events-none py-3 font-display text-xl tabular-nums text-charcoal">
+        <p className="pointer-events-none py-2.5 font-display text-[1.2rem] tabular-nums text-charcoal sm:text-xl">
           {formatGermanDate(value)}
         </p>
         <input

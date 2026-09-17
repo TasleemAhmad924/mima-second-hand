@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { EASE_OUT, DUR, VIEWPORT } from "@/lib/motion";
 
@@ -27,28 +27,28 @@ export function Reveal({
   children,
   className = "",
   delay = 0,
-  y = 22,
+  y = 18,
   duration = DUR.base,
   immediate = false,
   as = "div",
 }: RevealProps) {
-  const reduceMotion = useReducedMotion();
+  const prefersReduced = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const skip = mounted && prefersReduced === true;
   const Tag = motion[as];
 
-  if (reduceMotion) {
-    const Static = as;
-    return <Static className={className}>{children}</Static>;
-  }
-
-  const motionProps = immediate
+  const motionProps = skip
     ? { animate: { opacity: 1, y: 0 } }
-    : { whileInView: { opacity: 1, y: 0 }, viewport: VIEWPORT };
+    : immediate
+      ? { animate: { opacity: 1, y: 0 } }
+      : { whileInView: { opacity: 1, y: 0 }, viewport: VIEWPORT };
 
   return (
     <Tag
       className={className}
-      initial={{ opacity: 0, y }}
-      transition={{ duration, delay, ease: EASE_OUT }}
+      initial={skip ? { opacity: 1, y: 0 } : { opacity: 0, y }}
+      transition={{ duration: skip ? 0 : duration, delay: skip ? 0 : delay, ease: EASE_OUT }}
       {...motionProps}
     >
       {children}

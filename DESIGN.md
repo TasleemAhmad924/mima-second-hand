@@ -18,10 +18,11 @@ It is **not** a SaaS product, marketplace dashboard, or experimental portfolio.
 
 ## 2. Brand that must not change
 
-- The MiMa wordmark as supplied. Never redraw it.
+- The MiMa wordmark as supplied. Never redraw it. Do not crop chat screenshots into a production logo.
 - Warm off-white / cream world. Never convert the site to dark mode.
-- Charcoal ink, muted taupe accent. One accent only.
-- Serif display (Fraunces) + sans utility (Hanken Grotesk). This pairing is the identity.
+- Charcoal and warm-brown ink. Sage and beige from the client CI stay spare.
+- Serif display (Playfair Display) + sans utility (Montserrat). This pairing is the client CI.
+- Holiday script is a reserved accent for occasional single words only, and is not embedded until usage rights are confirmed.
 - Existing information architecture and German copy voice.
 - Dark charcoal footer as the one committed contrast close.
 
@@ -31,23 +32,22 @@ Do not import Apple, Notion, or Mastercard colors, fonts, pills, or components. 
 
 | Token | Hex | Role |
 |---|---|---|
-| warm | `#f7f5f1` | Page canvas |
-| cream | `#ece5db` | Alternate band, quieter plate |
-| cream-deep | `#e2d8c9` | Occupied / inset surfaces |
-| taupe | `#b89a7a` | Soft accent, numbers |
-| taupe-ink | `#8f7154` | Eyebrows, italic emphasis, hover |
-| charcoal | `#292827` | Primary text, primary buttons, footer |
-| ink | `#1b1a19` | Rare, deepest type |
-| muted | `#7d7973` | Secondary text |
-| line | `rgba(41,40,39,0.14)` | Hairlines |
-| line-strong | `rgba(41,40,39,0.28)` | Stronger rules, inputs |
+| warm | `#F7F5F1` | Page canvas (client off-white) |
+| cream | `#ece6dc` | Alternate band, quieter plate |
+| cream-deep / taupe | `#CEBBA9` | Warm beige, inset surfaces |
+| taupe-ink / ink | `#4A3A32` | Eyebrows, italic emphasis, hover |
+| sage | `#8C9A83` | Spare CI green; selection, rare hover |
+| charcoal | `#292725` | Primary text, primary buttons, footer |
+| muted | `#5c534c` | Secondary text |
+| line | `rgba(41,39,37,0.14)` | Hairlines |
+| line-strong | `rgba(41,39,37,0.28)` | Stronger rules, inputs |
 
-No gradients. No glow. No neon. No second accent. Status on the floor plan stays monochrome (available / occupied hatch / selected charcoal).
+No gradients. No glow. No neon. No second accent. The public floor plan is an explorer: wood hatch for shelves, no green/red availability, no occupancy colours.
 
 ## 4. Typography
 
-- Display: Fraunces, weight 400, optical sizing on. Tight tracking on large sizes (`-0.018em` to `-0.022em`).
-- Utility: Hanken Grotesk, weight 500 for labels, 400 for body.
+- Display: Playfair Display, weight 400. Tight tracking on large sizes (`-0.018em` to `-0.022em`).
+- Utility: Montserrat, weight 500 for labels, 400 for body.
 - Headlines use `text-wrap: balance`. Body uses `text-wrap: pretty`.
 - No hyphenation on headings. German display words must stay intact.
 - Reading measure: about 38–65 characters. `max-w-md` / `max-w-xl` for prose.
@@ -60,7 +60,7 @@ Fluid roles:
 
 | Role | Treatment |
 |---|---|
-| Display / H1 | `.display` — `clamp(1.875rem, 0.72rem + 5.4vw, 5.1rem)` / 1.02 |
+| Display / H1 | `.display` — `clamp(2rem, 0.88rem + 4.6vw, 4.15rem)` / 1.04. Hero overrides smaller so “Lieblingsstücke.” never clips. |
 | Headline / H2 | `.headline` — `clamp(1.6rem, 1.12rem + 1.55vw, 2.65rem)` / 1.08 |
 | Body | 16–18px, line-height 1.55–1.65, muted |
 | Eyebrow | 11px, uppercase, tracking `0.18em`, taupe-ink |
@@ -128,6 +128,8 @@ Animate only `transform` and `opacity`. Honor `prefers-reduced-motion`. Content 
 
 **Open menu:** full-viewport warm layer. Numbered editorial links. Secondary links. Booking CTA last. Then store contact. Lock scroll. Escape, focus trap, `aria-expanded`.
 
+**Laptop (to 1279px):** same closed treatment as mobile. Desktop nav and booking button begin at 1280px so five German labels never crowd.
+
 **Desktop header:** text links + one booking button. Height under 80px. Single row.
 
 ## 9. Responsive
@@ -154,3 +156,19 @@ Design 320, 375, 390, 430, 768, 1024, 1280, 1440 independently.
 - Dark cinematic mid-page bands (footer is the only dark surface).
 - Inter, generic icon sets, equal card grids, SaaS pricing towers.
 - Rewrite the brand into Apple, Notion, or Mastercard.
+
+## 12. Temporary imagery
+
+Classify every stock image so real store photography can replace it without a layout change.
+
+| Asset | Status | Role |
+|---|---|---|
+| `store-interior.jpg` | CURRENT HERO FALLBACK | Temporary interior until the real Laden photo arrives. |
+| `mima-store-hero.jpg` | [!] NOT SUPPLIED | Intended hero/About photograph of the real Second-Hand-Laden. |
+| `miriam-regal.jpg` | REAL CLIENT PHOTO | Miriam with a MiMa shelf. About / “Ein Wohlfühlort”. |
+| `store-wall.jpg` | REPLACE LATER WITH REAL STORE PHOTO | Sell side, process. Wooden shelves. |
+| `product-ceramics.jpg` / `product-cups.jpg` | REPLACE LATER | Home objects in the mix. |
+| Fashion product stills | REPLACE LATER | Catalogue only. |
+| `rack-minimal.jpg` | OPTIONAL | Unused in this pass. Too fashion-editorial. |
+
+Do not add more stock. Prefer fewer strong frames.

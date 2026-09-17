@@ -4,11 +4,11 @@ import { siteConfig } from "@/config/site";
 export const dynamic = "force-static";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${siteConfig.name} – Indoor-Flohmarkt in ${siteConfig.city}`;
+export const alt = `${siteConfig.name} – Second-Hand-Laden in ${siteConfig.city}`;
 
 export default function OpengraphImage() {
   const eyebrow = `Second Hand · Mietregale · ${siteConfig.city}`;
-  const location = `Dein Indoor-Flohmarkt in ${siteConfig.city}`;
+  const location = `Dein Second-Hand-Laden in ${siteConfig.city}`;
 
   return new ImageResponse(
     (

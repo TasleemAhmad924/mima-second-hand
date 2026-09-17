@@ -1,9 +1,10 @@
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { Button } from "@/components/ui/Button";
+import { BookingCta } from "@/components/booking/BookingCta";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { PriceRows } from "@/components/content/PriceRows";
+import { RentalRecommender } from "@/components/content/RentalRecommender";
 import { pricingNotes } from "@/config/pricing";
 
 export function ShelfRentalIntro() {
@@ -16,8 +17,8 @@ export function ShelfRentalIntro() {
               Ein Regal, drei Zeiträume.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-muted sm:mt-6">
-              Du wählst den Zeitraum, der zu dir passt. Ein Regal, keine
-              Kompliziertheit. MiMa übernimmt den Verkauf im Store.
+              Du wählst den Zeitraum, der zu dir passt. MiMa übernimmt den
+              Verkauf im Second-Hand-Laden.
             </p>
           </Reveal>
 
@@ -37,7 +38,7 @@ export function ShelfRentalIntro() {
 
           <Reveal delay={0.15}>
             <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-5">
-              <Button href="/regal-mieten">Regal auswählen</Button>
+              <BookingCta />
               <ArrowLink href="/preise">Preise ansehen</ArrowLink>
             </div>
           </Reveal>
@@ -47,10 +48,17 @@ export function ShelfRentalIntro() {
           <PriceRows />
           <Reveal>
             <p className="mt-6 text-xs leading-relaxed text-muted">
-              {pricingNotes.disclaimer}
+              {pricingNotes.disclaimer}{" "}
+              <a href="/agb/" className="link-underline text-charcoal">
+                AGB
+              </a>
             </p>
           </Reveal>
         </div>
+      </Container>
+
+      <Container className="mt-14 border-t border-line pt-12 lg:mt-16 lg:pt-14">
+        <RentalRecommender />
       </Container>
     </Section>
   );

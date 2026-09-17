@@ -7,7 +7,7 @@ import { sellerSteps } from "@/data/process";
 
 export function HowItWorks() {
   return (
-    <Section space="md">
+    <Section space="sm">
       <Container>
         <Reveal>
           <h2 className="headline max-w-xl text-charcoal">

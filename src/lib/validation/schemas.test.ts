@@ -35,7 +35,7 @@ describe("isoDateSchema", () => {
 describe("rentalDaysSchema", () => {
   it("accepts offered durations", () => {
     expect(rentalDaysSchema.safeParse(14).success).toBe(true);
-    expect(rentalDaysSchema.safeParse(30).success).toBe(true);
+    expect(rentalDaysSchema.safeParse(28).success).toBe(true);
     expect(rentalDaysSchema.safeParse(90).success).toBe(true);
   });
 
@@ -48,7 +48,8 @@ describe("rentalDaysSchema", () => {
 describe("shelfIdSchema", () => {
   it("accepts valid shelf ids", () => {
     expect(shelfIdSchema.safeParse("R01").success).toBe(true);
-    expect(shelfIdSchema.safeParse("R18").success).toBe(true);
+    expect(shelfIdSchema.safeParse("A-12").success).toBe(true);
+    expect(shelfIdSchema.safeParse("M1-12").success).toBe(true);
   });
 
   it("rejects invalid shelf ids", () => {
@@ -62,10 +63,10 @@ describe("availabilityQuerySchema", () => {
   it("validates and coerces a correct query", () => {
     const result = availabilityQuerySchema.safeParse({
       startDate: isoDaysFromToday(3),
-      days: "30",
+      days: "28",
     });
     expect(result.success).toBe(true);
-    if (result.success) expect(result.data.days).toBe(30);
+    if (result.success) expect(result.data.days).toBe(28);
   });
 
   it("rejects an out-of-range duration", () => {

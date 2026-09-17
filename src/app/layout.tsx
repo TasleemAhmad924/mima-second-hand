@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
-import { Fraunces, Hanken_Grotesk } from "next/font/google";
+import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { Ccm19Script } from "@/components/legal/Ccm19Script";
+import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
 /*
   Fonts are downloaded at build time and served from our own origin by Next's
-  font handling — the visitor's browser never requests fonts from Google.
-  Fraunces (contemporary editorial serif) carries the display voice and echoes
-  the Didone MiMa wordmark; Hanken Grotesk is the restrained utility sans.
+  font handling. Playfair Display and Montserrat are the client CI pairing.
+  Holiday (handwritten accent) is not embedded until usage rights are confirmed.
 */
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
   display: "swap",
   style: ["normal", "italic"],
-  axes: ["opsz"],
 });
 
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
   display: "swap",
 });
@@ -29,7 +29,7 @@ const hanken = Hanken_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} – Indoor-Flohmarkt & Mietregale in ${siteConfig.city}`,
+    default: `${siteConfig.name} – Second-Hand-Laden & Mietregale in ${siteConfig.city}`,
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -42,12 +42,12 @@ export const metadata: Metadata = {
     locale: "de_DE",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} – Indoor-Flohmarkt & Mietregale in ${siteConfig.city}`,
+    title: `${siteConfig.name} – Second-Hand-Laden & Mietregale in ${siteConfig.city}`,
     description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} – Indoor-Flohmarkt in ${siteConfig.city}`,
+    title: `${siteConfig.name} – Second-Hand-Laden in ${siteConfig.city}`,
     description: siteConfig.description,
   },
 };
@@ -61,9 +61,14 @@ export default function RootLayout({
     <html
       lang="de"
       data-scroll-behavior="smooth"
-      className={`${fraunces.variable} ${hanken.variable}`}
+      className={`${playfair.variable} ${montserrat.variable}`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-dvh flex-col">
+      <head>
+        <Ccm19Script />
+        <LocalBusinessJsonLd />
+      </head>
+      <body className="flex min-h-dvh flex-col" suppressHydrationWarning>
         <SkipLink />
         <Header />
         <main id="inhalt" className="flex-1">

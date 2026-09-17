@@ -3,8 +3,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { siteConfig } from "@/config/site";
 
 /**
- * Honest placeholder for legal pages. The client provides the final legal text
- * (Impressum, Datenschutz, AGB) — we do not invent legal copy.
+ * Honest placeholder for legal pages still waiting on remaining copy.
  */
 export function PreparingNotice() {
   return (

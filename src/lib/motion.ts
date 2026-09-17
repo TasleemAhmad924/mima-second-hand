@@ -18,14 +18,14 @@ export const DUR = {
   page: 0.32,
   accordion: 0.3,
   fast: 0.3,
-  menu: 0.48,
-  base: 0.72,
-  slow: 0.85,
-  image: 1.1,
+  menu: 0.52,
+  base: 0.7,
+  slow: 0.82,
+  image: 1.0,
 } as const;
 
 export const STAGGER = {
-  menu: 0.04,
+  menu: 0.05,
   reveal: 0.06,
 } as const;
 
@@ -34,7 +34,7 @@ export const VIEWPORT = { once: true, margin: "0px 0px -10% 0px" } as const;
 
 /** Section / text reveal. `custom` is a delay in seconds for staggering. */
 export const revealVariants: Variants = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 18 },
   show: (delay: number = 0) => ({
     opacity: 1,
     y: 0,
@@ -44,7 +44,7 @@ export const revealVariants: Variants = {
 
 /** Cinematic image reveal — gentle settle from a slight over-scale. */
 export const mediaVariants: Variants = {
-  hidden: { opacity: 0, scale: 1.06 },
+  hidden: { opacity: 0, scale: 1.04 },
   show: (delay: number = 0) => ({
     opacity: 1,
     scale: 1,

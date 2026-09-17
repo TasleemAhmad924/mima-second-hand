@@ -10,10 +10,10 @@ export interface ProcessStep {
 export const sellerSteps: ProcessStep[] = [
   {
     number: "01",
-    title: "Regal auswählen",
-    short: "Startzeitpunkt, Mietdauer und ein freies Regal online wählen.",
+    title: "Zeitraum wählen",
+    short: "2 Wochen, 4 Wochen oder 3 Monate. Die Buchung wird bald freigeschaltet.",
     detail:
-      "Du wählst online, wann es losgeht, wie lange du mieten möchtest und welches Regal im Store deins wird. Der schematische Grundriss zeigt dir, was frei ist.",
+      "Du wählst später Zeitraum und Mietdauer. Die passende Regalfläche wird im Buchungsprozess zugeordnet. Die öffentliche Buchung wird bald freigeschaltet.",
   },
   {
     number: "02",
@@ -25,9 +25,9 @@ export const sellerSteps: ProcessStep[] = [
   {
     number: "03",
     title: "MiMa verkauft für dich",
-    short: "Verkauf und Kasse übernehmen wir vor Ort im Store.",
+    short: "Verkauf und Kasse übernehmen wir vor Ort im Second-Hand-Laden.",
     detail:
-      "Während dein Regal im Store steht, kümmern wir uns um Verkauf und Kasse. Du musst nicht selbst vor Ort sein.",
+      "Während dein Regal im Second-Hand-Laden steht, kümmern wir uns um Verkauf und Kasse. Du musst nicht selbst vor Ort sein.",
   },
   {
     number: "04",

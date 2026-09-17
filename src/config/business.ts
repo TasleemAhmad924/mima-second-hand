@@ -23,5 +23,5 @@ export const ALLOWED_RENTAL_DAYS: readonly number[] = rentalPlans.map(
 /** Bounds for validating availability lookups (defensive, server-side). */
 export const AVAILABILITY_LOOKAHEAD_DAYS = 365;
 
-/** Shelf id shape used by MiMa's floor plan, e.g. "R01". Used for validation. */
-export const SHELF_ID_PATTERN = /^R\d{2}$/;
+/** Layout-local shelf label, e.g. "M1-12". Legacy preview ids "R01" still parse. */
+export const SHELF_ID_PATTERN = /^([A-Z][A-Z0-9]?-\d{2}|R\d{2})$/;

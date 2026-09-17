@@ -24,10 +24,22 @@ export function formatGermanDate(iso: string): string {
   return dateFormatter.format(new Date(year, month - 1, day));
 }
 
-/** Today's date as an ISO yyyy-mm-dd string, in local time. */
+/** Digits (and a leading +) from a display phone number. */
+export function toTelNumber(phone: string): string {
+  return phone.replace(/[^\d+]/g, "");
+}
+
+/** Builds a `tel:` href from a display phone number. */
+export function toTelHref(phone: string): string {
+  return `tel:${toTelNumber(phone)}`;
+}
+
+/** Today's date as yyyy-mm-dd in the store timezone (Europe/Berlin). */
 export function todayIso(): string {
-  const now = new Date();
-  const offset = now.getTimezoneOffset();
-  const local = new Date(now.getTime() - offset * 60 * 1000);
-  return local.toISOString().slice(0, 10);
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
 }
