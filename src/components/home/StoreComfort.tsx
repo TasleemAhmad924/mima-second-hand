@@ -2,8 +2,14 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { RevealMedia } from "@/components/ui/RevealMedia";
+import { comfortImage } from "@/config/media";
 
-const amenities = ["Spielecke", "Wickeltisch", "WC"] as const;
+const amenities = [
+  "Spielecke",
+  "Wickeltisch",
+  "Sitzecke",
+  "2 Umkleiden",
+] as const;
 
 export function StoreComfort() {
   return (
@@ -19,13 +25,13 @@ export function StoreComfort() {
           <Reveal delay={0.08}>
             <p className="mt-5 max-w-md text-base leading-relaxed text-muted sm:mt-6">
               MiMa soll ein Second-Hand-Laden sein, in dem du dir Zeit nehmen
-              kannst. Während du durch besondere Lieblingsstücke stöberst oder
-              dein Regal einräumst, sorgen eine Spielecke, ein Wickeltisch und
-              ein WC dafür, dass sich auch Familien bei uns wohlfühlen.
+              kannst. Zum Stöbern, Anprobieren und Einräumen. Eine Spielecke und
+              ein Wickeltisch, dazu eine gemütliche Sitzecke und zwei Umkleiden.
+              Damit sich auch Familien bei uns wohlfühlen.
             </p>
           </Reveal>
           <Reveal delay={0.12}>
-            <ul className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <ul className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-3">
               {amenities.map((item, index) => (
                 <li
                   key={item}
@@ -46,9 +52,9 @@ export function StoreComfort() {
 
         <div className="lg:col-span-6 lg:col-start-7">
           <RevealMedia
-            src="/images/store-wall.jpg"
-            alt="Einblick in den Second-Hand-Laden: Kleidung an offenen Holzregalen, ruhig und ohne Kaufdruck."
-            objectPosition="center 30%"
+            src={comfortImage.src}
+            alt={comfortImage.alt}
+            objectPosition={comfortImage.objectPosition}
             sizes="(max-width: 1024px) 100vw, 48vw"
             className="aspect-[4/5] w-full sm:aspect-[5/4] lg:aspect-[4/5]"
           />

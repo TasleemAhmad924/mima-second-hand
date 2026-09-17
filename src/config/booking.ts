@@ -5,7 +5,8 @@
 export const publicBooking = {
   isOpen: false,
   ctaLabel: "Buchung bald verfügbar",
-  statement: "Buchung wird bald freigeschaltet.",
-  support: "Die Regalbuchung wird in Kürze freigeschaltet.",
+  statement: "Die Buchung wird bald freigeschaltet.",
+  support:
+    "Es gibt bereits viele Anmeldungen. Wir geben Bescheid, sobald du ein Regal verbindlich nehmen kannst.",
   href: "/regal-mieten#buchung",
 } as const;

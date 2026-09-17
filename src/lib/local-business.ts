@@ -21,7 +21,9 @@ export function buildLocalBusinessJsonLd() {
     image: [assetUrl("/images/miriam-regal.jpg"), assetUrl("/logo-transparent.png")],
     hasMap: googleMapsPlaceUrl(),
     email: contact.email,
-    ...(contact.phone ? { telephone: toTelNumber(contact.phone) } : {}),
+    ...(contact.phonePublic && contact.phone
+      ? { telephone: toTelNumber(contact.phone) }
+      : {}),
     founder: {
       "@type": "Person",
       name: owner.name,

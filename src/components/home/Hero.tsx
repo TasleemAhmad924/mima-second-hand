@@ -1,8 +1,7 @@
 import { Reveal } from "@/components/ui/Reveal";
-import { RevealMedia } from "@/components/ui/RevealMedia";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { BookingCta } from "@/components/booking/BookingCta";
-import { heroImage } from "@/config/media";
+import { HeroPhoto } from "@/components/home/HeroPhoto";
 
 export function Hero() {
   return (
@@ -10,7 +9,7 @@ export function Hero() {
       <div className="mx-auto grid w-full max-w-[82rem] grid-cols-1 lg:min-h-[min(38rem,calc(100dvh-4.5rem))] lg:grid-cols-12">
         <div className="order-2 flex min-w-0 flex-col justify-center px-6 pb-9 pt-7 sm:px-8 sm:pb-12 sm:pt-9 lg:order-1 lg:col-span-6 lg:px-10 lg:py-14 xl:col-span-5 xl:px-14">
           <Reveal immediate>
-            <p className="eyebrow">Second Hand · Stockelsdorf</p>
+            <p className="eyebrow">Second-Hand-Laden · Stockelsdorf</p>
           </Reveal>
 
           <h1 className="display mt-4 text-[clamp(2.05rem,0.92rem+4.15vw,3.85rem)] text-charcoal sm:mt-5">
@@ -49,17 +48,7 @@ export function Hero() {
         </div>
 
         <div className="order-1 lg:order-2 lg:col-span-6 lg:h-full xl:col-span-7">
-          <RevealMedia
-            src={heroImage.src}
-            alt={heroImage.alt}
-            priority
-            immediate
-            delay={0.1}
-            objectPosition={heroImage.objectPosition}
-            mobileObjectPosition={heroImage.mobileObjectPosition}
-            sizes="(max-width: 1024px) 100vw, 58vw"
-            className="aspect-[4/3] w-full sm:aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[38rem]"
-          />
+          <HeroPhoto />
         </div>
       </div>
     </section>

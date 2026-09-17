@@ -10,7 +10,10 @@ export function Footer() {
   const year = new Date().getFullYear();
   const { contact, address, openingHours } = siteConfig;
   const hasStreet = address.street.length > 0;
-  const telHref = contact.phone ? toTelHref(contact.phone) : null;
+  const telHref =
+    contact.phonePublic && contact.phone
+      ? toTelHref(contact.phone)
+      : null;
 
   return (
     <footer className="mt-auto bg-charcoal text-warm">
@@ -50,7 +53,7 @@ export function Footer() {
           </nav>
 
           <div className="md:col-span-3">
-            <h2 className="eyebrow text-taupe">Laden &amp; Kontakt</h2>
+            <h2 className="eyebrow text-taupe">Kontakt</h2>
             <div className="mt-3.5 space-y-2.5 text-sm text-warm/70">
               {hasStreet ? (
                 <address className="not-italic leading-relaxed">

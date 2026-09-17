@@ -24,7 +24,7 @@ const chapters = [
   },
   {
     title: "Wie bei einer Freundin stöbern.",
-    text: "Der Laden soll sich anfühlen wie der Schrank einer Freundin. Vertraut, entspannt, ohne Kaufdruck. Du darfst in Ruhe entdecken, anfassen, überlegen. Nichts muss, vieles darf.",
+    text: "Der Second-Hand-Laden soll sich anfühlen wie der Schrank einer Freundin. Vertraut, entspannt, ohne Kaufdruck. Du darfst in Ruhe entdecken, anfassen, überlegen. Nichts muss, vieles darf.",
   },
   {
     title: "Dinge mit Geschichte.",
@@ -105,7 +105,7 @@ export default function UeberMimaPage() {
 
       <CtaBand
         title="Werde Teil von MiMa."
-        text="Regalbuchung wird bald freigeschaltet. Zum Stöbern kannst du schon vorbeischauen, sobald der Laden öffnet."
+        text="Zum Stöbern komm vorbei, sobald der Laden öffnet. Die Buchung für ein eigenes Regal folgt bald."
         primary={{ bookingSoon: true }}
         secondary={{ label: "Second Hand entdecken", href: "/entdecken" }}
       />

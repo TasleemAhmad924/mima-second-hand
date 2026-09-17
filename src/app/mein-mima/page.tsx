@@ -18,19 +18,19 @@ export const metadata: Metadata = pageMetadata({
 
 const capabilities = [
   {
-    title: "Buchungen & Regale",
+    title: "Buchungen und Regale",
     text: "Laufende Mietzeiträume ansehen, verlängern und neue Regale buchen.",
   },
   {
-    title: "Produkte & Bestand",
+    title: "Produkte und Bestand",
     text: "Deine Stücke anlegen, auszeichnen und den Bestand im Blick behalten.",
   },
   {
-    title: "Verkäufe & Auszahlungen",
+    title: "Verkäufe und Auszahlungen",
     text: "Nachvollziehen, was verkauft wurde, und deine Auszahlungen verwalten.",
   },
   {
-    title: "Konto & Daten",
+    title: "Konto und Daten",
     text: "Deine Kontodaten pflegen – sicher und an einem Ort.",
   },
 ];

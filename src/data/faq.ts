@@ -1,6 +1,5 @@
 import type { FaqItem } from "@/types";
 import { SALES_COMMISSION_PERCENT } from "@/config/pricing";
-import { publicBooking } from "@/config/booking";
 
 /**
  * FAQ content grouped by audience. Copy is intentionally concrete and plain.
@@ -9,7 +8,8 @@ export const faqItems: FaqItem[] = [
   {
     audience: "verkaufen",
     question: "Wie miete ich ein Regal?",
-    answer: `${publicBooking.statement} ${publicBooking.support} Sobald die Buchung startet, wählst du deinen Mietzeitraum. Konto, Zahlung und die Zuweisung eines Regals laufen über unseren Partner Pladsly.`,
+    answer:
+      "Die Buchung wird bald freigeschaltet. Sobald sie live ist, wählst du deinen Mietzeitraum. Konto, Zahlung und die Zuweisung eines Regals laufen über unseren Partner Pladsly.",
   },
   {
     audience: "verkaufen",
@@ -32,7 +32,7 @@ export const faqItems: FaqItem[] = [
     audience: "verkaufen",
     question: "Was darf ich verkaufen?",
     answer:
-      "Gut erhaltene Second-Hand-Stücke: Kleidung, Bücher, Accessoires und Dinge für zuhause. Was nicht angeboten werden darf, steht in den AGB.",
+      "Gut erhaltene Second-Hand-Stücke: Kleidung, Bücher, Accessoires und Dinge fürs Zuhause. Was nicht angeboten werden darf, steht in den AGB.",
   },
   {
     audience: "entdecken",
@@ -44,7 +44,7 @@ export const faqItems: FaqItem[] = [
     audience: "entdecken",
     question: "Wie oft gibt es Neues?",
     answer:
-      "Sobald der Laden öffnet, werden die Regale laufend neu bestückt. Ein Besuch lohnt sich immer wieder – das Sortiment verändert sich ständig.",
+      "Sobald der Laden öffnet, werden die Regale laufend neu bestückt. Ein Besuch lohnt sich immer wieder. Das Sortiment verändert sich ständig.",
   },
   {
     audience: "entdecken",

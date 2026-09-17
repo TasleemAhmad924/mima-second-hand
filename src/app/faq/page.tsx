@@ -19,12 +19,12 @@ const groups = [
   {
     key: "verkaufen" as const,
     label: "Für Verkäufer:innen",
-    heading: "Regal mieten & verkaufen",
+    heading: "Regal mieten und verkaufen",
   },
   {
     key: "entdecken" as const,
     label: "Für Entdecker:innen",
-    heading: "Stöbern & kaufen",
+    heading: "Stöbern und kaufen",
   },
 ];
 
@@ -32,9 +32,9 @@ export default function FaqPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Fragen & Antworten"
+        eyebrow="Fragen und Antworten"
         title="Gut zu wissen."
-        intro="Die häufigsten Fragen – getrennt nach Verkaufen und Entdecken. Ist deine Frage nicht dabei, melde dich gern."
+        intro="Die häufigsten Fragen, getrennt nach Verkaufen und Entdecken. Ist deine Frage nicht dabei, melde dich gern."
       />
 
       <Section space="md">

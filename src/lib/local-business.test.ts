@@ -13,6 +13,7 @@ describe("LocalBusiness JSON-LD", () => {
         expect.stringContaining("/images/miriam-regal.jpg"),
       ]),
     );
+    expect(data).not.toHaveProperty("telephone");
     expect(data).not.toHaveProperty("aggregateRating");
     expect(data).not.toHaveProperty("geo");
     expect(data).not.toHaveProperty("priceRange");

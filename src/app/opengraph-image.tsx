@@ -7,7 +7,7 @@ export const contentType = "image/png";
 export const alt = `${siteConfig.name} – Second-Hand-Laden in ${siteConfig.city}`;
 
 export default function OpengraphImage() {
-  const eyebrow = `Second Hand · Mietregale · ${siteConfig.city}`;
+  const eyebrow = `Second-Hand-Laden · Mietregale · ${siteConfig.city}`;
   const location = `Dein Second-Hand-Laden in ${siteConfig.city}`;
 
   return new ImageResponse(

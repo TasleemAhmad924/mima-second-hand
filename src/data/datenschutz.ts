@@ -384,6 +384,59 @@ export const DATENSCHUTZ_SECTIONS: LegalSection[] = [
     id: "plugins-tools",
     title: "7. Plugins und Tools",
     blocks: [
+      { type: "h3", text: "Google Analytics" },
+      {
+        type: "p",
+        text: "Diese Website nutzt Funktionen des Webanalysedienstes Google Analytics. Anbieter ist die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.",
+      },
+      {
+        type: "p",
+        text: "Google Analytics ermöglicht es dem Websitebetreiber, das Verhalten der Websitebesucher zu analysieren. Hierbei erhält der Websitebetreiber verschiedene Nutzungsdaten, wie z. B. Seitenaufrufe, Verweildauer, verwendete Betriebssysteme und Herkunft des Nutzers. Diese Daten werden dem jeweiligen Endgerät des Users zugeordnet. Eine Zuordnung zu einer User-ID erfolgt nicht.",
+      },
+      {
+        type: "p",
+        text: "Google Analytics verwendet Technologien, die die Wiedererkennung des Nutzers zum Zwecke der Analyse des Nutzerverhaltens ermöglichen (z. B. Cookies oder Device-Fingerprinting). Die von Google erfassten Informationen über die Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert.",
+      },
+      {
+        type: "p",
+        text: "Die Nutzung dieses Dienstes erfolgt auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die Einwilligung ist jederzeit widerrufbar, etwa über das Cookie-Banner auf dieser Website.",
+      },
+      {
+        type: "p",
+        text: "Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Details finden Sie hier:",
+      },
+      {
+        type: "link",
+        href: "https://privacy.google.com/businesses/gdprcontrollerterms/sccs/",
+        label: "https://privacy.google.com/businesses/gdprcontrollerterms/sccs/",
+      },
+      {
+        type: "p",
+        text: "Sie können die Erfassung und Verarbeitung Ihrer Daten durch Google verhindern, indem Sie das Browser-Plugin herunterladen und installieren, das unter folgendem Link verfügbar ist:",
+      },
+      {
+        type: "link",
+        href: "https://tools.google.com/dlpage/gaoptout?hl=de",
+        label: "https://tools.google.com/dlpage/gaoptout?hl=de",
+      },
+      {
+        type: "p",
+        text: "Mehr Informationen zum Umgang mit Nutzerdaten bei Google Analytics finden Sie in der Datenschutzerklärung von Google:",
+      },
+      {
+        type: "link",
+        href: "https://support.google.com/analytics/answer/6004245?hl=de",
+        label: "https://support.google.com/analytics/answer/6004245?hl=de",
+      },
+      {
+        type: "p",
+        text: "Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link:",
+      },
+      {
+        type: "link",
+        href: "https://www.dataprivacyframework.gov/participant/5780",
+        label: "https://www.dataprivacyframework.gov/participant/5780",
+      },
       { type: "h3", text: "Google Fonts (lokales Hosting)" },
       {
         type: "p",

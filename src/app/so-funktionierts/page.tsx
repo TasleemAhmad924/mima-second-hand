@@ -22,7 +22,7 @@ const mimaHandles = [
     text: "Deine Stücke stehen sichtbar im Second-Hand-Laden. Wir beraten die Kundschaft und wickeln den Verkauf ab.",
   },
   {
-    title: "Kasse & Abwicklung",
+    title: "Kasse und Abwicklung",
     text: "Die gesamte Kassenabwicklung im Second-Hand-Laden übernehmen wir. Du musst nicht vor Ort sein.",
   },
   {
@@ -49,9 +49,9 @@ export default function SoFunktioniertsPage() {
       <Section space="sm" divider={false}>
         <Container>
           <RevealMedia
-            src="/images/store-wall.jpg"
-            alt="Holzregale im Second-Hand-Laden, aufgenommen in der Breite des Raums."
-            objectPosition="center 28%"
+            src="/images/rack-minimal.jpg"
+            alt="Helle Kleidung an einer schlichten Stange, ruhig und ohne Kaufdruck."
+            objectPosition="center 40%"
             sizes="100vw"
             className="aspect-[16/9] w-full sm:aspect-[21/9]"
           />
@@ -88,7 +88,7 @@ export default function SoFunktioniertsPage() {
 
       <CtaBand
         title="Bereit für dein eigenes Regal?"
-        text="Buchung wird bald freigeschaltet. Bis dahin kannst du Preise und Ablauf in Ruhe ansehen."
+        text="Die Buchung wird bald freigeschaltet. Bis dahin kannst du Preise und Ablauf in Ruhe ansehen."
         primary={{ bookingSoon: true }}
         secondary={{ label: "Preise ansehen", href: "/preise" }}
       />

@@ -65,8 +65,8 @@ export default function PreisePage() {
       </Section>
 
       <CtaBand
-        title="Buchung wird bald freigeschaltet."
-        text="Die Regalbuchung wird in Kürze geöffnet. Bis dahin kannst du Preise und Mietmodell in Ruhe ansehen."
+        title="Die Buchung wird bald freigeschaltet."
+        text="Bis dahin kannst du Preise und Mietmodell in Ruhe ansehen."
         primary={{ bookingSoon: true }}
         secondary={{ label: "So funktioniert's", href: "/so-funktionierts" }}
       />

@@ -11,7 +11,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Entdecken",
   description:
-    "Bald bei MiMa Second Hand in Stockelsdorf: eine wechselnde Auswahl an Second-Hand-Stücken zum Entdecken. Gekauft wird vor Ort im Laden.",
+    "Bald bei MiMa Second Hand in Stockelsdorf: eine wechselnde Auswahl an Second-Hand-Stücken zum Entdecken. Gekauft wird vor Ort im Second-Hand-Laden.",
   path: "/entdecken",
 });
 
@@ -19,9 +19,9 @@ export default function EntdeckenPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Schon bald"
-        title="Hier kannst du bald erste Lieblingsstücke entdecken."
-        intro="Nach der Eröffnung zeigen wir dir hier regelmäßig ausgewählte Stücke aus dem MiMa Second-Hand-Laden. Das Sortiment verändert sich laufend – vorbeischauen lohnt sich also immer wieder."
+        eyebrow="Entdecken"
+        title="Bald zeigen wir hier erste Lieblingsstücke."
+        intro="Nach der Eröffnung findest du hier regelmäßig ausgewählte Stücke aus dem Second-Hand-Laden. Das Sortiment verändert sich laufend. Vorbeischauen lohnt sich."
       />
 
       <Section space="sm">
@@ -39,10 +39,10 @@ export default function EntdeckenPage() {
           </div>
           <div className="lg:col-span-4 lg:col-start-9">
             <Reveal delay={0.08}>
-              <p className="eyebrow">Bald hier entdecken</p>
+              <p className="eyebrow">Bis zur Eröffnung</p>
               <p className="mt-5 max-w-sm text-base leading-relaxed text-muted">
-                Bis dahin findest du Einblicke in den Aufbau und die ersten
-                Neuigkeiten auf Instagram.
+                Einblicke in den Aufbau und die ersten Neuigkeiten findest du
+                auf Instagram.
               </p>
               <div className="mt-7">
                 <InstagramLink
@@ -59,7 +59,7 @@ export default function EntdeckenPage() {
         title="Lieber selbst verkaufen?"
         text="Miete dein eigenes Regal und bring deine Lieblingsstücke ins Sortiment. Die Buchung wird bald freigeschaltet."
         primary={{ bookingSoon: true }}
-        secondary={{ label: "Zum Laden", href: "/kontakt" }}
+        secondary={{ label: "Vorbeikommen", href: "/kontakt" }}
       />
     </>
   );

@@ -17,7 +17,7 @@ export function StoreLocation() {
                 Ein fester Ort in {siteConfig.city}.
               </h2>
               <p className="mt-5 max-w-sm text-base leading-relaxed text-muted">
-                Second-Hand-Laden in {siteConfig.city}: komm vorbei, stöber in
+                Second-Hand-Laden in {siteConfig.city}: komm vorbei, stöbere in
                 Ruhe und nimm dein Lieblingsstück gleich mit.
               </p>
             </Reveal>

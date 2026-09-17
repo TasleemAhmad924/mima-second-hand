@@ -21,7 +21,7 @@ export default function KontaktPage() {
       <PageHeader
         eyebrow="Kontakt"
         title="Komm vorbei oder schreib uns."
-        intro="Alles Wichtige zum Second-Hand-Laden auf einen Blick, und ein direkter Draht zu uns."
+        intro="Adresse, Öffnungszeiten und ein direkter Draht zu uns."
       />
 
       <Section space="md" divider={false}>

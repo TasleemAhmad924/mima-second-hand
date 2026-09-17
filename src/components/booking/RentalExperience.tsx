@@ -36,8 +36,7 @@ export function RentalExperience() {
               {publicBooking.statement}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              {publicBooking.support} Es gibt bereits viele Anmeldungen. Sobald
-              die Regalbuchung startet, findest du den Weg hier.
+              {publicBooking.support}
             </p>
             <div className="mt-6">
               <BookingCta />

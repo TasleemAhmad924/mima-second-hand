@@ -11,16 +11,16 @@ export const sellerSteps: ProcessStep[] = [
   {
     number: "01",
     title: "Zeitraum wählen",
-    short: "2 Wochen, 4 Wochen oder 3 Monate. Die Buchung wird bald freigeschaltet.",
+    short: "2 Wochen, 4 Wochen oder 3 Monate.",
     detail:
-      "Du wählst später Zeitraum und Mietdauer. Die passende Regalfläche wird im Buchungsprozess zugeordnet. Die öffentliche Buchung wird bald freigeschaltet.",
+      "Sobald die Buchung live ist, wählst du Zeitraum und Mietdauer. Die passende Regalfläche wird im Ablauf zugeordnet.",
   },
   {
     number: "02",
     title: "Lieblingsstücke vorbereiten",
     short: "Stücke auszeichnen und dein Regal in Ruhe einräumen.",
     detail:
-      "Du zeichnest deine Stücke aus und räumst dein Regal ein – so, wie es dir gefällt. Wir helfen beim Start, wenn du magst.",
+      "Du zeichnest deine Stücke aus und räumst dein Regal ein, so wie es dir gefällt. Wir helfen beim Start, wenn du magst.",
   },
   {
     number: "03",

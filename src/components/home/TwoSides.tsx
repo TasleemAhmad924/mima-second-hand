@@ -8,7 +8,7 @@ const sides = [
   {
     kicker: "01",
     title: "Ich möchte verkaufen",
-    text: "Miete dein eigenes Regal und bring deine Lieblingsstücke unter Menschen. Den Verkauf im Second-Hand-Laden übernehmen wir für dich.",
+    text: "Miete dein eigenes Regal und bring deine Lieblingsstücke ins Sortiment. Den Verkauf im Second-Hand-Laden übernehmen wir für dich.",
     image: "/images/store-wall.jpg",
     alt: "Holzregale mit sorgfältig gehängter Kleidung und gefalteten Textilien im Second-Hand-Laden.",
     href: "/regal-mieten",

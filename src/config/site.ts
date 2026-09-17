@@ -32,8 +32,9 @@ export interface SiteConfig {
   };
   contact: {
     email: string;
-    /** Empty until confirmed. A tel: link only renders when set. */
+    /** Kept for Impressum and Datenschutz. Hidden on public contact surfaces until a business number exists. */
     phone: string;
+    phonePublic: boolean;
   };
   address: {
     street: string;
@@ -72,6 +73,7 @@ export const siteConfig: SiteConfig = {
   contact: {
     email: "info@mima-secondhand.de",
     phone: "+49 1512 2386262",
+    phonePublic: false,
   },
 
   address: {
@@ -84,7 +86,7 @@ export const siteConfig: SiteConfig = {
   openingHours: [
     { days: "Di–Fr", hours: "10:00–17:00" },
     { days: "Sa", hours: "10:00–16:00" },
-    { days: "Mo & So", hours: "Ruhetag", closed: true },
+    { days: "Mo und So", hours: "Ruhetag", closed: true },
   ],
 
   /**

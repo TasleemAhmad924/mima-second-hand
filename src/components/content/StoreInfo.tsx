@@ -10,7 +10,10 @@ interface StoreInfoProps {
 export function StoreInfo({ className = "" }: StoreInfoProps) {
   const { address, openingHours, contact, city } = siteConfig;
   const hasStreet = address.street.length > 0;
-  const telHref = contact.phone ? toTelHref(contact.phone) : null;
+  const telHref =
+    contact.phonePublic && contact.phone
+      ? toTelHref(contact.phone)
+      : null;
 
   return (
     <dl className={`grid gap-x-10 gap-y-7 sm:grid-cols-2 sm:gap-y-9 ${className}`}>

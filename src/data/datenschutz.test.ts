@@ -54,6 +54,7 @@ describe("Datenschutzerklärung", () => {
     expect(text).toContain("Instagram");
     expect(text).toContain("Meta Platforms Ireland Limited");
     expect(text).toContain("Newsletterdaten");
+    expect(text).toContain("Google Analytics");
     expect(text).toContain("Google Fonts sind lokal installiert");
     expect(text).toContain("Google Maps");
     expect(text).toContain("Web3Forms");

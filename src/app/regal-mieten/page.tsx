@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Regal mieten",
   description:
-    "Preise, Grundriss und der Weg zur Regalmiete bei MiMa Second Hand in Stockelsdorf. Die öffentliche Buchung wird bald freigeschaltet.",
+    "Preise, Grundriss und der Weg zur Regalmiete bei MiMa Second Hand in Stockelsdorf.",
   path: "/regal-mieten",
 });
 
@@ -17,7 +17,7 @@ export default function RegalMietenPage() {
       <PageHeader
         eyebrow="Regal mieten"
         title="Dein Regal im Laden."
-        intro="Du wählst Zeitraum und Mietdauer. Die öffentliche Buchung wird bald freigeschaltet."
+        intro="Miete ein offenes Holzregal. MiMa verkauft deine Lieblingsstücke im Second-Hand-Laden."
       />
       <section className="py-10 sm:py-16 lg:py-20">
         <Container>

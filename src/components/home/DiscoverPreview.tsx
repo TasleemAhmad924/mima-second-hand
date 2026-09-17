@@ -30,12 +30,12 @@ export function DiscoverPreview() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
-              Unser Second-Hand-Laden füllt sich gerade erst. Schon bald zeigen
-              wir dir hier eine wechselnde Auswahl an Kleidung, Accessoires,
-              Wohnschätzen und vielen weiteren besonderen Fundstücken.
+              Unser Second-Hand-Laden füllt sich gerade erst. Bald zeigen wir
+              dir hier eine wechselnde Auswahl an Kleidung, Accessoires,
+              Wohnstücken und weiteren Fundstücken.
             </p>
             <p className="mt-4 max-w-md text-base leading-relaxed text-muted">
-              Schau bald wieder vorbei. Die ersten Stücke folgen.
+              Die ersten Stücke folgen.
             </p>
           </Reveal>
           <Reveal delay={0.12}>

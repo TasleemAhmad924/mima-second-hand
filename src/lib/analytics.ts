@@ -2,8 +2,8 @@
  * Non-invasive analytics event vocabulary.
  *
  * PRINCIPLES:
- *   - No tracking library is installed automatically. `track()` is a safe no-op
- *     unless a consented analytics sink (`window.dataLayer`) is already present.
+ *   - `track()` is a safe no-op unless a consented analytics sink is present
+ *     (`gtag` after CCM19 consent, or `window.dataLayer`).
  *   - Never pass personal, booking or product-identifying data here. Events are
  *     intentionally coarse (a handoff happened), not personal.
  *   - Client-safe. No secrets. No network calls of its own.
@@ -28,8 +28,9 @@ export type AnalyticsEventName =
 
 type EventParams = Record<string, string | number | boolean>;
 
-interface DataLayerWindow {
+interface AnalyticsWindow {
   dataLayer?: unknown[];
+  gtag?: (...args: unknown[]) => void;
 }
 
 /**
@@ -38,7 +39,12 @@ interface DataLayerWindow {
  */
 export function track(event: AnalyticsEventName, params?: EventParams): void {
   if (typeof window === "undefined") return;
-  const sink = (window as unknown as DataLayerWindow).dataLayer;
+  const analyticsWindow = window as unknown as AnalyticsWindow;
+  if (typeof analyticsWindow.gtag === "function") {
+    analyticsWindow.gtag("event", event, params ?? {});
+    return;
+  }
+  const sink = analyticsWindow.dataLayer;
   if (!Array.isArray(sink)) return;
   sink.push({ event, ...(params ?? {}) });
 }

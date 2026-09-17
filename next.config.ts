@@ -22,6 +22,9 @@ const isProd = process.env.NODE_ENV === "production";
       cloud.ccm19.de before other scripts run.
     - Google Maps Embed is framed on the public location map. frame-src must
       allow the Google embed origins.
+    - Google Analytics 4 (gtag.js) loads from googletagmanager.com. Hits and
+      Consent Mode pings go to Google Analytics / Tag Manager hosts. Ads
+      stay off; still allow the standard GA image beacons.
     - The contact form posts from the browser to Web3Forms
       (api.web3forms.com). That origin belongs in connect-src only.
 */
@@ -29,6 +32,12 @@ const ccm19Origin = "https://cloud.ccm19.de";
 const web3formsOrigin = "https://api.web3forms.com";
 const googleMapsFrameSrc =
   "https://www.google.com https://maps.google.com https://www.google.de";
+const googleTagScriptSrc =
+  "https://www.googletagmanager.com https://www.google-analytics.com";
+const googleTagImgSrc =
+  "https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.google.de";
+const googleTagConnectSrc =
+  "https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://*.googletagmanager.com";
 
 const csp = [
   "default-src 'self'",
@@ -36,11 +45,11 @@ const csp = [
   "object-src 'none'",
   "frame-ancestors 'none'",
   "form-action 'self'",
-  `script-src 'self' 'unsafe-inline' ${ccm19Origin}${isProd ? "" : " 'unsafe-eval'"}`,
+  `script-src 'self' 'unsafe-inline' ${ccm19Origin} ${googleTagScriptSrc}${isProd ? "" : " 'unsafe-eval'"}`,
   `style-src 'self' 'unsafe-inline' ${ccm19Origin}`,
-  `img-src 'self' data: blob: ${ccm19Origin}`,
+  `img-src 'self' data: blob: ${ccm19Origin} ${googleTagImgSrc}`,
   `font-src 'self' ${ccm19Origin}`,
-  `connect-src 'self' ${ccm19Origin} ${web3formsOrigin}`,
+  `connect-src 'self' ${ccm19Origin} ${web3formsOrigin} ${googleTagConnectSrc}`,
   `frame-src 'self' ${ccm19Origin} ${googleMapsFrameSrc}`,
   "manifest-src 'self'",
   "upgrade-insecure-requests",

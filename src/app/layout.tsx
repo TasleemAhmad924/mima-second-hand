@@ -7,6 +7,8 @@ import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Ccm19Script } from "@/components/legal/Ccm19Script";
+import { GoogleTag } from "@/components/analytics/GoogleTag";
+import { Ccm19AnalyticsConsent } from "@/components/analytics/Ccm19AnalyticsConsent";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 
 /*
@@ -70,9 +72,11 @@ export default function RootLayout({
     >
       <head>
         <Ccm19Script />
+        <GoogleTag />
         <LocalBusinessJsonLd />
       </head>
       <body className="flex min-h-dvh flex-col" suppressHydrationWarning>
+        <Ccm19AnalyticsConsent />
         <SkipLink />
         <Header />
         <main id="inhalt" className="flex-1">

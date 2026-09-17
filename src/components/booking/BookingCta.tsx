@@ -73,8 +73,7 @@ export function BookingCta({
               {publicBooking.statement}
             </p>
             <p className="mt-2 text-sm leading-relaxed text-muted">
-              {publicBooking.support} Es gibt bereits viele Anmeldungen. Wir
-              geben Bescheid, sobald du ein Regal verbindlich nehmen kannst.
+              {publicBooking.support}
             </p>
           </motion.div>
         ) : null}
