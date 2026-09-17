@@ -20,7 +20,7 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           background: "#F7F5F1",
-          color: "#292827",
+          color: "#292725",
           padding: "72px 80px",
         }}
       >
@@ -30,7 +30,7 @@ export default function OpengraphImage() {
             fontSize: 22,
             letterSpacing: "0.28em",
             textTransform: "uppercase",
-            color: "#8f7154",
+            color: "#4A3A32",
           }}
         >
           {eyebrow}
@@ -53,7 +53,7 @@ export default function OpengraphImage() {
               display: "flex",
               marginTop: 28,
               fontSize: 40,
-              color: "#7d7973",
+              color: "#5C534C",
             }}
           >
             Lieblingsstücke. Neu entdeckt.
@@ -66,7 +66,7 @@ export default function OpengraphImage() {
             alignItems: "center",
             justifyContent: "space-between",
             fontSize: 24,
-            color: "#7d7973",
+            color: "#5C534C",
           }}
         >
           <span style={{ display: "flex" }}>{location}</span>
@@ -74,7 +74,7 @@ export default function OpengraphImage() {
             style={{
               width: 64,
               height: 8,
-              background: "#B89A7A",
+              background: "#CEBBA9",
               display: "flex",
             }}
           />

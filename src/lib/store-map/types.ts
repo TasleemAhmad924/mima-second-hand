@@ -101,6 +101,68 @@ export interface StructuralArea {
   points?: [number, number][];
 }
 
+export interface PlanLabel {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+  anchor?: "start" | "middle" | "end";
+  /** Highlights with this chip / zone / fixture id. */
+  focusId?: string;
+  /** Shown on small screens. Desktop always shows every label. */
+  compact?: boolean;
+}
+
+export type StorePlanShelfKind = "aisle" | "wall";
+
+export type StorePlanRoomKind = "kitchen" | "wc" | "fitting" | "play";
+
+export interface StorePlanRect {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface StorePlanShelf extends StorePlanRect {
+  kind: StorePlanShelfKind;
+}
+
+export interface StorePlanRoom extends StorePlanRect {
+  kind: StorePlanRoomKind;
+}
+
+export interface StorePlanLabel {
+  id: string;
+  text: string;
+  x: number;
+  y: number;
+  level: "primary" | "secondary";
+  anchor?: "start" | "middle" | "end";
+  /** Hide inside the SVG on small screens; the legend still lists it. */
+  desktopOnly?: boolean;
+  /** sm = from 640px, lg = from 1024px. Default: always visible. */
+  from?: "sm" | "lg";
+}
+
+export interface StorePlanLegendItem {
+  id: string;
+  label: string;
+  group: "primary" | "secondary";
+}
+
+/** Customer-facing orientation diagram. Not inventory, not CAD. */
+export interface StorePlan {
+  viewBox: { x: number; y: number; width: number; height: number };
+  outline: readonly [number, number][];
+  shelves: readonly StorePlanShelf[];
+  rooms: readonly StorePlanRoom[];
+  stairs: StorePlanRect;
+  labels: readonly StorePlanLabel[];
+  legend: readonly StorePlanLegendItem[];
+}
+
 export interface StoreLayout {
   metadata: StoreMapMetadata;
   viewBox: { x: number; y: number; width: number; height: number };
@@ -113,4 +175,5 @@ export interface StoreLayout {
   rows: ShelfRow[];
   shelves: LayoutShelf[];
   fixtures: StructuralArea[];
+  labels: PlanLabel[];
 }

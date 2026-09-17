@@ -1,19 +1,19 @@
 import { siteConfig } from "@/config/site";
+import { web3forms } from "@/config/web3forms";
 
 /**
  * Contact form transport.
  *
- * The presentation (form, validation, states) is fully separated from how a
- * message is actually delivered. Because this is a static frontend with no
- * backend, the default transport composes a real `mailto:` message and hands it
- * to the visitor's mail client. Nothing is faked as "sent". When a secure send
- * endpoint exists later, implement `ContactTransport` and swap the export.
+ * The presentation (form, validation, states) stays separate from delivery.
+ * Messages are posted from the browser to Web3Forms, which emails the shop.
  */
 
 export interface ContactMessage {
   name: string;
   email: string;
   message: string;
+  /** Honeypot. When true, nothing is sent. */
+  botcheck?: boolean;
 }
 
 export interface ContactTransport {
@@ -21,25 +21,44 @@ export interface ContactTransport {
   send(message: ContactMessage): Promise<void>;
 }
 
-const mailtoTransport: ContactTransport = {
+function isWeb3FormsSuccess(payload: unknown, status: number): boolean {
+  if (status === 429 || status >= 500) return false;
+  if (!payload || typeof payload !== "object") return status === 200;
+  const record = payload as Record<string, unknown>;
+  if (record.success === false) return false;
+  if (record.success === true) return true;
+  return status === 200;
+}
+
+const web3formsTransport: ContactTransport = {
   async send(message) {
-    const subject = `Nachricht über die Website – ${message.name}`;
-    const body = [
-      message.message,
-      "",
-      "—",
-      `Name: ${message.name}`,
-      `E-Mail: ${message.email}`,
-    ].join("\n");
+    if (message.botcheck) return;
 
-    const href = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
+    const formData = new FormData();
+    formData.append("access_key", web3forms.accessKey);
+    formData.append("name", message.name);
+    formData.append("email", message.email);
+    formData.append("message", message.message);
+    formData.append("subject", `Nachricht über die Website – ${message.name}`);
+    formData.append("from_name", siteConfig.name);
 
-    if (typeof window !== "undefined") {
-      window.location.href = href;
+    const response = await fetch(web3forms.submitUrl, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: formData,
+    });
+
+    let payload: unknown = null;
+    try {
+      payload = await response.json();
+    } catch {
+      payload = null;
+    }
+
+    if (!isWeb3FormsSuccess(payload, response.status)) {
+      throw new Error("web3forms_failed");
     }
   },
 };
 
-export const contactTransport: ContactTransport = mailtoTransport;
+export const contactTransport: ContactTransport = web3formsTransport;

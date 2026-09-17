@@ -44,21 +44,7 @@ export function LegalDocument({ document }: LegalDocumentProps) {
         <p className="mt-6 text-sm text-muted">Stand: {document.published}</p>
       </header>
 
-      <nav aria-label="Inhalt" className="border-b border-line py-8 sm:py-10">
-        <p className="eyebrow">Inhalt</p>
-        <ol className="mt-5 columns-1 gap-x-12 sm:columns-2">
-          {document.sections.map((section) => (
-            <li key={section.id} className="break-inside-avoid pb-1.5">
-              <a
-                href={`#${section.id}`}
-                className="text-sm leading-snug text-charcoal transition-colors duration-300 hover:text-taupe-ink"
-              >
-                {section.title}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <LegalToc sections={document.sections} />
 
       <div>
         {document.sections.map((section) => (
@@ -74,6 +60,53 @@ export function LegalDocument({ document }: LegalDocumentProps) {
         ))}
       </footer>
     </article>
+  );
+}
+
+export function PrivacyDocument({
+  sections,
+  source,
+}: {
+  sections: LegalSection[];
+  source: { label: string; href: string };
+}) {
+  return (
+    <article className="text-[0.975rem] leading-[1.65] text-muted sm:text-base">
+      <LegalToc sections={sections} />
+
+      <div>
+        {sections.map((section) => (
+          <Section key={section.id} section={section} />
+        ))}
+      </div>
+
+      <footer className="border-t border-line pt-8 sm:pt-10">
+        <p>
+          Quelle:{" "}
+          <LegalAnchor href={source.href}>{source.label}</LegalAnchor>
+        </p>
+      </footer>
+    </article>
+  );
+}
+
+function LegalToc({ sections }: { sections: LegalSection[] }) {
+  return (
+    <nav aria-label="Inhalt" className="border-b border-line py-8 sm:py-10">
+      <p className="eyebrow">Inhalt</p>
+      <ol className="mt-5 columns-1 gap-x-12 sm:columns-2">
+        {sections.map((section) => (
+          <li key={section.id} className="break-inside-avoid pb-1.5">
+            <a
+              href={`#${section.id}`}
+              className="text-sm leading-snug text-charcoal transition-colors duration-300 hover:text-taupe-ink"
+            >
+              {section.title}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
   );
 }
 
@@ -95,6 +128,22 @@ function Section({ section }: { section: LegalSection }) {
   );
 }
 
+function LegalAnchor({ href, children }: { href: string; children: string }) {
+  const external = href.startsWith("http://") || href.startsWith("https://");
+
+  return (
+    <a
+      href={href}
+      className="link-underline break-all text-charcoal"
+      {...(external
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
+    >
+      {children}
+    </a>
+  );
+}
+
 function Block({ block }: { block: LegalBlock }) {
   if (block.type === "h3") {
     return (
@@ -105,12 +154,44 @@ function Block({ block }: { block: LegalBlock }) {
   }
 
   if (block.type === "p" || block.type === "lead") {
-    return <p>{block.text}</p>;
+    return <p className="whitespace-pre-line">{block.text}</p>;
   }
 
   if (block.type === "formula") {
     return (
       <p className="font-display text-[1.05rem] text-charcoal">{block.text}</p>
+    );
+  }
+
+  if (block.type === "caps") {
+    return (
+      <p className="text-[0.92rem] leading-[1.7] text-charcoal sm:text-[0.95rem]">
+        {block.text}
+      </p>
+    );
+  }
+
+  if (block.type === "link") {
+    return (
+      <p>
+        <LegalAnchor href={block.href}>{block.label}</LegalAnchor>
+      </p>
+    );
+  }
+
+  if (block.type === "rich") {
+    return (
+      <p className="whitespace-pre-line">
+        {block.parts.map((part, index) =>
+          part.href ? (
+            <LegalAnchor key={`${part.text}-${index}`} href={part.href}>
+              {part.text}
+            </LegalAnchor>
+          ) : (
+            <span key={`${part.text}-${index}`}>{part.text}</span>
+          ),
+        )}
+      </p>
     );
   }
 

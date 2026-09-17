@@ -20,11 +20,13 @@ const isProd = process.env.NODE_ENV === "production";
       explicitly and re-test.
     - CCM19 Cloud is the cookie banner. It must load and fetch config from
       cloud.ccm19.de before other scripts run.
-    - Google Maps is only framed after the visitor activates the map or
-      Usercentrics grants the Google Maps service. frame-src must still
-      allow the embed origin so the iframe can load after that click.
+    - Google Maps Embed is framed on the public location map. frame-src must
+      allow the Google embed origins.
+    - The contact form posts from the browser to Web3Forms
+      (api.web3forms.com). That origin belongs in connect-src only.
 */
 const ccm19Origin = "https://cloud.ccm19.de";
+const web3formsOrigin = "https://api.web3forms.com";
 const googleMapsFrameSrc =
   "https://www.google.com https://maps.google.com https://www.google.de";
 
@@ -38,7 +40,7 @@ const csp = [
   `style-src 'self' 'unsafe-inline' ${ccm19Origin}`,
   `img-src 'self' data: blob: ${ccm19Origin}`,
   `font-src 'self' ${ccm19Origin}`,
-  `connect-src 'self' ${ccm19Origin}`,
+  `connect-src 'self' ${ccm19Origin} ${web3formsOrigin}`,
   `frame-src 'self' ${ccm19Origin} ${googleMapsFrameSrc}`,
   "manifest-src 'self'",
   "upgrade-insecure-requests",
@@ -65,6 +67,7 @@ const nextConfig: NextConfig = {
   // now runs as a standard Next.js app on Vercel so that sensitive Pladsly
   // requests can execute server-side (API routes / server modules) and secret
   // credentials never reach the browser. The public UI is unchanged.
+  poweredByHeader: false,
   trailingSlash: true,
   images: {
     // Image sources are local assets today; keep optimization off to preserve

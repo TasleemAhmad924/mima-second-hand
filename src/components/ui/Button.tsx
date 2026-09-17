@@ -7,12 +7,14 @@ const base =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.16em] transition-[background-color,color,border-color] duration-[350ms] [transition-timing-function:var(--ease-inout)] active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-charcoal text-warm hover:bg-taupe-ink",
+  primary:
+    "bg-charcoal text-warm [@media(hover:hover)]:hover:bg-taupe-ink",
   secondary:
-    "border border-line-strong text-charcoal hover:border-charcoal hover:bg-cream/60",
-  "on-dark": "bg-warm text-charcoal hover:bg-taupe hover:text-charcoal",
+    "border border-line-strong text-charcoal [@media(hover:hover)]:hover:border-charcoal [@media(hover:hover)]:hover:bg-cream/60",
+  "on-dark":
+    "bg-warm text-charcoal [@media(hover:hover)]:hover:bg-taupe [@media(hover:hover)]:hover:text-charcoal",
   "on-dark-outline":
-    "border border-warm/30 text-warm hover:border-warm hover:bg-warm/10",
+    "border border-warm/30 text-warm [@media(hover:hover)]:hover:border-warm [@media(hover:hover)]:hover:bg-warm/10",
 };
 
 interface CommonProps {

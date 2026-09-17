@@ -1,12 +1,12 @@
 import { ArrowLink } from "@/components/ui/ArrowLink";
-import { GoogleMapConsentGate } from "@/components/location/GoogleMapConsentGate";
+import { GoogleMap } from "@/components/location/GoogleMap";
 import { googleMapsDirectionsUrl } from "@/config/maps";
 
-/** Location map + route action. Google-specific embed stays behind the gate. */
+/** Location map + route action. The embed loads immediately. */
 export function LocationMap() {
   return (
     <div>
-      <GoogleMapConsentGate />
+      <GoogleMap />
       <div className="mt-5">
         <ArrowLink href={googleMapsDirectionsUrl()} external>
           Route mit Google Maps

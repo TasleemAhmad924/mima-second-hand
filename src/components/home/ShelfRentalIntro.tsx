@@ -38,7 +38,7 @@ export function ShelfRentalIntro() {
 
           <Reveal delay={0.15}>
             <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-5">
-              <BookingCta />
+              <BookingCta className="w-full sm:w-auto" />
               <ArrowLink href="/preise">Preise ansehen</ArrowLink>
             </div>
           </Reveal>

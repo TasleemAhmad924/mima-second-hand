@@ -21,7 +21,7 @@ interface Meta {
 export function ok<T>(data: T, meta: Meta) {
   return NextResponse.json(
     { ok: true, data, meta },
-    { headers: { "Cache-Control": "no-store" } },
+    { headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } },
   );
 }
 
@@ -36,7 +36,7 @@ export function fail(operation: string, error: unknown) {
   });
   return NextResponse.json(
     { ok: false, error: userMessageFor(error), requestId },
-    { status, headers: { "Cache-Control": "no-store" } },
+    { status, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } },
   );
 }
 
@@ -45,6 +45,6 @@ export function failValidation(operation: string, message: string) {
   logIntegration({ operation, status: "warn", requestId, detail: "invalid_input" });
   return NextResponse.json(
     { ok: false, error: message, requestId },
-    { status: 400, headers: { "Cache-Control": "no-store" } },
+    { status: 400, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } },
   );
 }

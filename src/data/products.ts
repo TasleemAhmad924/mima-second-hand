@@ -1,11 +1,10 @@
 import type { CategoryMeta, Product } from "@/types";
 
 /**
- * MOCK discovery products.
+ * MOCK discovery products — not customer-facing while the Laden is unopened.
  *
- * Placeholder catalogue used to design the discovery experience. Real products
- * will later come from the provider catalogue (see `src/lib/pladsly.ts`).
- * Images are temporary editorial stand-ins, not final MiMa store photography.
+ * Kept for the later catalogue integration (see `src/lib/pladsly.ts`).
+ * Do not render these cards on public pages as live inventory.
  */
 export const mockProducts: Product[] = [
   {

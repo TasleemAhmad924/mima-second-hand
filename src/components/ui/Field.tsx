@@ -28,7 +28,7 @@ export function Field({
   rows = 5,
 }: FieldProps) {
   const errorId = `${name}-error`;
-  const controlClasses = `w-full border-b bg-transparent py-2.5 text-base text-charcoal outline-none transition-colors placeholder:text-muted/60 focus:border-charcoal ${
+  const controlClasses = `w-full border-b bg-transparent py-2.5 text-base text-charcoal transition-colors placeholder:text-muted/60 focus:border-charcoal ${
     error ? "border-[#9a3b2e]" : "border-line-strong"
   }`;
 

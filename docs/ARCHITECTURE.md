@@ -356,5 +356,4 @@ the live payment/account path. Public rental UX is explorer + handoff.
 
 Postponed: live Supabase project, Auth, Stripe, POS ingest, payout transfers,
 full admin. Cookie consent is CCM19 Cloud (not Usercentrics). The Laden
-location map is a Google Maps embed behind click-to-load, with a Usercentrics
-service hook ready in `src/lib/consent/google-maps.ts`.
+location map is a Google Maps embed that loads immediately.

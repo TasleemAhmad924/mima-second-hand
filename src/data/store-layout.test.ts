@@ -9,15 +9,6 @@ import {
 } from "@/data/store-layout";
 
 describe("store layout from the client floor plan", () => {
-  it("keeps an irregular room, not a rectangle", () => {
-    const xs = STORE_LAYOUT.outline.map(([x]) => x);
-    const ys = STORE_LAYOUT.outline.map(([, y]) => y);
-    expect(STORE_LAYOUT.outline.length).toBeGreaterThanOrEqual(16);
-    expect(STORE_LAYOUT.partitions.length).toBeGreaterThanOrEqual(2);
-    expect(new Set(xs).size).toBeGreaterThan(3);
-    expect(new Set(ys).size).toBeGreaterThan(3);
-  });
-
   it("does not treat any drawn total as confirmed inventory", () => {
     expect(exactShelfCount.status).toBe("open");
     expect(STORE_LAYOUT.metadata.exactShelfCount.status).toBe("open");

@@ -51,7 +51,7 @@ export function StoreInfo({ className = "" }: StoreInfoProps) {
         <dd className="mt-3 space-y-1 text-base text-charcoal">
           <a
             href={`mailto:${contact.email}`}
-            className="link-underline block w-fit"
+            className="link-underline block w-fit max-w-full break-words"
           >
             {contact.email}
           </a>

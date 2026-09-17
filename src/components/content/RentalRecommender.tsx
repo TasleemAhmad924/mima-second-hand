@@ -12,14 +12,14 @@ import { EASE_OUT } from "@/lib/motion";
 
 const durations: { id: DurationIntent; label: string }[] = [
   { id: "up-to-2-weeks", label: "bis 2 Wochen" },
-  { id: "about-4-weeks", label: "etwa 3 bis 4 Wochen" },
+  { id: "about-4-weeks", label: "3 bis 4 Wochen" },
   { id: "several-weeks", label: "mehrere Wochen" },
-  { id: "up-to-3-months", label: "langfristig, bis 3 Monate" },
+  { id: "up-to-3-months", label: "bis 3 Monate" },
 ];
 
 const volumes: { id: VolumeIntent; label: string }[] = [
   { id: "few", label: "wenige Teile" },
-  { id: "some", label: "eine Auswahl" },
+  { id: "some", label: "mehrere Teile" },
   { id: "many", label: "viele Teile" },
 ];
 
@@ -37,10 +37,10 @@ function Choice({
       type="button"
       aria-pressed={selected}
       onClick={onSelect}
-      className={`min-h-11 border px-4 py-2 text-left text-sm leading-snug transition-colors duration-300 [transition-timing-function:var(--ease-inout)] ${
+      className={`flex min-h-12 w-full items-center justify-center border px-2.5 py-2.5 text-center text-[0.75rem] leading-snug whitespace-nowrap transition-[background-color,color,border-color] duration-300 [transition-timing-function:var(--ease-inout)] sm:px-3 sm:text-sm ${
         selected
           ? "border-charcoal bg-charcoal text-warm"
-          : "border-line-strong text-charcoal hover:border-charcoal"
+          : "border-line-strong text-charcoal [@media(hover:hover)]:hover:border-charcoal"
       }`}
     >
       {children}
@@ -62,16 +62,16 @@ export function RentalRecommender() {
       <h2 className="headline max-w-xl text-charcoal">
         Welches Mietmodell passt zu dir?
       </h2>
-      <p className="mt-4 max-w-md text-base leading-relaxed text-muted">
-        Keine Gewinnrechnung. Nur eine Einschätzung, welcher Zeitraum zu deinem
-        Vorhaben passt.
+      <p className="mt-4 max-w-lg text-base leading-relaxed text-muted">
+        Beantworte zwei kurze Fragen und finde heraus, welcher Mietzeitraum zu
+        deinem Vorhaben passt.
       </p>
 
       <fieldset className="mt-8 border-0 p-0">
         <legend className="text-sm font-medium text-charcoal">
           Wie lange möchtest du ungefähr verkaufen?
         </legend>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 grid grid-cols-2 gap-2">
           {durations.map((option) => (
             <Choice
               key={option.id}
@@ -88,7 +88,7 @@ export function RentalRecommender() {
         <legend className="text-sm font-medium text-charcoal">
           Wie viele Teile möchtest du ungefähr anbieten?
         </legend>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 grid grid-cols-1 gap-2 min-[375px]:grid-cols-3">
           {volumes.map((option) => (
             <Choice
               key={option.id}
@@ -117,7 +117,7 @@ export function RentalRecommender() {
               {result.plan.name}
               <span className="text-taupe-ink">
                 {" "}
-                {formatEuro(result.plan.price)}
+                · {formatEuro(result.plan.price)}
               </span>
             </p>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-muted sm:text-base">

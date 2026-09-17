@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
         error:
           "Native Buchungen sind noch nicht freigeschaltet. Bitte den Pladsly-Buchungsassistenten nutzen.",
       },
-      { status: 403, headers: { "Cache-Control": "no-store" } },
+      { status: 403, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } },
     );
   }
 

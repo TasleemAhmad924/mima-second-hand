@@ -74,7 +74,7 @@ export function Footer() {
               <div className="space-y-0.5">
                 <a
                   href={`mailto:${contact.email}`}
-                  className="block transition-colors duration-300 hover:text-warm"
+                  className="block break-words transition-colors duration-300 hover:text-warm"
                 >
                   {contact.email}
                 </a>

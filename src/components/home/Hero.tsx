@@ -39,8 +39,8 @@ export function Hero() {
           </Reveal>
 
           <Reveal immediate delay={0.22}>
-            <div className="mt-7 flex flex-col items-start gap-3.5 sm:mt-8 sm:flex-row sm:items-start sm:gap-6">
-              <BookingCta />
+            <div className="mt-7 flex w-full flex-col items-stretch gap-3.5 sm:mt-8 sm:flex-row sm:items-start sm:gap-6">
+              <BookingCta className="w-full sm:w-auto" />
               <ArrowLink href="/entdecken" className="sm:mt-3">
                 Second Hand entdecken
               </ArrowLink>

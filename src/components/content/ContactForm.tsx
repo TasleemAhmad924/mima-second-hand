@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { contactTransport } from "@/lib/contact";
 import { siteConfig } from "@/config/site";
 import { Field } from "@/components/ui/Field";
@@ -40,6 +41,7 @@ export function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -82,6 +84,7 @@ export function ContactForm() {
         name: name.trim(),
         email: email.trim(),
         message: message.trim(),
+        botcheck: honeypot.trim().length > 0,
       });
       setStatus("success");
     } catch {
@@ -92,10 +95,10 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="border border-line bg-cream/40 p-8" role="status">
-        <h2 className="font-display text-2xl text-charcoal">Fast geschafft.</h2>
+        <h2 className="font-display text-2xl text-charcoal">Danke für deine Nachricht.</h2>
         <p className="mt-3 max-w-md text-base leading-relaxed text-muted">
-          Dein E-Mail-Programm öffnet sich mit deiner Nachricht. Falls das nicht
-          klappt, schreib uns gern direkt an{" "}
+          Wir haben sie erhalten und melden uns so bald wie möglich. Falls es
+          eilt, erreichst du uns auch unter{" "}
           <a
             href={`mailto:${siteConfig.contact.email}`}
             className="link-underline text-charcoal"
@@ -111,6 +114,7 @@ export function ContactForm() {
             setName("");
             setEmail("");
             setMessage("");
+            setHoneypot("");
             setErrors({});
             setTouched({});
           }}
@@ -123,7 +127,17 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
+    <form onSubmit={handleSubmit} noValidate className="relative flex flex-col gap-6">
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+        value={honeypot}
+        onChange={(event) => setHoneypot(event.target.value)}
+      />
       <Field
         label="Name"
         name="name"
@@ -163,15 +177,19 @@ export function ContactForm() {
         </p>
       ) : null}
 
-      <div className="flex items-center gap-4">
-        <Button type="submit" disabled={status === "submitting"}>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <Button type="submit" disabled={status === "submitting"} className="w-full sm:w-auto">
           {status === "submitting" ? "Wird gesendet…" : "Nachricht senden"}
         </Button>
       </div>
 
       <p className="text-xs leading-relaxed text-muted">
         Deine Angaben werden ausschließlich zur Beantwortung deiner Anfrage
-        genutzt.
+        genutzt. Mehr dazu in der{" "}
+        <Link href="/datenschutz" className="link-underline text-charcoal">
+          Datenschutzerklärung
+        </Link>
+        .
       </p>
     </form>
   );

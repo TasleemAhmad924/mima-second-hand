@@ -4,13 +4,21 @@ export interface LegalClause {
   aside?: string;
 }
 
+export type LegalInline = {
+  text: string;
+  href?: string;
+};
+
 export type LegalBlock =
   | { type: "h3"; text: string }
   | { type: "p"; text: string }
   | { type: "lead"; text: string }
   | { type: "clauses"; items: LegalClause[] }
   | { type: "ul"; items: string[] }
-  | { type: "formula"; text: string };
+  | { type: "formula"; text: string }
+  | { type: "caps"; text: string }
+  | { type: "link"; href: string; label: string }
+  | { type: "rich"; parts: LegalInline[] };
 
 export interface LegalSection {
   id: string;

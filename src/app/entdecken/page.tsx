@@ -2,18 +2,16 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
+import { RevealMedia } from "@/components/ui/RevealMedia";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { ProductGrid } from "@/components/content/ProductGrid";
 import { CtaBand } from "@/components/content/CtaBand";
-import { TrackedButton } from "@/components/analytics/TrackedButton";
-import { AnalyticsEvent } from "@/lib/analytics";
-import { siteConfig } from "@/config/site";
+import { InstagramLink } from "@/components/content/InstagramLink";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Entdecken",
   description:
-    "Stöbere durch eine wechselnde Auswahl an Second-Hand-Stücken: Mode, Accessoires und Dinge fürs Zuhause. Online entdecken, im Second-Hand-Laden kaufen.",
+    "Bald bei MiMa Second Hand in Stockelsdorf: eine wechselnde Auswahl an Second-Hand-Stücken zum Entdecken. Gekauft wird vor Ort im Laden.",
   path: "/entdecken",
 });
 
@@ -21,36 +19,39 @@ export default function EntdeckenPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Second Hand entdecken"
-        title="Eine Auswahl, die lebt."
-        intro="Was du hier siehst, ist eine kuratierte Vorschau des Sortiments. Das vollständige, tagesaktuelle Angebot findest du im Online-Katalog. Online stöbern, vor Ort kaufen."
+        eyebrow="Schon bald"
+        title="Hier kannst du bald erste Lieblingsstücke entdecken."
+        intro="Nach der Eröffnung zeigen wir dir hier regelmäßig ausgewählte Stücke aus dem MiMa Second-Hand-Laden. Das Sortiment verändert sich laufend – vorbeischauen lohnt sich also immer wieder."
       />
 
-      <Section space="sm" divider={false}>
-        <Container>
-          <Reveal>
-            <div className="flex flex-col gap-5 border-b border-line pb-8 sm:flex-row sm:items-end sm:justify-between">
-              <p className="max-w-xl text-base leading-relaxed text-muted">
-                Der komplette Katalog mit allen aktuellen Stücken wird von unserem
-                Partner Pladsly bereitgestellt. Dort kannst du das gesamte
-                Sortiment durchsuchen.
-              </p>
-              <TrackedButton
-                href={siteConfig.external.shopUrl}
-                event={AnalyticsEvent.EntdeckenShopClick}
-                variant="secondary"
-                className="shrink-0"
-              >
-                Zum Katalog
-              </TrackedButton>
-            </div>
-          </Reveal>
-        </Container>
-      </Section>
-
       <Section space="sm">
-        <Container>
-          <ProductGrid />
+        <Container className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <RevealMedia
+                src="/images/store-wall.jpg"
+                alt="Holzregale im Second-Hand-Laden von MiMa, bereit für die ersten Lieblingsstücke."
+                objectPosition="center 28%"
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="aspect-[4/3] w-full sm:aspect-[16/10]"
+              />
+            </Reveal>
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9">
+            <Reveal delay={0.08}>
+              <p className="eyebrow">Bald hier entdecken</p>
+              <p className="mt-5 max-w-sm text-base leading-relaxed text-muted">
+                Bis dahin findest du Einblicke in den Aufbau und die ersten
+                Neuigkeiten auf Instagram.
+              </p>
+              <div className="mt-7">
+                <InstagramLink
+                  label="MiMa auf Instagram"
+                  className="text-charcoal"
+                />
+              </div>
+            </Reveal>
+          </div>
         </Container>
       </Section>
 

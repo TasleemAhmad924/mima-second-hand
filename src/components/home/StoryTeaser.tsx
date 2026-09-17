@@ -11,7 +11,7 @@ export function StoryTeaser() {
       <Container className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
         <div className="order-1 lg:order-2 lg:col-span-5 lg:col-start-8 lg:pt-4">
           <Reveal>
-            <p className="eyebrow">Ein Wohlfühlort</p>
+            <p className="eyebrow">Über MiMa</p>
             <h2 className="headline mt-4 text-charcoal">
               Mehr als ein Second-Hand-Laden.
             </h2>

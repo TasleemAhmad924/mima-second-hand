@@ -155,7 +155,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
           aria-modal="true"
           aria-label="Navigation"
         >
-          <div className="flex h-dvh flex-col overflow-y-auto overscroll-contain px-6 pb-[max(1.75rem,env(safe-area-inset-bottom))] pt-[5.5rem] sm:px-8">
+          <div className="flex h-dvh flex-col overflow-y-auto overscroll-contain px-5 pb-[max(1.75rem,env(safe-area-inset-bottom))] pt-[5.5rem] sm:px-8">
             <nav aria-label="Hauptnavigation">
               <ul className="flex flex-col">
                 {menuNav.map((item, index) => {
@@ -167,7 +167,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                         href={item.href}
                         onClick={onClose}
                         aria-current={active ? "page" : undefined}
-                        className="group flex min-h-11 items-baseline gap-4 border-b border-line/60 py-3"
+                        className="group flex min-h-12 items-baseline gap-4 border-b border-line/60 py-3.5"
                       >
                         <span className="w-6 shrink-0 font-sans text-[0.62rem] uppercase tracking-[0.14em] text-taupe-ink">
                           {number}
@@ -198,7 +198,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
                     key={item.href}
                     href={item.href}
                     onClick={onClose}
-                    className="flex min-h-10 items-center text-sm text-muted transition-colors duration-300 hover:text-charcoal"
+                    className="flex min-h-11 items-center text-sm text-muted transition-colors duration-300 hover:text-charcoal"
                   >
                     {item.label}
                   </Link>

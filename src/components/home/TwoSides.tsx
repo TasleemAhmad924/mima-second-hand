@@ -41,7 +41,7 @@ export function TwoSides() {
           </h2>
         </Reveal>
 
-        <div className="mt-8 grid grid-cols-1 gap-x-14 gap-y-10 md:mt-14 md:grid-cols-2 md:gap-y-16">
+        <div className="mt-8 grid grid-cols-1 gap-y-12 md:mt-14 md:grid-cols-2 md:gap-x-14 md:gap-y-16">
           {sides.map((side, index) => (
             <article
               key={side.href}
@@ -53,10 +53,10 @@ export function TwoSides() {
                 delay={index * 0.08}
                 objectPosition={side.objectPosition}
                 sizes="(max-width: 768px) 100vw, 44vw"
-                className={`hidden w-full md:block ${side.aspect}`}
+                className={`w-full ${side.aspect}`}
               />
               <Reveal delay={0.06}>
-                <div className="mt-0 flex items-baseline gap-3.5 md:mt-5">
+                <div className="mt-4 flex items-baseline gap-3.5 md:mt-5">
                   <span className="font-display text-[1.35rem] leading-none text-taupe-ink">
                     {side.kicker}
                   </span>

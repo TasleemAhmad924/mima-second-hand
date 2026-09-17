@@ -38,13 +38,13 @@ export const faqItems: FaqItem[] = [
     audience: "entdecken",
     question: "Kann ich online kaufen?",
     answer:
-      "Entdecken kannst du online, gekauft wird vor Ort im Second-Hand-Laden. So bleibt jedes Stück ein Einzelstück und du siehst es dir in Ruhe an.",
+      "Nach der Eröffnung kannst du Stücke online entdecken. Gekauft wird vor Ort im Second-Hand-Laden. So bleibt jedes Stück ein Einzelstück und du siehst es dir in Ruhe an.",
   },
   {
     audience: "entdecken",
     question: "Wie oft gibt es Neues?",
     answer:
-      "Die Regale werden laufend neu bestückt. Ein Besuch lohnt sich immer wieder – das Sortiment verändert sich ständig.",
+      "Sobald der Laden öffnet, werden die Regale laufend neu bestückt. Ein Besuch lohnt sich immer wieder – das Sortiment verändert sich ständig.",
   },
   {
     audience: "entdecken",

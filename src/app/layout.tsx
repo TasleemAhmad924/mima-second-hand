@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
+import { canonicalUrl, isIndexableDeployment } from "@/lib/seo";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "de_DE",
-    url: siteConfig.url,
+    url: canonicalUrl("/"),
     siteName: siteConfig.name,
     title: `${siteConfig.name} – Second-Hand-Laden & Mietregale in ${siteConfig.city}`,
     description: siteConfig.description,
@@ -50,6 +51,9 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} – Second-Hand-Laden in ${siteConfig.city}`,
     description: siteConfig.description,
   },
+  robots: isIndexableDeployment()
+    ? { index: true, follow: true }
+    : { index: false, follow: false },
 };
 
 export default function RootLayout({

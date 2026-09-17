@@ -15,7 +15,7 @@ export function RentalExperience() {
   const shelf = STANDARD_SHELF_TYPE;
 
   return (
-    <div className="flex flex-col gap-16 pb-8 lg:gap-24">
+    <div className="flex flex-col gap-12 pb-8 sm:gap-16 lg:gap-24">
       <div
         id="buchung"
         className="grid scroll-mt-28 grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16"
@@ -49,10 +49,10 @@ export function RentalExperience() {
       <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-6">
           <RevealMedia
-            src="/images/shelf-open.jpg"
+            src="/images/shelf-open.png"
             alt="Offenes Holzregal, wie es bei MiMa im Second-Hand-Laden steht."
             sizes="(min-width: 1024px) 42vw, 100vw"
-            className="aspect-[4/5] w-full bg-warm sm:aspect-[5/6]"
+            className="mx-auto aspect-[4/5] w-full max-w-md bg-warm sm:max-w-none sm:aspect-[5/6]"
             objectPosition="center"
             objectFit="contain"
             zoom={false}
@@ -101,18 +101,17 @@ export function RentalExperience() {
 
       <RentalRecommender />
 
-      <div>
-        <p className="eyebrow">Der Laden</p>
-        <h2 className="headline mt-4 max-w-xl text-charcoal">
-          So ist MiMa aufgebaut.
-        </h2>
-        <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
-          Der Grundriss folgt dem Ladenplan: unregelmäßig, mit langen
-          Mittelgängen, Wandregalen, Küche, WC, Umkleide und einer Spielecke.
-          Er erklärt den Raum. Ein bestimmtes Regal kannst du hier nicht
-          auswählen.
-        </p>
-        <div className="mt-10">
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-4 lg:pt-1">
+          <p className="eyebrow">Der Laden</p>
+          <h2 className="headline mt-3 text-charcoal">So ist MiMa aufgebaut.</h2>
+          <p className="mt-4 max-w-[36ch] text-base leading-relaxed text-pretty text-muted">
+            Der Plan zeigt, wie der Laden grob organisiert ist. Vier
+            Mittelgänge, Wandregale, Küche, WC, Umkleide und Spielecke. Er
+            gibt Orientierung. Ein bestimmtes Regal wählst du hier nicht aus.
+          </p>
+        </div>
+        <div className="lg:col-span-8">
           <StoreMapExplorer />
         </div>
       </div>

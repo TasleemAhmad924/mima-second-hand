@@ -54,7 +54,7 @@ export function BookingCta({
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        className="whitespace-nowrap"
+        className="w-full whitespace-nowrap sm:w-auto"
         onClick={() => setOpen((value) => !value)}
       >
         {publicBooking.ctaLabel}

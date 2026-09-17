@@ -4,27 +4,97 @@ Architecture Decision Records. Newest first. Status: **accepted** | **proposed**
 
 ---
 
-## 2026-09-17 — Google Maps for the Laden location; click-to-load until Usercentrics
+## 2026-09-17 — Pre-opening: no fake inventory, Wohlfühlort amenities
 
 **Status:** accepted
 
-The public location map is **Google Maps Embed**, not OpenStreetMap.
+Until the Laden is open, public pages must not present mock catalogue cards
+as real stock. Homepage discovery and `/entdecken` are a coming-soon editorial
+state. `mockProducts` stay in the repo for later Pladsly catalogue work only.
 
-- Address remains the confirmed **Segeberger Straße 8, 23617 Stockelsdorf**.
-  Do not invent coordinates or a Lübeck street.
-- Implementation: Google Maps share iframe (`maps/embed?pb=…`) for
-  Segeberger Str. 8, Stockelsdorf. No Maps JavaScript API, no Leaflet,
-  no API key.
-- The iframe must **not** load until the visitor clicks „Google Maps laden“
-  or until a future **Usercentrics** grant for the service `Google Maps`.
-- Do not auto-load the embed behind the current CCM19 banner. Cookie
-  consent remains CCM19 until an explicit Usercentrics cutover.
-- `src/lib/consent/google-maps.ts` is the adapter hook for Usercentrics
-  (`UC_UI` / `UC_CONSENT`). Until that CMP is live, click-to-load is the
-  privacy-friendly state.
-- Secondary action: „Route mit Google Maps“ opens Google Maps in a new tab
-  (`target="_blank"` `rel="noopener noreferrer"`).
+The rental recommender middle volume is labelled **„mehrere Teile“** (not
+„eine Auswahl“) so the three options stay parallel: wenige / mehrere / viele.
+Recommendation logic is unchanged.
+
+A dedicated Wohlfühlort section lists only confirmed amenities:
+**Spielecke, Wickeltisch, WC**. No invented extras. The Miriam story teaser
+remains a separate section.
+
+---
+
+## 2026-09-17 — Final pre-launch audit (verify-first)
+
+**Status:** accepted
+
+Launch audit against the current site, not a rebuild. Lille Loppe used only as an IA/clarity benchmark.
+
+- Homepage IA, booking gate, 17 %, Stockelsdorf, shelf 90 × 49 × 181 cm, Miriam photo, CCM19, Web3Forms, and the immediate Google Maps embed were already correct and were left in place.
+- Navbar hover was **not missing**: desktop links already use `.link-underline`; the CTA already hovers charcoal → taupe-ink (DESIGN.md). Hover is now limited to `@media (hover: hover)`. No new fill animation was invented.
+- SEO: canonicals and sitemap use trailing slashes to match `trailingSlash: true`. Preview/dev is `noindex` / `Disallow: /`. Production robots allow `/` and disallow `/intern/` and `/api/`. LocalBusiness JSON-LD now includes logo + image; still no invented ratings or coordinates.
+- `poweredByHeader: false`. Next.js patched 16.3.2 → 16.3.5 (security advisories). Four large product JPEGs recompressed.
+- Maps stay **immediate load** (client). Do not restore click-to-load for launch.
+- Google Search Console: no verification token in the repo; submit sitemap after the production domain is live.
+
+---
+
+## 2026-09-17 — Google Maps embed loads immediately
+
+**Status:** accepted
+
+The Laden map on the homepage and `/kontakt` loads the Google Maps iframe
+at once. There is no „Google Maps laden“ button.
+
+- Address remains **Segeberger Straße 8, 23617 Stockelsdorf**.
+- Embed is still the share iframe (`maps/embed?pb=…`). No Maps JavaScript API,
+  no Leaflet, no API key.
+- Cookie banner remains CCM19. Do not reintroduce a second click-to-load gate
+  in this repo.
+- Secondary action: „Route mit Google Maps“ opens Google Maps in a new tab.
 - The SVG floor plan (`StoreMap`) is unrelated and stays.
+
+This supersedes click-to-load until Usercentrics.
+
+---
+
+## 2026-09-17 — Contact form via Web3Forms
+
+**Status:** accepted
+
+The Kontakt form sends through **Web3Forms**, not `mailto:`.
+
+- Public access key lives in `src/config/web3forms.ts` (overridable with
+  `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`). Web3Forms documents this as a
+  client-side form id, not a server secret.
+- Submissions POST from the browser to `https://api.web3forms.com/submit`.
+  Do not proxy this on the server: Web3Forms server-side posting needs a
+  paid plan and IP allowlisting.
+- CSP `connect-src` includes `https://api.web3forms.com`.
+- A honeypot field discards bot traffic locally. Delivery still uses the
+  existing `ContactTransport` so the form UI stays independent of the vendor.
+- The Datenschutzerklärung names Web3Forms under Kontaktformular.
+
+---
+
+## 2026-09-17 — Datenschutzerklärung published from e-recht24 text
+
+**Status:** accepted
+
+The client supplied the e-recht24 text version. It is on `/datenschutz`.
+
+- Controller identity and contact come from `src/config/site.ts` (Miriam Vlot, MiMa Second Hand, Segeberger Straße 8, Stockelsdorf, confirmed phone and e-mail).
+- Hosting is published as **IONOS**, as in the supplied text. Do not rewrite this to Vercel without a new legal text.
+- Included as supplied: Cookies, Kontaktanfragen, Instagram/Meta, Newsletter, local Google Fonts, Google Maps, Art. 21 caps, Quelle e-recht24.
+- Do not invent extra processors (CCM19, Usercentrics, Vercel, Pladsly) into this copy.
+- Point CCM19’s privacy-policy URL at `/datenschutz/`.
+
+---
+
+## 2026-09-17 — Google Maps for the Laden location; click-to-load until Usercentrics
+
+**Status:** superseded
+
+Superseded by immediate embed loading (same day). The map is still Google Maps
+Embed for Segeberger Straße 8, Stockelsdorf, not OpenStreetMap.
 
 ---
 
@@ -38,11 +108,10 @@ Client-confirmed public identity:
 - E-Mail: **info@mima-secondhand.de** (replaces the draft `hallo@` address)
 - Instagram: **https://www.instagram.com/mima.second.hand/**
 
-Source of truth: `src/config/site.ts`. AGB, Impressum, Datenschutz
-(Verantwortliche), footer, contact form and JSON-LD read from there.
+Source of truth: `src/config/site.ts`. AGB, Impressum, Datenschutz,
+footer, contact form and JSON-LD read from there.
 
-The full Datenschutzerklärung is still outstanding; the page now names the
-controller and contact. A Widerrufsbelehrung is still not on the site.
+The Datenschutzerklärung is published on `/datenschutz`. A Widerrufsbelehrung is still not on the site.
 
 ---
 
@@ -126,8 +195,7 @@ Cookie consent is **CCM19 Cloud**, not Usercentrics and not a custom banner.
   administration. Do not restyle or reimplement the banner in this repo.
 - Content-Security-Policy allows `https://cloud.ccm19.de` for script,
   connect, image, font and frame.
-- `/datenschutz` is still a placeholder. Point CCM19’s privacy-policy URL
-  at `/datenschutz/` once that copy exists.
+- Point CCM19’s privacy-policy URL at `/datenschutz/`.
 
 ---
 
@@ -164,7 +232,7 @@ The client supplied the AGB. They are on `/agb`.
 - Sales commission: **15 %** of the sale price (AGB § 16).
 - Regular rental periods in the AGB: 14 days 39 €, 28 days 75 €. The public site still also offers 3 Monate 210 € from the confirmed price graphic.
 - Inhaberin: **Miriam Vlot**. Legal e-mail: **info@mima-secondhand.de** (filled 2026-09-17).
-- Impressum is published from the same facts. The full Datenschutzerklärung is still outstanding; the page names the controller.
+- Impressum and the Datenschutzerklärung are published from the same facts.
 - A separate Widerrufsbelehrung is referenced in the AGB and is not on the site yet.
 
 ---
