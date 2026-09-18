@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/config/site";
 import { googleMapsEmbedSrc, googleMapsPlaceUrl } from "@/config/maps";
 
@@ -12,29 +12,54 @@ interface GoogleMapProps {
   className?: string;
 }
 
-/** Google Maps Embed for the Laden. Loads immediately. */
+/** Google Maps Embed. Loads when the map is about to enter the viewport. */
 export function GoogleMap({
   src = googleMapsEmbedSrc(),
   className = "",
 }: GoogleMapProps) {
+  const shellRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
   const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const node = shellRef.current;
+    if (!node || inView) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "240px 0px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [inView]);
 
   if (failed) {
     return <MapFallback />;
   }
 
   return (
-    <div className={`${mapShellClass} ${className}`}>
-      <iframe
-        title={`Karte: ${siteConfig.name}, ${siteConfig.city}`}
-        src={src}
-        className="absolute inset-0 h-full w-full border-0"
-        loading="eager"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allow="fullscreen"
-        allowFullScreen
-        onError={() => setFailed(true)}
-      />
+    <div ref={shellRef} className={`${mapShellClass} ${className}`}>
+      {inView ? (
+        <iframe
+          title={`Karte: ${siteConfig.name}, ${siteConfig.city}`}
+          src={src}
+          className="absolute inset-0 h-full w-full border-0"
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allow="fullscreen"
+          allowFullScreen
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-cream"
+        />
+      )}
     </div>
   );
 }

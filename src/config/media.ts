@@ -1,9 +1,12 @@
 /**
  * Public photography slots. Swap `src` when a higher-resolution exterior lands.
+ * Hero uses static WebP so the LCP preload URL matches the image request.
  */
 export const heroImage = {
-  src: "/images/mima-store-hero.jpg",
-  intendedSrc: "/images/mima-store-hero.jpg",
+  src: "/images/mima-store-hero.webp",
+  srcMobile: "/images/mima-store-hero-640.webp",
+  fallbackSrc: "/images/mima-store-hero.jpg",
+  intendedSrc: "/images/mima-store-hero.webp",
   alt: "Außenansicht des Second-Hand-Ladens von MiMa an der Segeberger Straße in Stockelsdorf.",
   objectPosition: "68% 58%",
   mobileObjectPosition: "62% 62%",

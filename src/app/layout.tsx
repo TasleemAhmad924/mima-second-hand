@@ -10,6 +10,7 @@ import { Ccm19Script } from "@/components/legal/Ccm19Script";
 import { GoogleTag } from "@/components/analytics/GoogleTag";
 import { Ccm19AnalyticsConsent } from "@/components/analytics/Ccm19AnalyticsConsent";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
+import { HeroPreload } from "@/components/home/HeroPreload";
 
 /*
   Fonts are downloaded at build time and served from our own origin by Next's
@@ -71,6 +72,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <HeroPreload />
         <Ccm19Script />
         <GoogleTag />
         <LocalBusinessJsonLd />

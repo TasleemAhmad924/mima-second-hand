@@ -2,7 +2,7 @@ import { ArrowLink } from "@/components/ui/ArrowLink";
 import { GoogleMap } from "@/components/location/GoogleMap";
 import { googleMapsDirectionsUrl } from "@/config/maps";
 
-/** Location map + route action. The embed loads immediately. */
+/** Location map + route action. The embed loads when it is about to enter view. */
 export function LocationMap() {
   return (
     <div>

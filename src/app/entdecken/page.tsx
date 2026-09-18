@@ -29,7 +29,7 @@ export default function EntdeckenPage() {
           <div className="lg:col-span-7">
             <Reveal>
               <RevealMedia
-                src="/images/store-wall.jpg"
+                src="/images/store-wall.webp"
                 alt="Holzregale im Second-Hand-Laden von MiMa, bereit für die ersten Lieblingsstücke."
                 objectPosition="center 28%"
                 sizes="(max-width: 1024px) 100vw, 58vw"

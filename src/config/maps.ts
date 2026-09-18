@@ -26,7 +26,7 @@ export function googleMapsDirectionsUrl(): string {
 
 /**
  * Client-supplied Google Maps share embed for Segeberger Str. 8, Stockelsdorf.
- * The public site loads this iframe immediately.
+ * The public site loads this iframe when the map is about to enter view.
  */
 export const GOOGLE_MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2351.5452153033034!2d10.6509094!3d53.8865127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b20c170c08ef2d%3A0xdd3807bbeb60cea!2sSegeberger%20Str.%208%2C%2023617%20Stockelsdorf!5e0!3m2!1sde!2sde!4v1789600822002!5m2!1sde!2sde";

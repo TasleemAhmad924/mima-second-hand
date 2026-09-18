@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { heroImage } from "@/config/media";
 
 /** Static hero crop of the storefront. No zoom, no drift. */
@@ -11,14 +10,24 @@ export function HeroPhoto() {
         ["--media-pos-mobile" as string]: heroImage.mobileObjectPosition,
       }}
     >
-      <Image
-        src={heroImage.src}
-        alt={heroImage.alt}
-        fill
-        priority
-        sizes="(max-width: 1024px) 100vw, 58vw"
-        className="object-cover"
-      />
+      <picture>
+        <source
+          media="(max-width: 1024px)"
+          srcSet={heroImage.srcMobile}
+          type="image/webp"
+          width={640}
+          height={853}
+        />
+        <img
+          src={heroImage.src}
+          alt={heroImage.alt}
+          width={864}
+          height={1152}
+          fetchPriority="high"
+          decoding="sync"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      </picture>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-y-0 left-0 hidden w-16 bg-gradient-to-r from-warm/50 to-transparent lg:block"

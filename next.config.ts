@@ -80,9 +80,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   trailingSlash: true,
   images: {
-    // Image sources are local assets today; keep optimization off to preserve
-    // current behaviour. Revisit if remote (Pladsly) images are introduced.
-    unoptimized: true,
+    // Vercel can resize/convert. IONOS static export has no image optimizer.
+    unoptimized: isIonosStatic,
+    formats: ["image/avif", "image/webp"],
   },
   turbopack: {
     root: path.resolve(__dirname),
