@@ -1,16 +1,28 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import sitemap from "@/app/sitemap";
 import robots from "@/app/robots";
+import { buildSitemapXml, sitemapEntries } from "@/lib/sitemap";
 
 describe("sitemap", () => {
   it("lists only public canonical URLs with trailing slashes", () => {
-    const entries = sitemap();
+    const entries = sitemapEntries("2026-09-18");
     const urls = entries.map((entry) => entry.url);
     expect(urls[0]).toBe("https://www.mima-second-hand.de/");
     expect(urls).toContain("https://www.mima-second-hand.de/regal-mieten/");
     expect(urls.every((url) => url.endsWith("/"))).toBe(true);
     expect(urls.join(" ")).not.toContain("/intern");
     expect(urls.join(" ")).not.toContain("/api/");
+  });
+
+  it("emits date-only lastmod XML that Search Console can parse", () => {
+    const xml = buildSitemapXml(sitemapEntries("2026-09-18"));
+    expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(
+      true,
+    );
+    expect(xml).toContain(
+      'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+    );
+    expect(xml).toContain("<lastmod>2026-09-18</lastmod>");
+    expect(xml).not.toMatch(/<lastmod>[^<]*T/);
   });
 });
 
