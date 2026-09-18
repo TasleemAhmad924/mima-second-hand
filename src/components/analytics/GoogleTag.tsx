@@ -1,19 +1,10 @@
-import { googleAnalytics, googleTagBootstrap } from "@/config/analytics";
-
 /**
- * Official gtag.js snippet, once per page, directly after CCM19 in <head>.
+ * First-party file, not an inline snippet.
  *
- * One inline script only: Next.js would hoist a separate `async` src tag
- * above CCM19. Consent Mode v2 starts denied; CCM19 updates it after the
- * banner choice. The gtag.js file is injected from this script so it is
- * not duplicated via the RSC payload.
+ * CCM19 can block inline scripts whose text contains `gtag`. Putting that
+ * bootstrap in the React tree also serializes it into `self.__next_f`, so the
+ * whole RSC payload was treated as a tracking script and hydration never ran.
  */
 export function GoogleTag() {
-  return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: googleTagBootstrap(googleAnalytics.measurementId),
-      }}
-    />
-  );
+  return <script src="/analytics-consent.js" />;
 }

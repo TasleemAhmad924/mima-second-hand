@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { EASE_OUT, DUR, VIEWPORT } from "@/lib/motion";
+import { EASE_OUT, DUR } from "@/lib/motion";
+import { useEnterMotion } from "@/lib/use-enter-motion";
 
 interface RevealProps {
   children: ReactNode;
@@ -19,9 +20,9 @@ interface RevealProps {
 }
 
 /**
- * Subtle entrance reveal. Fades and lifts content into place once, when it
- * scrolls into view. Renders static markup when the user prefers reduced
- * motion, so the site reads perfectly with animation disabled.
+ * Subtle entrance reveal. First paint is visible; the fade only starts after
+ * JavaScript has measured the viewport, so a delayed consent manager cannot
+ * leave copy at opacity 0.
  */
 export function Reveal({
   children,
@@ -33,23 +34,21 @@ export function Reveal({
   as = "div",
 }: RevealProps) {
   const prefersReduced = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const skip = mounted && prefersReduced === true;
+  const { ref, visible, armed } = useEnterMotion(immediate);
   const Tag = motion[as];
-
-  const motionProps = skip
-    ? { animate: { opacity: 1, y: 0 } }
-    : immediate
-      ? { animate: { opacity: 1, y: 0 } }
-      : { whileInView: { opacity: 1, y: 0 }, viewport: VIEWPORT };
+  const play = armed && visible && prefersReduced !== true;
 
   return (
     <Tag
+      ref={ref}
       className={className}
-      initial={skip ? { opacity: 1, y: 0 } : { opacity: 0, y }}
-      transition={{ duration: skip ? 0 : duration, delay: skip ? 0 : delay, ease: EASE_OUT }}
-      {...motionProps}
+      initial={false}
+      animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y }}
+      transition={{
+        duration: play ? duration : 0,
+        delay: play ? delay : 0,
+        ease: EASE_OUT,
+      }}
     >
       {children}
     </Tag>

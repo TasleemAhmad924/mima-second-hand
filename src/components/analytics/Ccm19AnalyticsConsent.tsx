@@ -52,6 +52,7 @@ function syncGoogleConsent() {
  */
 export function Ccm19AnalyticsConsent() {
   useEffect(() => {
+    document.documentElement.dataset.hydrated = "true";
     syncGoogleConsent();
     const events = ["ccm19WidgetLoaded", "ccm19WidgetClosed"] as const;
     for (const event of events) {

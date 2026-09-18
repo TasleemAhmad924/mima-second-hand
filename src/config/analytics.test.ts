@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   googleAnalytics,
@@ -27,6 +28,11 @@ describe("Google Analytics tag", () => {
     expect(googleTagSrc(googleAnalytics.measurementId)).toBe(
       "https://www.googletagmanager.com/gtag/js?id=G-7MBL4EZ18H",
     );
+  });
+
+  it("keeps the first-party bootstrap file in sync so CCM19 cannot swallow the RSC payload", () => {
+    const file = readFileSync("public/analytics-consent.js", "utf8").trim();
+    expect(file).toBe(googleTagBootstrap(googleAnalytics.measurementId));
   });
 
   it("rejects a measurement ID that is not GA4", () => {

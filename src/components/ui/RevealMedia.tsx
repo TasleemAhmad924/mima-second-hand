@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { EASE_OUT, DUR, VIEWPORT } from "@/lib/motion";
+import { EASE_OUT, DUR } from "@/lib/motion";
+import { useEnterMotion } from "@/lib/use-enter-motion";
 
 interface RevealMediaProps {
   src: string;
@@ -29,6 +29,7 @@ interface RevealMediaProps {
  * Cinematic editorial image. The frame clips; the image resolves from a slight
  * over-scale as it enters the viewport, then a separate layer carries the quiet
  * hover zoom — so the entrance and hover transforms never fight each other.
+ * First paint stays visible if JavaScript is delayed.
  */
 export function RevealMedia({
   src,
@@ -44,9 +45,8 @@ export function RevealMedia({
   objectFit = "cover",
 }: RevealMediaProps) {
   const prefersReduced = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const skip = mounted && prefersReduced === true;
+  const { ref, visible, armed } = useEnterMotion(immediate);
+  const play = armed && visible && prefersReduced !== true;
 
   const cropVars = mobileObjectPosition
     ? {
@@ -81,15 +81,16 @@ export function RevealMedia({
       style={cropVars}
     >
       <motion.div
+        ref={ref}
         className="absolute inset-0 h-full w-full origin-center"
-        initial={skip ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.04 }}
-        {...(skip || immediate
-          ? { animate: { opacity: 1, scale: 1 } }
-          : { whileInView: { opacity: 1, scale: 1 }, viewport: VIEWPORT })}
+        initial={false}
+        animate={
+          visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.04 }
+        }
         transition={{
-          duration: skip ? 0 : DUR.image,
+          duration: play ? DUR.image : 0,
           ease: EASE_OUT,
-          delay: skip ? 0 : delay,
+          delay: play ? delay : 0,
         }}
       >
         {image}

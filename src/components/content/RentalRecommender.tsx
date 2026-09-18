@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { formatEuro } from "@/lib/format";
 import {
@@ -51,11 +51,13 @@ function Choice({
 export function RentalRecommender() {
   const [duration, setDuration] = useState<DurationIntent>("about-4-weeks");
   const [volume, setVolume] = useState<VolumeIntent>("some");
+  const [ready, setReady] = useState(false);
   const reduce = useReducedMotion();
   const result = useMemo(
     () => recommendRental(duration, volume),
     [duration, volume],
   );
+  useEffect(() => setReady(true), []);
 
   return (
     <div>
@@ -108,7 +110,7 @@ export function RentalRecommender() {
         <AnimatePresence mode="wait">
           <motion.div
             key={result.plan.id}
-            initial={reduce ? false : { opacity: 0, y: 10 }}
+            initial={!ready || reduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: EASE_OUT }}

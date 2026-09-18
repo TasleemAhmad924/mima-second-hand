@@ -1,26 +1,11 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
-import { EASE_OUT } from "@/lib/motion";
+import type { ReactNode } from "react";
 
 /**
- * Restrained route transition. `template.tsx` re-mounts on every navigation, so
- * each page fades in gently. Opacity-only on purpose: a transform on this
- * wrapper would turn `position: fixed` descendants (e.g. the booking sticky bar)
- * into absolutely-positioned ones. The vertical motion lives in section reveals.
+ * Next.js remounts `template` on every navigation. A fade-in used to start
+ * at opacity 0 in the server HTML. CCM19 can block the RSC payload
+ * (`self.__next_f`), so that fade never ran and the page stayed blank under
+ * the header. Keep this shell visible — section reveals handle motion.
  */
-export default function Template({ children }: { children: React.ReactNode }) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) return <>{children}</>;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.32, ease: EASE_OUT }}
-    >
-      {children}
-    </motion.div>
-  );
+export default function Template({ children }: { children: ReactNode }) {
+  return children;
 }

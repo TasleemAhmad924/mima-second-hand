@@ -96,6 +96,15 @@
       transform: none !important;
     }
   }
+
+  /*
+    CCM19 can delay or block Next.js hydration. Until React marks the
+    document as hydrated, do not leave the page at Framer's opacity 0.
+  */
+  html:not([data-hydrated]) main [style*="opacity"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @layer components {
