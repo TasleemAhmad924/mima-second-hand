@@ -2,22 +2,14 @@
  * Simplified orientation map. Not a booking selector, not CAD.
  */
 import { STORE_PLAN } from "@/data/store-plan";
+import { PLAN_COLORS } from "@/lib/store-map/plan-colors";
 import type { StorePlanLabel, StorePlanRoomKind } from "@/lib/store-map/types";
 
-const INK = "#292725";
-const TAUPE = "#4A3A32";
-const LINE = "#4A3A32";
-const FLOOR = "#f4efe8";
-const WOOD = "#CEBBA9";
-const SERVICE = "#e4d9cb";
-const FITTING = "#ddd1c2";
-const PLAY = "#e4e9de";
-
 const ROOM_FILL: Record<StorePlanRoomKind, string> = {
-  kitchen: SERVICE,
-  wc: SERVICE,
-  fitting: FITTING,
-  play: PLAY,
+  kitchen: PLAN_COLORS.kitchen,
+  wc: PLAN_COLORS.wc,
+  fitting: PLAN_COLORS.fitting,
+  play: PLAN_COLORS.play,
 };
 
 function outlinePath(points: readonly [number, number][]): string {
@@ -26,23 +18,22 @@ function outlinePath(points: readonly [number, number][]): string {
     .join(" ")} Z`;
 }
 
-const STAIR_XS = [10, 22, 34, 46] as const;
-
 export function StoreMap() {
   const { viewBox, outline, shelves, rooms, stairs, labels } = STORE_PLAN;
+  const stepGap = stairs.width / 5;
 
   return (
     <svg
       viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`}
-      className="h-auto w-full"
+      className="h-auto w-full overflow-visible"
       role="img"
       aria-label="Vereinfachter Grundriss von MiMa in Stockelsdorf. Vier Mittelgänge, Wandregale, Küche, WC, Umkleide, Spielecke und Treppe."
     >
       <path
         d={outlinePath(outline)}
-        fill={FLOOR}
-        stroke={INK}
-        strokeWidth={1.65}
+        fill={PLAN_COLORS.floor}
+        stroke={PLAN_COLORS.ink}
+        strokeWidth={1.5}
         strokeLinejoin="round"
         strokeLinecap="round"
       />
@@ -54,11 +45,11 @@ export function StoreMap() {
           y={room.y}
           width={room.width}
           height={room.height}
-          rx={room.kind === "play" ? 3 : 1.5}
+          rx={2}
           fill={ROOM_FILL[room.kind]}
-          stroke={LINE}
-          strokeOpacity={0.16}
-          strokeWidth={0.7}
+          stroke={PLAN_COLORS.taupe}
+          strokeOpacity={0.12}
+          strokeWidth={0.6}
         />
       ))}
 
@@ -70,23 +61,37 @@ export function StoreMap() {
           width={shelf.width}
           height={shelf.height}
           rx={1}
-          fill={WOOD}
+          fill={shelf.kind === "wall" ? PLAN_COLORS.wall : PLAN_COLORS.aisle}
         />
       ))}
 
       <g aria-hidden="true">
-        {STAIR_XS.map((offset) => (
-          <line
-            key={`step-${offset}`}
-            x1={stairs.x + offset}
-            y1={stairs.y + 2}
-            x2={stairs.x + offset}
-            y2={stairs.y + stairs.height - 2}
-            stroke={LINE}
-            strokeWidth={1}
-            opacity={0.45}
-          />
-        ))}
+        <rect
+          x={stairs.x}
+          y={stairs.y}
+          width={stairs.width}
+          height={stairs.height}
+          rx={1}
+          fill={PLAN_COLORS.stairs}
+          stroke={PLAN_COLORS.taupe}
+          strokeOpacity={0.22}
+          strokeWidth={0.6}
+        />
+        {[1, 2, 3, 4].map((step) => {
+          const x = stairs.x + step * stepGap;
+          return (
+            <line
+              key={`step-${step}`}
+              x1={x}
+              y1={stairs.y + 2.5}
+              x2={x}
+              y2={stairs.y + stairs.height - 2.5}
+              stroke={PLAN_COLORS.taupe}
+              strokeWidth={1}
+              opacity={0.55}
+            />
+          );
+        })}
       </g>
 
       {labels.map((label) => (
@@ -109,11 +114,13 @@ function MapLabel({ label }: { label: StorePlanLabel }) {
       x={label.x}
       y={label.y}
       textAnchor={label.anchor ?? "middle"}
-      fill={primary ? TAUPE : INK}
+      dominantBaseline="middle"
+      alignmentBaseline="middle"
+      fill={primary ? PLAN_COLORS.taupe : PLAN_COLORS.ink}
       className={visibility}
       style={{
-        fontSize: primary ? 9.5 : 9,
-        letterSpacing: primary ? "0.12em" : "0.1em",
+        fontSize: primary ? 10 : 8.5,
+        letterSpacing: primary ? "0.1em" : "0.06em",
         fontFamily: "var(--font-sans)",
         fontWeight: 500,
       }}

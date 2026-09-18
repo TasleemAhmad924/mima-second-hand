@@ -49,6 +49,15 @@ describe("customer-facing store plan", () => {
     expect(walls.length).toBeLessThanOrEqual(6);
   });
 
+  it("keeps the play area inset from the south-west corner", () => {
+    const play = STORE_PLAN.rooms.find((room) => room.kind === "play");
+    expect(play).toBeDefined();
+    const maxY = Math.max(...STORE_PLAN.outline.map(([, y]) => y));
+    const minX = Math.min(...STORE_PLAN.outline.map(([x]) => x));
+    expect(play!.y + play!.height).toBeLessThanOrEqual(maxY - 12);
+    expect(play!.x).toBeGreaterThanOrEqual(minX + 8);
+  });
+
   it("marks the visitor rooms without extra interaction", () => {
     expect(STORE_PLAN.rooms.map((room) => room.kind).sort()).toEqual(
       ["fitting", "kitchen", "play", "wc"].sort(),
@@ -74,5 +83,10 @@ describe("customer-facing store plan", () => {
         .filter((item) => item.group === "secondary")
         .map((item) => item.label),
     ).toEqual(["Küche", "WC", "Umkleide", "Spielecke", "Treppe"]);
+    expect(
+      STORE_PLAN.legend.every(
+        (item) => item.color.startsWith("#") && item.color.length === 7,
+      ),
+    ).toBe(true);
   });
 });

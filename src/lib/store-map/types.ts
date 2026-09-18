@@ -146,10 +146,15 @@ export interface StorePlanLabel {
   from?: "sm" | "lg";
 }
 
+export type StorePlanLegendMark = "fill" | "stairs";
+
 export interface StorePlanLegendItem {
   id: string;
   label: string;
   group: "primary" | "secondary";
+  /** Fill used on the diagram. Same value as the matching map shape. */
+  color: string;
+  mark?: StorePlanLegendMark;
 }
 
 /** Customer-facing orientation diagram. Not inventory, not CAD. */

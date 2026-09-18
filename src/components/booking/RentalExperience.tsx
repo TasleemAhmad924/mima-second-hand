@@ -100,17 +100,17 @@ export function RentalExperience() {
 
       <RentalRecommender />
 
-      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-4 lg:pt-1">
+      <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:gap-y-10">
+        <div className="lg:col-span-5">
           <p className="eyebrow">Der Laden</p>
           <h2 className="headline mt-3 text-charcoal">So ist MiMa aufgebaut.</h2>
-          <p className="mt-4 max-w-[36ch] text-base leading-relaxed text-pretty text-muted">
+          <p className="mt-5 max-w-[34ch] text-base leading-relaxed text-pretty text-muted">
             Der Plan zeigt, wie der Laden grob organisiert ist. Vier
             Mittelgänge, Wandregale, Küche, WC, Umkleide und Spielecke. Er
             gibt Orientierung. Ein bestimmtes Regal wählst du hier nicht aus.
           </p>
         </div>
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-7">
           <StoreMapExplorer />
         </div>
       </div>
